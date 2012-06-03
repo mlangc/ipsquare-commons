@@ -11,7 +11,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 
 	<scm>
-		<developerConnection>scm:svn:https://svn.ipsquare.at/root/ipsquare/development/Commons/ipsquare-commons/head/</developerConnection>
+		<developerConnection>scm:svn:https://svn.ipsquare.at/root/ipsquare/development/Commons/ipsquare-commons-core/head/</developerConnection>
 	</scm>
 
 	<distributionManagement>
