@@ -1,0 +1,115 @@
+package at.ipsquare.util;
+
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
+
+/**
+ * Tests for {@link LocalResources}.
+ * 
+ * @author Matthias Langer
+ */
+public class TestLocalResources
+{
+    private static String TEST_FILE_PATH = "at/ipsquare/util/_LocalResources/test.txt";
+    private static String NOT_EXISTING_PATH = "ASDFKJASDLFlsdfsdll/sdf/dd";
+    private static String WITHIN_COMMONS_COLLECTIONS_JAR_PATH = "META-INF/maven/commons-collections/commons-collections/pom.properties";
+    private static String STARTS_WITH_SLASH = "/META-INF/maven/commons-collections/commons-collections/pom.properties";
+    
+    /**
+     * Tests for {@link LocalResources#getFile(String)}.
+     */
+    @Test
+    public void testGetFile()
+    {
+        testGetFile(TEST_FILE_PATH, "test", null);
+        testGetFile(NOT_EXISTING_PATH, null, NOT_EXISTING_PATH);
+        testGetFile(WITHIN_COMMONS_COLLECTIONS_JAR_PATH, null, "getStream");
+        testGetFile(STARTS_WITH_SLASH, null, "leading");
+    }
+    
+    /**
+     * Tests for {@link LocalResources#getUrl(String)}.
+     */
+    @Test
+    public void testGetUrl() throws IOException
+    {
+        /*
+         * As getFile() and getStream() use this method we only verify that we can read contents from a JAR file:
+         */
+        URL url = LocalResources.getUrl(WITHIN_COMMONS_COLLECTIONS_JAR_PATH);
+        assertNotNull(url);
+        String contents = consume(url.openStream());
+        assertTrue(StringUtils.containsIgnoreCase(contents, "commons-collections"));
+    }
+    
+    /**
+     * Tests for {@link LocalResources#getStream(String)}.
+     */
+    @Test
+    public void testGetStream() throws IOException
+    {
+        /*
+         * As getStream() just forwards to getUrl() we just verify that we can open our test file:
+         */
+        InputStream in = LocalResources.getStream(TEST_FILE_PATH);
+        assertNotNull(in);
+        String contents = consume(in);
+        assertTrue(StringUtils.containsIgnoreCase(contents, "test"));
+    }
+    
+
+    /**
+     * Tests {@link LocalResources#getFile(String)}.
+     * 
+     * @param path the path.
+     * @param expectedContents a string that should be contained in the file if it is expected to exist.
+     * @param expectedError a string that should be contained in the exception message we get, if any.
+     */
+    private static void testGetFile(String path, String expectedContents, String expectedError)
+    {
+        try
+        {
+            File f = LocalResources.getFile(path);
+            if(expectedError != null)
+                fail("Expected an error containing '" + expectedError + "'.");
+            
+            assertNotNull(f);
+            assertTrue(f.exists());
+            assertTrue(f.canRead());
+            
+            String contents = consume(new FileInputStream(f));
+            assertTrue(StringUtils.containsIgnoreCase(contents, expectedContents));
+        }
+        catch(Throwable th)
+        {
+            if(expectedError ==  null)
+                fail("Did not expect an error but got: " + th);
+            
+            assertTrue("Expected exception message containing '" + expectedError + "' but got:\n" + th.getMessage(),
+                    StringUtils.containsIgnoreCase(th.getMessage(), expectedError));
+        }
+    }
+    
+    private static String consume(InputStream in) throws IOException
+    {
+        try
+        {
+            return IOUtils.toString(in);
+        }
+        finally
+        {
+            IOUtils.closeQuietly(in);
+        }
+    }
+}
