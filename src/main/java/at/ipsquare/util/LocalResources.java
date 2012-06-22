@@ -117,7 +117,7 @@ public final class LocalResources
     if(urls.isEmpty())
       return null;
     if(urls.size() > 1)
-      throw new IOException("'" + path + "' : Ambiguous path.");
+      throw new IOException("'" + path + "' : Ambiguous path; URLs: " + urls);
     return urls.get(0);
   }
   
