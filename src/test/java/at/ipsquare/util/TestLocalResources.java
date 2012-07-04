@@ -68,6 +68,27 @@ public class TestLocalResources
         assertTrue(StringUtils.containsIgnoreCase(contents, "test"));
     }
     
+    /**
+     * See {@link #testGetFile(String, String, String, ClassLoader)}.
+     * 
+     * <p/>
+     * Note that this method tests {@link LocalResources#getFile(String)} with different context {@link ClassLoader}s.
+     */
+    private static void testGetFile(String path, String expectedContents, String expectedError)
+    {
+    	ClassLoader origContextClassLoader = Thread.currentThread().getContextClassLoader();
+    	try
+    	{
+    		testGetFile(path, expectedContents, expectedError, origContextClassLoader);
+    		testGetFile(path, expectedContents, expectedError, null);
+    		testGetFile(path, expectedContents, expectedError, TestLocalResources.class.getClassLoader());
+    	}
+    	finally
+    	{
+    		Thread.currentThread().setContextClassLoader(origContextClassLoader);
+    	}
+    }
+    
 
     /**
      * Tests {@link LocalResources#getFile(String)}.
@@ -75,11 +96,13 @@ public class TestLocalResources
      * @param path the path.
      * @param expectedContents a string that should be contained in the file if it is expected to exist.
      * @param expectedError a string that should be contained in the exception message we get, if any.
+     * @param contextClassLoader the context {@link ClassLoader} to use (see {@link Thread#setContextClassLoader(ClassLoader)}).
      */
-    private static void testGetFile(String path, String expectedContents, String expectedError)
+    private static void testGetFile(String path, String expectedContents, String expectedError, ClassLoader contextClassLoader)
     {
         try
         {
+        	Thread.currentThread().setContextClassLoader(contextClassLoader);
             File f = LocalResources.getFile(path);
             if(expectedError != null)
                 fail("Expected an error containing '" + expectedError + "'.");
