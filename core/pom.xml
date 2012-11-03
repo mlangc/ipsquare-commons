@@ -2,80 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>at.ipsquare</groupId>
-		<artifactId>maven-project</artifactId>
-		<version>1.0.1</version>
+		<artifactId>commons-pom</artifactId>
+		<version>1.0.0</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-core</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-
-    <inceptionYear>2012</inceptionYear>
-
-	<scm>
-		<developerConnection>scm:svn:https://svn.ipsquare.at/root/ipsquare/development/Commons/ipsquare-commons-core/head/</developerConnection>
-	</scm>
-
-	<distributionManagement>
-		<repository>
-			<id>ipsquare-releases</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-releases</url>
-		</repository>
-
-		<snapshotRepository>
-			<id>ipsquare-snapshots</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-	<repositories>
-		<repository>
-			<id>ipsquare-releases</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-releases</url>
-		</repository>
-
-		<repository>
-			<id>ipsquare-snapshots</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-snapshots</url>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>ipsquare-releases</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-releases</url>
-		</pluginRepository>
-
-		<pluginRepository>
-			<id>ipsquare-snapshots</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-snapshots</url>
-		</pluginRepository>
-
-        <pluginRepository>
-            <id>mc-release</id>
-            <name>Local Maven repository of releases</name>
-            <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>mc-release</id>
-            <name>Local Maven repository of releases</name>
-            <url>http://mc-repo.googlecode.com/svn/maven2/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-
-	</pluginRepositories>
 
 	<build>
 		<plugins>
@@ -86,70 +19,7 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
-
-            <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <configuration>
-                    <header>src/etc/header.txt</header>
-                    <includes>
-                        <include>src/main/java/**</include>
-                        <include>src/test/java/**</include>
-                    </includes>
-                    <useDefaultExcludes>true</useDefaultExcludes>
-                    <useDefaultMappings>true</useDefaultMappings>
-                    <properties>
-                        <year>${project.inceptionYear}</year>
-                    </properties>
-                    <skipExistingHeaders>true</skipExistingHeaders>
-                    <strictCheck>true</strictCheck>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>buildnumber-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>create</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<doCheck>true</doCheck>
-					<buildNumberPropertyName>svnRevision</buildNumberPropertyName>
-					<timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss z}</timestampFormat>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<SvnRevision>${svnRevision}</SvnRevision>
-							<Timestamp>${timestamp}</Timestamp>
-						</manifestEntries>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
+        </plugins>
 	</build>
 
 	<dependencies>
