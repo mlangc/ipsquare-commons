@@ -160,7 +160,7 @@
                         <manifestEntries>
                             <GitRevId>${gitRevId}</GitRevId>
                             <Timestamp>${timestamp}</Timestamp>
-                            <DeveloperConnection>${scm.developerConnection}</DeveloperConnection>
+                            <Scm>${scm.developerConnection}</Scm>
                         </manifestEntries>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
