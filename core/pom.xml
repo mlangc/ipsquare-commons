@@ -100,7 +100,6 @@
                     <useDefaultMappings>true</useDefaultMappings>
                     <properties>
                         <year>${project.inceptionYear}</year>
-                        <email>mlangc@gmx.at</email>
                     </properties>
                     <skipExistingHeaders>true</skipExistingHeaders>
                     <strictCheck>true</strictCheck>
