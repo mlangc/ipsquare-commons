@@ -3,53 +3,14 @@
 
 	<parent>
 		<groupId>at.ipsquare</groupId>
-		<artifactId>maven-project</artifactId>
-		<version>1.0.1</version>
+		<artifactId>commons-pom</artifactId>
+		<version>1.0.0</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-hibernate</artifactId>
+	<name>ipsquare-commons-hibernate</name>
 	<version>1.0.0-SNAPSHOT</version>
-
-	<scm>
-		<developerConnection>scm:svn:https://svn.ipsquare.at/root/ipsquare/development/Commons/ipsquare-commons-hibernate/head/</developerConnection>
-	</scm>
-
-	<distributionManagement>
-		<repository>
-			<id>ipsquare-releases</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-releases</url>
-		</repository>
-
-		<snapshotRepository>
-			<id>ipsquare-snapshots</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-	<repositories>
-		<repository>
-			<id>ipsquare-releases</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-releases</url>
-		</repository>
-
-		<repository>
-			<id>ipsquare-snapshots</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-snapshots</url>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>ipsquare-releases</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-releases</url>
-		</pluginRepository>
-
-		<pluginRepository>
-			<id>ipsquare-snapshots</id>
-			<url>https://artifactory.ipsquare.at/artifactory/ipsquare-snapshots</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<build>
 		<plugins>
@@ -58,42 +19,6 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>buildnumber-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>create</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<doCheck>true</doCheck>
-					<buildNumberPropertyName>svnRevision</buildNumberPropertyName>
-					<timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss z}</timestampFormat>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<SvnRevision>${svnRevision}</SvnRevision>
-							<Timestamp>${timestamp}</Timestamp>
-							<BambooBuildNumber>${bambooBuildNumber}</BambooBuildNumber>
-						</manifestEntries>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifest>
-					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
