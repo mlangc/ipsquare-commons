@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.ipsquare</groupId>
 	<artifactId>commons-pom</artifactId>
-    <name>ipsquare-commons</name>
+    <name>IP SQUARE Commons POM</name>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
-	<url>http://www.ipsquare.at/</url>
+	<url>http://sourceforge.net/p/ipsquarecommons</url>
 
 	<issueManagement>
         <url>https://sourceforge.net/p/ipsquarecommons/tickets/</url>
@@ -15,6 +15,7 @@
 
 	<scm>
 		<developerConnection>scm:git:git://git.code.sf.net/p/ipsquarecommons/code</developerConnection>
+		<url>git://git.code.sf.net/p/ipsquarecommons/code</url>
 	</scm>
 
     <inceptionYear>2012</inceptionYear>
@@ -24,7 +25,21 @@
 		<name>IP SQUARE</name>
 		<url>http://www.ipsquare.at/</url>
 	</organization>
-
+	
+	<developers>
+		<developer>
+			<email>mlangc@gmx.at</email>
+			<name>Matthias Langer</name>
+		</developer>
+	</developers>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -173,4 +188,5 @@
 
 	</build>
 
+	<description>Parent POM for all IP SQUARE Commons projects.</description>
 </project>

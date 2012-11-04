@@ -9,7 +9,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-servlet</artifactId>
-	<name>ipsquare-commons-servlet</name>
+	<name>IP SQUARE Commons Servlet</name>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<build>
@@ -76,4 +76,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<description>APIs related to Java servlets and filters.</description>
 </project>
