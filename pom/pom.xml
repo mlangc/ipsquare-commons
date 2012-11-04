@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.ipsquare</groupId>
 	<artifactId>commons-pom</artifactId>
-    <name>IP SQUARE Commons POM</name>
+	<name>IP SQUARE Commons POM</name>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<url>http://sourceforge.net/p/ipsquarecommons</url>
 
 	<issueManagement>
-        <url>https://sourceforge.net/p/ipsquarecommons/tickets/</url>
+		<url>https://sourceforge.net/p/ipsquarecommons/tickets/</url>
 		<system>SF</system>
 	</issueManagement>
 
@@ -18,21 +18,21 @@
 		<url>git://git.code.sf.net/p/ipsquarecommons/code</url>
 	</scm>
 
-    <inceptionYear>2012</inceptionYear>
+	<inceptionYear>2012</inceptionYear>
 
 
 	<organization>
 		<name>IP SQUARE</name>
 		<url>http://www.ipsquare.at/</url>
 	</organization>
-	
+
 	<developers>
 		<developer>
 			<email>mlangc@gmx.at</email>
 			<name>Matthias Langer</name>
 		</developer>
 	</developers>
-	
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -47,29 +47,29 @@
 	</properties>
 
 	<pluginRepositories>
-        <pluginRepository>
-            <id>mc-release</id>
-            <name>Local Maven repository of releases</name>
-            <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
+		<pluginRepository>
+			<id>mc-release</id>
+			<name>Local Maven repository of releases</name>
+			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
 
-        <pluginRepository>
-            <id>mc-release</id>
-            <name>Local Maven repository of releases</name>
-            <url>http://mc-repo.googlecode.com/svn/maven2/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
+		<pluginRepository>
+			<id>mc-release</id>
+			<name>Local Maven repository of releases</name>
+			<url>http://mc-repo.googlecode.com/svn/maven2/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</pluginRepository>
 
 	</pluginRepositories>
 
@@ -94,7 +94,7 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3.2</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>buildnumber-maven-plugin</artifactId>
@@ -129,64 +129,94 @@
 				</executions>
 			</plugin>
 
-            <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <configuration>
-                    <header>src/etc/header.txt</header>
-                    <includes>
-                        <include>src/main/java/**</include>
-                        <include>src/test/java/**</include>
-                    </includes>
-                    <useDefaultExcludes>true</useDefaultExcludes>
-                    <useDefaultMappings>true</useDefaultMappings>
-                    <properties>
-                        <year>${project.inceptionYear}</year>
-                    </properties>
-                    <skipExistingHeaders>true</skipExistingHeaders>
-                    <strictCheck>true</strictCheck>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>src/etc/header.txt</header>
+					<includes>
+						<include>src/main/java/**</include>
+						<include>src/test/java/**</include>
+					</includes>
+					<useDefaultExcludes>true</useDefaultExcludes>
+					<useDefaultMappings>true</useDefaultMappings>
+					<properties>
+						<year>${project.inceptionYear}</year>
+					</properties>
+					<skipExistingHeaders>true</skipExistingHeaders>
+					<strictCheck>true</strictCheck>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <doCheck>true</doCheck>
-                    <buildNumberPropertyName>gitRevId</buildNumberPropertyName>
-                    <timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss z}</timestampFormat>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>true</doCheck>
+					<buildNumberPropertyName>gitRevId</buildNumberPropertyName>
+					<timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss z}</timestampFormat>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <GitRevId>${gitRevId}</GitRevId>
-                            <Timestamp>${timestamp}</Timestamp>
-                            <Scm>${scm.developerConnection}</Scm>
-                        </manifestEntries>
-                        <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<GitRevId>${gitRevId}</GitRevId>
+							<Timestamp>${timestamp}</Timestamp>
+							<Scm>${scm.developerConnection}</Scm>
+						</manifestEntries>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
 
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<description>Parent POM for all IP SQUARE Commons projects.</description>
 </project>
