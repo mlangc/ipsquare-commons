@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-core</artifactId>
 	<name>IP SQUARE Commons Core</name>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 
 	<build>
 		<plugins>
