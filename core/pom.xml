@@ -48,5 +48,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<description>Core components that might be usefull in almost any Java project.</description>
+	<description>Core components that might be useful in almost any Java project.</description>
 </project>
