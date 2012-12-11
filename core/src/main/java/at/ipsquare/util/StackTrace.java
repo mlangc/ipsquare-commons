@@ -71,7 +71,10 @@ public final class StackTrace
         return i;
     }
     
-    private static Class<?> associatedClass(StackTraceElement elem)
+    /**
+     * Returns the class associated with the given {@link StackTraceElement}.
+     */
+    static Class<?> associatedClass(StackTraceElement elem)
     {
         try
         {
