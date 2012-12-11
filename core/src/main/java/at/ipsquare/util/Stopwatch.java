@@ -25,10 +25,17 @@ import java.util.concurrent.TimeUnit;
  * as other stopwatch implementations do.
  * </p>
  * 
+ * <p>
+ * This class is not thread save.
+ * </p>
+ * 
  * @author Matthias Langer
  */
 public class Stopwatch
 {
+    private final Ticker ticker;
+    private long start;
+    
     /**
      * Constructs a new stopwatch and starts it immediately.
      */
@@ -44,7 +51,11 @@ public class Stopwatch
      */
     public Stopwatch(Ticker ticker)
     {
+        if(ticker == null)
+            throw new NullPointerException("Missing ticker.");
         
+        this.ticker = ticker;
+        this.start = ticker.nanos();
     }
     
     /**
@@ -52,7 +63,7 @@ public class Stopwatch
      */
     public long elapsed()
     {
-        return 0;
+        return elapsed(TimeUnit.MILLISECONDS);
     }
     
     /**
@@ -60,7 +71,8 @@ public class Stopwatch
      */
     public long elapsed(TimeUnit timeUnit)
     {
-        return 0;
+        long nanos = (ticker.nanos() - start);
+        return timeUnit.convert(nanos, TimeUnit.NANOSECONDS);
     }
     
     /**
@@ -68,7 +80,7 @@ public class Stopwatch
      */
     public long elapsedAndRestart()
     {
-        return 0;
+        return elapsedAndRestart(TimeUnit.MILLISECONDS);
     }
     
     /**
@@ -76,7 +88,9 @@ public class Stopwatch
      */
     public long elapsedAndRestart(TimeUnit timeUnit)
     {
-        return 0;
+        long ret = elapsed(timeUnit);
+        restart();
+        return ret;
     }
     
     /**
@@ -84,7 +98,7 @@ public class Stopwatch
      */
     public void restart()
     {
-        
+        start = ticker.nanos();
     }
     
     /**
@@ -93,6 +107,6 @@ public class Stopwatch
     @Override
     public String toString()
     {
-        return "";
+        return elapsed() + "ms";
     }
 }
