@@ -37,8 +37,9 @@ public class TestStopwatch
         assertThat(sw.elapsed(TimeUnit.SECONDS), equalTo(0L));
         
         ticker.nanos += 1000L;
+        assertThat(sw.elapsed(TimeUnit.NANOSECONDS), equalTo(1000L));
         assertThat(sw.elapsed(TimeUnit.MICROSECONDS), equalTo(1L));
-        assertThat(sw.elapsedAndRestart(TimeUnit.NANOSECONDS), equalTo(1000L));
+        assertThat(sw.elapsedAndRestart(), equalTo(0L));
         
         ticker.nanos += 1000L * 1000L * 1000L;
         assertThat(sw.elapsed(), equalTo(1000L));
