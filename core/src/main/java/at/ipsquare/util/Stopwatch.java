@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  * 
  * @author Matthias Langer
  */
-public class Stopwatch
+public final class Stopwatch
 {
     private final Ticker ticker;
     private long start;
@@ -49,7 +49,7 @@ public class Stopwatch
      * 
      * @see #Stopwatch()
      */
-    public Stopwatch(Ticker ticker)
+    Stopwatch(Ticker ticker)
     {
         if(ticker == null)
             throw new NullPointerException("Missing ticker.");

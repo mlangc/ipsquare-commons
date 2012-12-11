@@ -20,7 +20,7 @@ package at.ipsquare.util;
  * 
  * @author Matthias Langer
  */
-public interface Ticker
+interface Ticker
 {
     /**
      * The current value of the ticker.

@@ -28,7 +28,7 @@ public final class StackTrace
      * Returns the current stack trace, starting with the invocation of this method (unlike {@link Thread#getStackTrace()}).
      * 
      * <h4>Note:</h4>
-     *  In theory this method might return an empty array if the VM has no stack trace information
+     *  This method might return an empty array if the VM has no stack trace information
      *  concerning the current thread. With a decent VM however, this should never happen.
      */
     public static StackTraceElement[] get()

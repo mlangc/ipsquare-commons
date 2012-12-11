@@ -20,7 +20,7 @@ package at.ipsquare.util;
  * 
  * @author Matthias Langer
  */
-public enum SystemTicker implements Ticker
+enum SystemTicker implements Ticker
 {
     INSTANCE;
     
