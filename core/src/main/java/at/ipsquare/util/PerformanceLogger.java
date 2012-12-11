@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * //...}
  * </pre>
  * 
- * For logging, the {@link Logger#debug(String)} is used; you can therefore disable
+ * For logging, the {@link org.slf4j.Logger#debug(String)} is used; you can therefore disable
  * performance logging by simply setting the log level for this class accordingly.
  * </p>
  * 
