@@ -17,6 +17,8 @@ package at.ipsquare.util;
 
 import java.util.concurrent.TimeUnit;
 
+import net.jcip.annotations.NotThreadSafe;
+
 /**
  * A simple stopwatch.
  * <p>
@@ -25,12 +27,9 @@ import java.util.concurrent.TimeUnit;
  * as other stopwatch implementations do.
  * </p>
  * 
- * <p>
- * This class is not thread save.
- * </p>
- * 
  * @author Matthias Langer
  */
+@NotThreadSafe
 public final class Stopwatch
 {
     private final Ticker ticker;

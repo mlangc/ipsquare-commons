@@ -39,7 +39,27 @@ public class TestStackTrace
         assertThat(stackTrace.length, not(0));
         
         StackTraceElement first = stackTrace[0];
-        assertEquals(TestStackTrace.class, Class.forName(first.getClassName()));
+        assertEquals(getClass(), Class.forName(first.getClassName()));
         assertThat(first.getMethodName(), equalTo("testGet"));
+    }
+    
+    /**
+     * Tests {@link StackTrace#firstElementBelowClass()}.
+     */
+    @Test
+    public void testFirstElementBelowClass() throws ClassNotFoundException
+    {
+        class TestClass
+        {
+            StackTraceElement elem;
+            
+            TestClass()
+            {
+                elem = StackTrace.firstElementBelowClass();
+            }
+        }
+        
+        StackTraceElement elem = new TestClass().elem;
+        assertEquals(getClass(), Class.forName(elem.getClassName()));
     }
 }

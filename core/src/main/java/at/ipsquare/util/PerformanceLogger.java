@@ -1,5 +1,9 @@
 package at.ipsquare.util;
 
+import net.jcip.annotations.NotThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A simple performance logger.
@@ -20,14 +24,20 @@ package at.ipsquare.util;
  * 
  * @author Matthias Langer
  */
+@NotThreadSafe
 public class PerformanceLogger
 {
+    private static final Logger log = LoggerFactory.getLogger(PerformanceLogger.class);
+    
+    private final Stopwatch stopwatch;
+    private final long threshold;
+    
     /**
      * Constructs a new {@link PerformanceLogger} with no threshold.
      */
     public PerformanceLogger()
     {
-        
+        this(0);
     }
     
     /**
@@ -37,7 +47,8 @@ public class PerformanceLogger
      */
     public PerformanceLogger(long threshold)
     {
-        
+        this.threshold = threshold;
+        this.stopwatch = new Stopwatch();
     }
     
     /**
@@ -45,7 +56,7 @@ public class PerformanceLogger
      */
     public void logElapsed()
     {
-        
+        log.debug(" asdf§");
     }
     
     /**

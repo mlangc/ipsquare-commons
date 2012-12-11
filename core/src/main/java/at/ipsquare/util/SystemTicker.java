@@ -15,11 +15,14 @@
  */
 package at.ipsquare.util;
 
+import net.jcip.annotations.ThreadSafe;
+
 /**
  * A {@link Ticker} that is implemented using {@link System#nanoTime()}.
  * 
  * @author Matthias Langer
  */
+@ThreadSafe
 enum SystemTicker implements Ticker
 {
     INSTANCE;

@@ -34,29 +34,55 @@ public final class StackTrace
     public static StackTraceElement[] get()
     {
         StackTraceElement[] elems =  Thread.currentThread().getStackTrace();
-        
+        int first = firstElemBelowThisClass(elems);
+        return Arrays.copyOfRange(elems, first, elems.length);
+    }
+    
+    /**
+     * Returns the first element in the stack that does not originate from the class of the caller.
+     */
+    public static StackTraceElement firstElementBelowClass()
+    {
+        StackTraceElement[] elems = Thread.currentThread().getStackTrace();
+        int first = firstElemBelowThisClass(elems);
+        Class<?> callerClass = associatedClass(elems[first]);
+        for(int i = first + 1; i < elems.length; ++i)
+        {
+            StackTraceElement current = elems[i];
+            if(!callerClass.equals(associatedClass(current)))
+                return current;
+        }
+        return null;
+    }
+    
+    private static int firstElemBelowThisClass(StackTraceElement[] elems)
+    {
         boolean seenThisClass = false;
         int i = 0;
         for(; i < elems.length; ++i)
         {
             StackTraceElement elem = elems[i];
-            try
-            {
-                Class<?> clazz = Class.forName(elem.getClassName());
-                if(StackTrace.class.equals(clazz))
-                    seenThisClass = true;
-                else if(seenThisClass)
-                    break;
-            }
-            catch(ClassNotFoundException e)
-            {
-                throw new RuntimeException("Could not find class from stack trace; trouble awaits!", e);
-            }
+            Class<?> clazz = associatedClass(elem);
+            if(StackTrace.class.equals(clazz))
+                seenThisClass = true;
+            else if(seenThisClass)
+                break;
         }
-        
-        return Arrays.copyOfRange(elems, i, elems.length);
+        return i;
     }
     
+    private static Class<?> associatedClass(StackTraceElement elem)
+    {
+        try
+        {
+            return Class.forName(elem.getClassName());
+        }
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Could not find class from StackTraceElement; trouble awaits.", e);
+        }
+    }
+
     private StackTrace()
     {
         
