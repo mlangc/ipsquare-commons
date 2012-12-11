@@ -13,8 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package at.ipsquare.util;
 
 /**
- * Various utility classes.
+ * A ticker, that returns the number of nanoseconds relative to an arbitrary, but fixed point in time.
+ * 
+ * @author Matthias Langer
  */
-package at.ipsquare.util;
+public interface Ticker
+{
+    /**
+     * The current value of the ticker.
+     */
+    long nanos();
+}

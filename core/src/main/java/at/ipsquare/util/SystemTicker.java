@@ -13,8 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package at.ipsquare.util;
 
 /**
- * Various utility classes.
+ * A {@link Ticker} that is implemented using {@link System#nanoTime()}.
+ * 
+ * @author Matthias Langer
  */
-package at.ipsquare.util;
+public enum SystemTicker implements Ticker
+{
+    INSTANCE;
+    
+    public long nanos()
+    {
+        return System.nanoTime();
+    }
+}
