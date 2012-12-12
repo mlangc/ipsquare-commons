@@ -1,13 +1,17 @@
 package at.ipsquare.util;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.core.OutputStreamAppender;
 
 /**
@@ -41,11 +45,33 @@ public class TestPerformanceLogger
         }
     }
     
-    private static class SomeClass
+    private static class InnerClass
     {
-        SomeClass(PerformanceLogger plog)
+        static class InnerInnerClass
+        {
+            void doStuff() throws InterruptedException
+            {
+                PerformanceLogger plog = new PerformanceLogger();
+                Thread.sleep(5);
+                plog.logElapsed("done, bastards");
+            }
+        }
+        
+        
+        InnerClass(final PerformanceLogger plog) throws InterruptedException
         {
             plog.restart();
+            
+            class InCtorClass
+            {
+                InCtorClass()
+                {
+                    plog.logElapsedAndRestart();
+                }
+            }
+            
+            new InCtorClass();
+            new InnerInnerClass().doStuff();
         }
     }
     
@@ -62,11 +88,11 @@ public class TestPerformanceLogger
         assertThat(logString(), containsString(TestPerformanceLogger.class.getSimpleName()));
         assertThat(logString(), containsString("test"));
         
-        new SomeClass(plog);
+        new InnerClass(plog);
         plog.logElapsed("asdf");
         
         assertThat(logString(), containsString("asdf"));
-        assertThat(logString(), containsString(SomeClass.class.getSimpleName()));
+        assertThat(logString(), containsString(InnerClass.class.getSimpleName()));
         
         new Object() 
         {
@@ -93,5 +119,17 @@ public class TestPerformanceLogger
         }.run();
         
         assertThat(logString(), containsString("running"));
+        
+        PerformanceLogger plog2 = new PerformanceLogger(1000);
+        plog2.logElapsed("should-never-be-logged");
+        assertThat(logString(), not(containsString("should-never-be-logged")));
+        Thread.sleep(1500);
+        plog2.logElapsed("should-be-logged");
+        assertThat(logString(), containsString("should-be-logged"));
+        
+        Logger logbackLogger = (Logger) LoggerFactory.getLogger(PerformanceLogger.class);
+        logbackLogger.setLevel(Level.ERROR);
+        plog.logElapsedAndRestart("do-not-log-me");
+        assertThat(logString(), not(containsString("do-not-log-me")));
     }
 }
