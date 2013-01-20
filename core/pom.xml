@@ -72,6 +72,11 @@
 			<artifactId>jcip-annotations</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>14.0-rc1</version>
+		</dependency>
 	</dependencies>
 	<description>Core components that might be useful in almost any Java project.</description>
 </project>

@@ -2,11 +2,14 @@ package at.ipsquare.util;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.TimeUnit;
 
 import net.jcip.annotations.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Stopwatch;
 
 /**
  * A simple performance logger.
@@ -56,7 +59,7 @@ public class PerformanceLogger
     {
         this.from = StackTrace.firstElementBelowClass();
         this.threshold = threshold;
-        this.stopwatch =new Stopwatch();
+        this.stopwatch = new Stopwatch().start();
     }
     
     /**
@@ -85,7 +88,7 @@ public class PerformanceLogger
         if(!log.isDebugEnabled())
             return;
         
-        long elapsed = stopwatch.elapsed();
+        long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
         if(elapsed >= threshold)
         {
             StackTraceElement to = StackTrace.firstElementBelowClass();
@@ -232,6 +235,6 @@ public class PerformanceLogger
             return;
         
         from = StackTrace.firstElementBelowClass();
-        stopwatch.restart();
+        stopwatch.reset().start();
     }
 }
