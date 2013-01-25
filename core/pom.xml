@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>at.ipsquare</groupId>
 		<artifactId>commons-pom</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -22,44 +22,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.6</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>index</report>
-							<report>javadoc</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>javadoc</report>
-						</reports>
-					</reportSet>
-					<reportSet>
-						<id>aggregate</id>
-						<inherited>false</inherited>
-						<reports>
-							<report>aggregate</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting>
 
 	<dependencies>
 		<dependency>
