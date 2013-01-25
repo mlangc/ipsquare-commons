@@ -9,7 +9,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-hibernate</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 
 	<build>
 		<plugins>
@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>at.ipsquare</groupId>
 			<artifactId>ipsquare-commons-core</artifactId>
-			<version>1.0.1</version>
+			<version>[1.0.1,2.0.0)</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -48,13 +48,13 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.5.2</version>
+			<version>6.8</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.9</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -65,12 +65,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.1.4.Final</version>
+			<version>4.1.9.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.4</version>
+			<version>1.7.2</version>
 		</dependency>
 	</dependencies>
 	<name>IP SQUARE Commons Hibernate</name>
