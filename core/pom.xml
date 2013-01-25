@@ -33,6 +33,7 @@
 					<reportSet>
 						<reports>
 							<report>index</report>
+							<report>javadoc</report>
 						</reports>
 					</reportSet>
 				</reportSets>
