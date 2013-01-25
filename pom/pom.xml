@@ -22,7 +22,7 @@
 
 	<scm>
 		<developerConnection>scm:git:git://git.code.sf.net/p/ipsquarecommons/code</developerConnection>
-		<connection>git://git.code.sf.net/p/ipsquarecommons/code</connection>
+		<connection>scm:git:git://git.code.sf.net/p/ipsquarecommons/code</connection>
 		<url>http://sourceforge.net/p/ipsquarecommons/code/ci/5218bf9d730e7fa77c8241527c5e327009c43211/tree/</url>
 	</scm>
 
