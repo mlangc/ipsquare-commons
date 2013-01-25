@@ -79,7 +79,7 @@
 					<artifactId>buildnumber-maven-plugin</artifactId>
 					<version>1.0</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>com.mycila.maven-license-plugin</groupId>
 					<artifactId>maven-license-plugin</artifactId>
@@ -197,32 +197,45 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
 	<reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.6</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>index</report>
-              <report>javadoc</report>
-              <report>dependencies</report>
-              <report>scm</report>
-              <report>issue-tracking</report>
-              <report>project-team</report>
-              <report>license</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-        <configuration>
-        	<webAccessUrl>http://sourceforge.net/p/ipsquarecommons/code</webAccessUrl>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.6</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>index</report>
+							<report>dependencies</report>
+							<report>scm</report>
+							<report>issue-tracking</report>
+							<report>project-team</report>
+							<report>license</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<webAccessUrl>http://sourceforge.net/p/ipsquarecommons/code</webAccessUrl>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+		</plugins>
+	</reporting>
 
 	<description>Parent POM for all IP SQUARE Commons projects.</description>
 </project>
