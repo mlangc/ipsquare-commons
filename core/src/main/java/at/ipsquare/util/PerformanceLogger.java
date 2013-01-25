@@ -27,7 +27,7 @@ import com.google.common.base.Stopwatch;
  * //...}
  * </pre>
  * 
- * For logging SLF4J with log level debug is used; you can therefore disable
+ * For logging SLF4J with log level DEBUG is used; you can therefore disable
  * performance logging by simply setting the log level for this class accordingly.
  * </p>
  * 
