@@ -23,7 +23,7 @@
 	<scm>
 		<developerConnection>scm:git:git://git.code.sf.net/p/ipsquarecommons/code</developerConnection>
 		<connection>scm:git:git://git.code.sf.net/p/ipsquarecommons/code</connection>
-		<url>http://sourceforge.net/p/ipsquarecommons/code/</url>
+		<url>http://sourceforge.net/p/ipsquarecommons/code</url>
 	</scm>
 
 	<inceptionYear>2012</inceptionYear>
