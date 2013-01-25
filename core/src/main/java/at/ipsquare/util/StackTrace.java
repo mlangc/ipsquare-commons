@@ -20,6 +20,7 @@ import java.util.Arrays;
 /**
  * Utility methods for dealing with stack traces.
  * 
+ * @since 1.1.0
  * @author Matthias Langer
  */
 public final class StackTrace

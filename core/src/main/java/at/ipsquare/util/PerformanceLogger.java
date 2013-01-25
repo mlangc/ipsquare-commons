@@ -31,6 +31,7 @@ import com.google.common.base.Stopwatch;
  * performance logging by simply setting the log level for this class accordingly.
  * </p>
  * 
+ * @since 1.1.0
  * @author Matthias Langer
  */
 @NotThreadSafe
