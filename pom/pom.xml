@@ -22,7 +22,8 @@
 
 	<scm>
 		<developerConnection>scm:git:git://git.code.sf.net/p/ipsquarecommons/code</developerConnection>
-		<url>git://git.code.sf.net/p/ipsquarecommons/code</url>
+		<connection>git://git.code.sf.net/p/ipsquarecommons/code</connection>
+		<url>http://sourceforge.net/p/ipsquarecommons/code/ci/5218bf9d730e7fa77c8241527c5e327009c43211/tree/</url>
 	</scm>
 
 	<inceptionYear>2012</inceptionYear>
@@ -153,7 +154,7 @@
 						<manifestEntries>
 							<GitRevId>${gitRevId}</GitRevId>
 							<Timestamp>${timestamp}</Timestamp>
-							<Scm>${scm.developerConnection}</Scm>
+							<Scm>${project.scm.developerConnection}</Scm>
 						</manifestEntries>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
