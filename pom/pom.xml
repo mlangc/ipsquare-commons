@@ -215,6 +215,9 @@
             </reports>
           </reportSet>
         </reportSets>
+        <configuration>
+        	<webAccessUrl>http://sourceforge.net/p/ipsquarecommons/code</webAccessUrl>
+        </configuration>
       </plugin>
     </plugins>
   </reporting>
