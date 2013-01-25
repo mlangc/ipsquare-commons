@@ -207,6 +207,8 @@
         <reportSets>
           <reportSet>
             <reports>
+              <report>index</report>
+              <report>javadoc</report>
               <report>dependencies</report>
               <report>scm</report>
               <report>issue-tracking</report>
