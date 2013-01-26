@@ -18,6 +18,8 @@ package at.ipsquare.hibernate;
 import java.sql.Driver;
 import java.util.Map;
 
+import net.jcip.annotations.ThreadSafe;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -39,6 +41,7 @@ import com.google.inject.Singleton;
  * @author Matthias Langer
  */
 @Singleton
+@ThreadSafe
 public class DefaultHibernateRepository implements HibernateRepository
 {
     private static final Logger log = LoggerFactory.getLogger(DefaultHibernateRepository.class);

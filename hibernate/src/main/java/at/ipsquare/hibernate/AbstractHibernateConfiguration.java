@@ -18,6 +18,8 @@ package at.ipsquare.hibernate;
 import java.util.Collections;
 import java.util.Map;
 
+import org.hibernate.dialect.Dialect;
+
 /**
  * An abstract {@link HibernateConfiguration} implementation, that requires clients only to supply values where no reasonable default can be found.
  * 
@@ -29,6 +31,12 @@ public abstract class AbstractHibernateConfiguration implements HibernateConfigu
     public HibernateHbm2dllAuto getHbm2dllAuto()
     {
         return HibernateHbm2dllAuto.VALIDATE;
+    }
+    
+    @Override
+    public Class<? extends Dialect> getDbDialectClass()
+    {
+        return null;
     }
     
     public Map<String, String> getProperties()

@@ -19,6 +19,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import at.ipsquare.interfaces.ExecutionError;
+import at.ipsquare.interfaces.UnitOfWork;
+import at.ipsquare.interfaces.UnitOfWorkExecutor;
 
 /**
  * Wraps our Hibernate repository.
@@ -31,7 +33,7 @@ import at.ipsquare.interfaces.ExecutionError;
  * @author Matthias Langer
  * @since 1.0.0
  */
-public interface HibernateRepository
+public interface HibernateRepository extends UnitOfWorkExecutor
 {
     /**
      * Executes the given {@link UnitOfWork} within a single transaction.
@@ -50,7 +52,6 @@ public interface HibernateRepository
      * @return the result of the {@link UnitOfWork}.
      * 
      * @throws ExecutionError if {@link UnitOfWork#execute()} throws an exception.
-     * @since 1.0.0
      */
     <T> T executeUnitOfWork(UnitOfWork<T> work);
     
@@ -58,7 +59,6 @@ public interface HibernateRepository
      * Returns the currently open session for this thread.
      * 
      * @throws IllegalStateException if no {@link UnitOfWork} is currently executing in this thread.
-     * @since 1.0.0
      */
     Session currentSession();
 }

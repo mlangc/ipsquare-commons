@@ -18,6 +18,8 @@ package at.ipsquare.hibernate;
 import java.sql.Driver;
 import java.util.Map;
 
+import org.hibernate.dialect.Dialect;
+
 /**
  * The database configuration.
  * 
@@ -67,6 +69,13 @@ public interface HibernateConfiguration
      *  @since 1.0.0
      */
     Class<? extends Driver> getDbDriverClass();
+    
+    /**
+     * The hibernate dialect to use.
+     * 
+     * @since 2.0.0
+     */
+    Class<? extends Dialect> getDbDialectClass();
     
     /**
      * The value of {@literal hibernate.hbm2ddl.auto}.
