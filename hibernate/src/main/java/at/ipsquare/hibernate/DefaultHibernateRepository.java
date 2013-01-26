@@ -22,6 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class DefaultHibernateRepository implements HibernateRepository
     @Inject
     public DefaultHibernateRepository(HibernateConfiguration hibernateCfg)
     {
-        sessionFactory = sessionFactory(hibernateCfg);
+        sessionFactory = buildSessionFactory(hibernateCfg);
     }
     
     public <T> T executeUnitOfWork(UnitOfWork<T> work)
@@ -146,12 +147,15 @@ public class DefaultHibernateRepository implements HibernateRepository
         return sessionFactory.openSession();
     }
     
-    private static SessionFactory sessionFactory(HibernateConfiguration hibernateCfg)
+    private static SessionFactory buildSessionFactory(HibernateConfiguration hibernateCfg)
     {
-        return hibernateConfiguration(hibernateCfg).buildSessionFactory();
+        Configuration nativeCfg = toNativeHibernateConfiguration(hibernateCfg);
+        ServiceRegistryBuilder builder = new ServiceRegistryBuilder();
+        builder.applySettings(nativeCfg.getProperties());
+        return nativeCfg.buildSessionFactory(builder.buildServiceRegistry());
     }
     
-    private static Configuration hibernateConfiguration(HibernateConfiguration hibernateCfg)
+    private static Configuration toNativeHibernateConfiguration(HibernateConfiguration hibernateCfg)
     {
         Configuration cfg = new Configuration();
         for(Class<?> domainClass : hibernateCfg.getDomainClasses())
