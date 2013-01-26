@@ -173,16 +173,16 @@ public class PerformanceLogger
             sb.append("]");
         }
         
+        sb.append(" ")
+        .append(elapsed)
+        .append("ms");
+        
         if(msg != null)
         {
             sb.append(" <<")
               .append(msg)
               .append(">>");
         }
-        
-        sb.append(" ")
-          .append(elapsed)
-          .append("ms");
         
         return sb.toString();
     }

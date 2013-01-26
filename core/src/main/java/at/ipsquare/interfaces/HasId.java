@@ -15,6 +15,7 @@
  */
 package at.ipsquare.interfaces;
 
+
 /**
  * Interface for types (usually entities) that have some kind of ID.
  * 

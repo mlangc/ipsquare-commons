@@ -1,5 +1,6 @@
 package at.ipsquare.interfaces;
 
+
 /**
  * Interface for generating strings from various objects.
  * 
