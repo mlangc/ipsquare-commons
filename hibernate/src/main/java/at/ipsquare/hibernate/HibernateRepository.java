@@ -18,6 +18,8 @@ package at.ipsquare.hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import at.ipsquare.interfaces.ExecutionError;
+
 /**
  * Wraps our Hibernate repository.
  * 

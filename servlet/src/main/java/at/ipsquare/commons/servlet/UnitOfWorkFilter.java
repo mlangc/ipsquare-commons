@@ -29,9 +29,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import at.ipsquare.hibernate.AbstractUnitOfWork;
 import at.ipsquare.hibernate.HibernateRepository;
-import at.ipsquare.hibernate.UnitOfWork;
+import at.ipsquare.interfaces.AbstractUnitOfWork;
+import at.ipsquare.interfaces.UnitOfWork;
 
 import com.google.inject.Provider;
 

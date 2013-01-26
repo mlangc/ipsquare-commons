@@ -15,6 +15,6 @@
  */
 
 /**
- * This package contains interfaces that are useful in most projects.
+ * This package contains interfaces and abstract classes as well as directly related types, that are useful in most projects.
  */
 package at.ipsquare.interfaces;

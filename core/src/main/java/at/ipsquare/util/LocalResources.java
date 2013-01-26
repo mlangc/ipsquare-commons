@@ -35,6 +35,7 @@ import org.apache.commons.collections.EnumerationUtils;
  * For loading local resources from the classpath.
  *  
  * @author Matthias Langer
+ * @since 1.0.0
  */
 public final class LocalResources
 {

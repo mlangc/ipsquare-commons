@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.hibernate;
+package at.ipsquare.interfaces;
+
 
 
 /**
@@ -27,8 +28,8 @@ package at.ipsquare.hibernate;
  * </ul>
  * 
  * @see AbstractUnitOfWork
+ * @since 1.1.0
  * @author Matthias Langer
- * @since 1.0.0
  */
 public interface UnitOfWork<T>
 {

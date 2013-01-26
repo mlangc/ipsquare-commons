@@ -19,6 +19,7 @@ package at.ipsquare.interfaces;
 /**
  * Interface for types (usually entities) that have some kind of ID.
  * 
+ * @since 1.0.0
  * @author Matthias Langer
  */
 public interface HasId<T>

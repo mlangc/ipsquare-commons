@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.hibernate;
+package at.ipsquare.interfaces;
 
 import org.apache.commons.lang3.StringUtils;
+
 
 /**
  * Abstract base class for {@link UnitOfWork} implementations.
  * 
- * @since 1.0.0
+ * @since 1.1.0
  * @author Matthias Langer
  */
 public abstract class AbstractUnitOfWork<T> implements UnitOfWork<T>

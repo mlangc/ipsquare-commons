@@ -26,6 +26,9 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import at.ipsquare.interfaces.ExecutionError;
+import at.ipsquare.interfaces.UnitOfWork;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.hibernate;
+package at.ipsquare.interfaces;
+
 
 /**
- * Thrown by {@link HibernateRepository} if the executed {@link UnitOfWork} throws an {@link Exception}.
+ * Thrown by {@link UnitOfWorkExecutor}s if executing {@link UnitOfWork#execute()} fails.
  * 
- * @since 1.0.0
+ * @since 1.1.0
  * @author Matthias Langer
  */
 public class ExecutionError extends RuntimeException
