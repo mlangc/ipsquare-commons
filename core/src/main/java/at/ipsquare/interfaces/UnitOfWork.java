@@ -35,17 +35,11 @@ public interface UnitOfWork<T>
 {
     /**
      * Performs some operations and returns the results.
-     * 
-     * @see HibernateRepository#executeUnitOfWork(UnitOfWork)
-     * @since 1.0.0
      */
     T execute() throws Exception;
     
     /**
-     * A name that is used for logging.
-     * 
-     * @return an optional name that is used for logging purposes.
-     * @since 1.0.0
+     * A name (most likely for logging purposes).
      */
     String getName();
 }
