@@ -201,4 +201,59 @@ public class TestDefaultHibernateRepository
                          .add(Restrictions.eq("name", threadLocalName(name)));
         return (UnitTestEntityParent) c.uniqueResult();
     }
+    
+    private static class SomeRepo1 extends DefaultHibernateRepository
+    {
+        public SomeRepo1(HibernateConfiguration hibernateCfg)
+        {
+            super(hibernateCfg);
+        }
+    }
+    
+    private static class SomeRepo2 extends DefaultHibernateRepository
+    {
+        public SomeRepo2(HibernateConfiguration hibernateCfg)
+        {
+            super(hibernateCfg);
+        }
+    }
+    
+    /**
+     * Assert that we fail fast if an unfortunate user attempts to create multiple repository instances of the same type.
+     */
+    @Test
+    public void verifyThatMultipleInstancesOfTheSameRepoClassLeadToAnException()
+    {
+        HibernateConfiguration cfg = new UnitTestHibernateConfiguration();
+        @SuppressWarnings("resource")
+        SomeRepo1 repo1 = new SomeRepo1(cfg);
+        @SuppressWarnings("resource")
+        SomeRepo2 repo2 = new SomeRepo2(cfg);
+        
+        try
+        {
+            new SomeRepo1(cfg);
+            fail();
+        }
+        catch(IllegalStateException e)
+        {
+            // OK!
+        }
+        
+        try
+        {
+            new SomeRepo2(cfg);
+            fail();
+        }
+        catch(IllegalStateException e)
+        {
+            // OK!
+        }
+        
+        repo1.close();
+        repo2.close();
+        
+        repo1 = new SomeRepo1(cfg);
+        repo2 = new SomeRepo2(cfg);
+    }
 }

@@ -28,11 +28,6 @@ import org.hibernate.dialect.Dialect;
  */
 public abstract class AbstractHibernateConfiguration implements HibernateConfiguration
 {
-    public HibernateHbm2dllAuto getHbm2dllAuto()
-    {
-        return HibernateHbm2dllAuto.VALIDATE;
-    }
-    
     @Override
     public Class<? extends Dialect> getDbDialectClass()
     {

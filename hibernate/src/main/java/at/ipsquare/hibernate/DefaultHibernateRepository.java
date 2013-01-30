@@ -15,6 +15,7 @@
  */
 package at.ipsquare.hibernate;
 
+import java.lang.ref.WeakReference;
 import java.sql.Driver;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import at.ipsquare.interfaces.ExecutionError;
 import at.ipsquare.interfaces.UnitOfWork;
 
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -45,13 +47,38 @@ import com.google.inject.Singleton;
 public class DefaultHibernateRepository implements HibernateRepository
 {
     private static final Logger log = LoggerFactory.getLogger(DefaultHibernateRepository.class);
+    
+    private static final 
+        Map<Class<? extends DefaultHibernateRepository>, WeakReference<? extends DefaultHibernateRepository>> 
+            instanceMap = Maps.newHashMapWithExpectedSize(2);
+             
     private final SessionFactory sessionFactory;
     private final ThreadLocal<Session> currentSession = new ThreadLocal<Session>();
     private final ThreadLocal<UnitOfWork<?>> currentUnitOfWork = new ThreadLocal<UnitOfWork<?>>();
     
+    
     @Inject
     public DefaultHibernateRepository(HibernateConfiguration hibernateCfg)
     {
+        synchronized(instanceMap)
+        {
+            WeakReference<? extends DefaultHibernateRepository> ref = instanceMap.get(getClass());
+            if(ref != null)
+            {
+                DefaultHibernateRepository other = ref.get();
+                if(other != null && !other.isClosed())
+                {
+                    throw new IllegalStateException("Attempting to create an instance of " + getClass().getSimpleName() + " while " +
+                    		"another instance that has not yet been closed is still weakly reachable. " +
+                    		"You are not meant to have more than one open repository for the same underlying DB resource. " +
+                    		"Plese read the documentation and fix your code.");
+                            
+                }
+            }
+
+            instanceMap.put(getClass(), new WeakReference<DefaultHibernateRepository>(this));
+        }
+
         sessionFactory = buildSessionFactory(hibernateCfg);
     }
     
@@ -120,6 +147,18 @@ public class DefaultHibernateRepository implements HibernateRepository
                 currentUnitOfWork.set(null);
             }
         }
+    }
+    
+    @Override
+    public void close()
+    {
+        sessionFactory.close();
+    }
+    
+    @Override
+    public boolean isClosed()
+    {
+        return sessionFactory.isClosed();
     }
     
     private static String exceptionLogMessage(UnitOfWork<?> work)

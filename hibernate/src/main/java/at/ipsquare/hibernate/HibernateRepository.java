@@ -15,6 +15,8 @@
  */
 package at.ipsquare.hibernate;
 
+import java.io.Closeable;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -33,7 +35,7 @@ import at.ipsquare.interfaces.UnitOfWorkExecutor;
  * @author Matthias Langer
  * @since 1.0.0
  */
-public interface HibernateRepository extends UnitOfWorkExecutor
+public interface HibernateRepository extends UnitOfWorkExecutor, Closeable
 {
     /**
      * Executes the given {@link UnitOfWork} within a single transaction.
@@ -61,4 +63,19 @@ public interface HibernateRepository extends UnitOfWorkExecutor
      * @throws IllegalStateException if no {@link UnitOfWork} is currently executing in this thread.
      */
     Session currentSession();
+    
+    /**
+     * Closes the repository (all acquired resources are released).
+     * 
+     * @since 2.0.0
+     */
+    @Override
+    void close();
+    
+    /**
+     * Returns true if the repository is closed.
+     * 
+     * @since 2.0.0
+     */
+    boolean isClosed();
 }
