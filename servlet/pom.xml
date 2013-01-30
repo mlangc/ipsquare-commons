@@ -4,13 +4,14 @@
 	<parent>
 		<groupId>at.ipsquare</groupId>
 		<artifactId>commons-pom</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-servlet</artifactId>
 	<name>IP SQUARE Commons Servlet</name>
 	<version>2.0.0-SNAPSHOT</version>
+	<description>APIs related to Java servlets and filters.</description>
 
 	<build>
 		<plugins>
@@ -71,5 +72,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<description>APIs related to Java servlets and filters.</description>
 </project>
