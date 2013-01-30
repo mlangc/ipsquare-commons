@@ -32,7 +32,7 @@ public final class InitParameterNames
      */
     public static final String EXCLUDE_PATH_PATTERN = "excludePathPattern";
     
-    public InitParameterNames()
+    private InitParameterNames()
     {
         
     }

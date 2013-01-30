@@ -44,7 +44,7 @@ import com.google.inject.Provider;
  * 
  * @author Matthias Langer
  */
-public class UnitOfWorkFilter implements Filter
+public final class UnitOfWorkFilter implements Filter
 {
     private volatile Map<String, HibernateRepository> repoMap;
     private volatile RequestMatcher requestMatcher;

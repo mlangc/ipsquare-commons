@@ -89,6 +89,17 @@ public class TestUnitOfWorkFilter
                 (ok ? unitsProcessedOk : unitsProcessedError).incrementAndGet();
             }
         }
+        
+        @Override
+        public void close()
+        {
+            
+        }
+        
+        public boolean isClosed() 
+        {
+            return false;
+        }
     }
     
     public static class TestRepositoryProvider1 implements Provider<TestRepository1>
