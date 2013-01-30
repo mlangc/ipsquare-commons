@@ -44,7 +44,7 @@ import com.google.inject.Provider;
  * 
  * @author Matthias Langer
  */
-public final class UnitOfWorkFilter implements Filter
+public final class HibernateUnitOfWorkFilter implements Filter
 {
     private volatile Map<String, HibernateRepository> repoMap;
     private volatile RequestMatcher requestMatcher;
@@ -190,7 +190,7 @@ public final class UnitOfWorkFilter implements Filter
     private static ClassLoader[] classLoaders()
     {
         ClassLoader contextLoader =  Thread.currentThread().getContextClassLoader();
-        ClassLoader myLoader =  UnitOfWorkFilter.class.getClassLoader();
+        ClassLoader myLoader =  HibernateUnitOfWorkFilter.class.getClassLoader();
         
         if(contextLoader != null && contextLoader != myLoader)
             return new ClassLoader[] { contextLoader, myLoader };

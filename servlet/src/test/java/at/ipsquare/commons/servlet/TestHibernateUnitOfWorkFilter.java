@@ -43,11 +43,11 @@ import com.google.inject.Provider;
 
 
 /**
- * Tests for {@link UnitOfWorkFilter}.
+ * Tests for {@link HibernateUnitOfWorkFilter}.
  * 
  * @author Matthias Langer
  */
-public class TestUnitOfWorkFilter
+public class TestHibernateUnitOfWorkFilter
 {
     public interface TestRepository1 extends HibernateRepository
     {
@@ -161,14 +161,14 @@ public class TestUnitOfWorkFilter
     }
     
     /**
-     * Tests {@link UnitOfWorkFilter#doFilter(ServletRequest, ServletResponse, FilterChain)}.
+     * Tests {@link HibernateUnitOfWorkFilter#doFilter(ServletRequest, ServletResponse, FilterChain)}.
      */
     @Test
     public void testDoFilter() throws ServletException
     {
        
         
-        UnitOfWorkFilter filter = new UnitOfWorkFilter();
+        HibernateUnitOfWorkFilter filter = new HibernateUnitOfWorkFilter();
         filter.init(validTestFilterConfig());
         try
         {
@@ -203,7 +203,7 @@ public class TestUnitOfWorkFilter
     }
     
     /**
-     * Tests for {@link UnitOfWorkFilter#init(FilterConfig)}.
+     * Tests for {@link HibernateUnitOfWorkFilter#init(FilterConfig)}.
      */
     @Test
     public void testInit()
@@ -226,7 +226,7 @@ public class TestUnitOfWorkFilter
     {
         try
         {
-            Filter filter = new UnitOfWorkFilter();
+            Filter filter = new HibernateUnitOfWorkFilter();
             filter.init(new UnitTestFilterConfig(properties));
             if(expectedException != null)
                 fail("Exception expected.");

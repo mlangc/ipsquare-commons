@@ -21,6 +21,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import net.jcip.annotations.ThreadSafe;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  *  
  * @author Matthias Langer
  */
+@ThreadSafe
 public class PathPatternRequestMatcher implements RequestMatcher
 {
     private static final Logger log = LoggerFactory.getLogger(PathPatternRequestMatcher.class);
