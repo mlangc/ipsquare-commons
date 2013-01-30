@@ -195,8 +195,8 @@ public class TestUnitOfWorkFilter
     private static Map<String, String> validTestFilterConfigProperties()
     {
         Map<String, String> props = new LinkedHashMap<String, String>();
-        props.put("repo1", "at.ipsquare.commons.servlet.TestUnitOfWorkFilter$TestRepositoryProvider1");
-        props.put("repo2", "at.ipsquare.commons.servlet.TestUnitOfWorkFilter$TestRepositoryProvider2");
+        props.put("repo1", TestRepositoryProvider1.class.getName());
+        props.put("repo2", TestRepositoryProvider2.class.getName());
         props.put(InitParameterNames.INCLUDE_PATH_PATTERN, ".*");
         props.put(InitParameterNames.EXCLUDE_PATH_PATTERN, ".*\\.jpg");
         return props;
@@ -218,7 +218,7 @@ public class TestUnitOfWorkFilter
         testInit(props, RuntimeException.class);
         
         props.remove("");
-        props.put("duplicate", "at.ipsquare.commons.servlet.TestUnitOfWorkFilter$TestRepositoryProvider1");
+        props.put("duplicate", TestRepositoryProvider1.class.getName());
         testInit(props, ServletConfigurationError.class);
     }
     
