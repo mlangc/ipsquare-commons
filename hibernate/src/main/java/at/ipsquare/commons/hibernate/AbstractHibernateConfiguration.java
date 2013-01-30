@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.hibernate;
+package at.ipsquare.commons.hibernate;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import java.util.Collections;
+import java.util.Map;
 
-import at.ipsquare.interfaces.HasId;
+import org.hibernate.dialect.Dialect;
 
 /**
- * Abstract base class for all unit test entities.
+ * An abstract {@link HibernateConfiguration} implementation, that requires clients only to supply values where no reasonable default can be found.
  * 
+ * @since 1.0.0
  * @author Matthias Langer
  */
-@MappedSuperclass
-public class AbstractUnitTestEntity implements HasId<Long>
+public abstract class AbstractHibernateConfiguration implements HibernateConfiguration
 {
-    @Id
-    @GeneratedValue
-    private Long id;
-    
-    public Long getId()
+    @Override
+    public Class<? extends Dialect> getDbDialectClass()
     {
-        return id;
+        return null;
+    }
+    
+    public Map<String, String> getProperties()
+    {
+        return Collections.emptyMap();
     }
 }

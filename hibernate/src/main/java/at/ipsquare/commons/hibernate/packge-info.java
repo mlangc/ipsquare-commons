@@ -16,4 +16,4 @@
 /**
  * Hibernate related APIs.
  */
-package at.ipsquare.hibernate;
+package at.ipsquare.commons.hibernate;

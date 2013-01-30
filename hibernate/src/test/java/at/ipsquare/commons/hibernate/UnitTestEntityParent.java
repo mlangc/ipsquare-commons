@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.hibernate;
+package at.ipsquare.commons.hibernate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * Entity for unit tests.
@@ -26,32 +29,27 @@ import javax.persistence.ManyToOne;
  * @author Matthias Langer
  */
 @Entity
-public class UnitTestEntityChild extends AbstractUnitTestEntity
+public class UnitTestEntityParent extends AbstractUnitTestEntity
 {
     @Column(unique = true, nullable = false)
     private String name;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    private UnitTestEntityParent parent;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UnitTestEntityChild> children = new ArrayList<UnitTestEntityChild>(2);
     
-    public UnitTestEntityChild()
+    public UnitTestEntityParent()
     {
         
     }
     
-    public UnitTestEntityChild(String name)
+    public UnitTestEntityParent(String name)
     {
         this.name = name;
     }
-
+    
     public String getName()
     {
         return name;
-    }
-    
-    public UnitTestEntityParent getParent()
-    {
-        return parent;
     }
     
     public void setName(String name)
@@ -59,8 +57,8 @@ public class UnitTestEntityChild extends AbstractUnitTestEntity
         this.name = name;
     }
     
-    public void setParent(UnitTestEntityParent parent)
+    public List<UnitTestEntityChild> getChildren()
     {
-        this.parent = parent;
+        return children;
     }
 }

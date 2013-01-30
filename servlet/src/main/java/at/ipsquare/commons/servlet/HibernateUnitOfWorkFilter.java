@@ -29,7 +29,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import at.ipsquare.hibernate.HibernateRepository;
+import at.ipsquare.commons.hibernate.HibernateRepository;
 import at.ipsquare.interfaces.AbstractUnitOfWork;
 import at.ipsquare.interfaces.UnitOfWork;
 
