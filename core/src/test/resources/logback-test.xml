@@ -21,7 +21,7 @@
   	</encoder>
   </appender>
   
-  <logger name="at.ipsquare.util.PerformanceLogger" additivity="false">
+  <logger name="at.ipsquare.commons.util.PerformanceLogger" additivity="false">
   	<appender-ref ref="TEST_PERFORMANCE_LOGGER"/>
   	<appender-ref ref="PERFORMANCE_OUT"/>
   </logger>
