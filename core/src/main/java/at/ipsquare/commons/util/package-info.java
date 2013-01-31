@@ -13,22 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.interfaces;
 
 /**
- * An API for executing {@link UnitOfWork} instances.
- * 
- * @since 1.1.0
- * @author Matthias Langer
+ * Various utility classes.
  */
-public interface UnitOfWorkExecutor
-{
-    /**
-     * Executes the given {@link UnitOfWork} in an implementation defined context and returns its result.
-     * 
-     * @param work a unit of work.
-     * @return the value returned by the given {@link UnitOfWork}.
-     * @throws ExecutionError if {@link UnitOfWork#execute()} threw an exception.
-     */
-    <T> T executeUnitOfWork(UnitOfWork<T> work);
-}
+package at.ipsquare.commons.util;

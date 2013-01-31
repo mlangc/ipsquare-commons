@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.util;
+package at.ipsquare.commons.util;
 
 import java.util.Arrays;
 

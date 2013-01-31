@@ -20,9 +20,8 @@ import java.io.Closeable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import at.ipsquare.interfaces.ExecutionError;
-import at.ipsquare.interfaces.UnitOfWork;
-import at.ipsquare.interfaces.UnitOfWorkExecutor;
+import at.ipsquare.commons.interfaces.UnitOfWork;
+import at.ipsquare.commons.interfaces.UnitOfWorkExecutor;
 
 /**
  * Wraps our Hibernate repository.

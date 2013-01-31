@@ -22,6 +22,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
+import at.ipsquare.commons.util.StackTrace;
+
 /**
  * Tests for {@link StackTrace}.
  * 

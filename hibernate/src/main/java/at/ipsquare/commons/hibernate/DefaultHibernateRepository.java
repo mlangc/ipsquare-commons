@@ -29,8 +29,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.ipsquare.interfaces.ExecutionError;
-import at.ipsquare.interfaces.UnitOfWork;
+import at.ipsquare.commons.interfaces.UnitOfWork;
 
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;

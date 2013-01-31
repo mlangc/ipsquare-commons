@@ -30,8 +30,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import at.ipsquare.commons.hibernate.HibernateRepository;
-import at.ipsquare.interfaces.AbstractUnitOfWork;
-import at.ipsquare.interfaces.UnitOfWork;
+import at.ipsquare.commons.interfaces.AbstractUnitOfWork;
+import at.ipsquare.commons.interfaces.UnitOfWork;
 
 import com.google.inject.Provider;
 
