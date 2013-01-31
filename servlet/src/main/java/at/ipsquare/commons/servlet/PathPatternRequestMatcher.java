@@ -18,6 +18,7 @@ package at.ipsquare.commons.servlet;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +48,12 @@ public class PathPatternRequestMatcher implements RequestMatcher
     
     /**
      * Builds a {@link PathPatternRequestMatcher} from the given filter configuration.
+     * 
+     * <p>
+     *  This constructor function looks for init parameters named {@link InitParameterNames#INCLUDE_PATH_PATTERN}
+     *  and {@link InitParameterNames#EXCLUDE_PATH_PATTERN} in the given {@link FilterConfig} and the {@link ServletContext}.
+     *  Values from the given configuration override values from the {@link ServletContext}.
+     * </p>
      * 
      * @see InitParameterNames#INCLUDE_PATH_PATTERN
      * @see InitParameterNames#EXCLUDE_PATH_PATTERN
