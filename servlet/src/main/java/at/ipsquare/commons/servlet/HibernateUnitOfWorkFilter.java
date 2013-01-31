@@ -32,8 +32,7 @@ import javax.servlet.ServletResponse;
 import at.ipsquare.commons.core.interfaces.AbstractUnitOfWork;
 import at.ipsquare.commons.core.interfaces.UnitOfWork;
 import at.ipsquare.commons.hibernate.HibernateRepository;
-
-import com.google.inject.Provider;
+import at.ipsquare.commons.hibernate.HibernateRepositoryProvider;
 
 /**
  * This class implements a {@link Filter} that wraps entire web requests in {@link UnitOfWork} instances using the configured {@link HibernateRepository} instances.
@@ -148,15 +147,15 @@ public final class HibernateUnitOfWorkFilter implements Filter
         }
     }
 
-    private static Provider<?> loadProvider(String className)
+    private static HibernateRepositoryProvider loadProvider(String className)
     {
         Class<?> clazz = loadClass(className);
-        if(!Provider.class.isAssignableFrom(clazz))
-            throw new ServletConfigurationError("'" + clazz.getCanonicalName() + "' does not implement '" + Provider.class.getCanonicalName() + "'.");
+        if(!HibernateRepositoryProvider.class.isAssignableFrom(clazz))
+            throw new ServletConfigurationError("'" + clazz.getCanonicalName() + "' does not implement '" + HibernateRepositoryProvider.class.getCanonicalName() + "'.");
 
         try
         {
-            Provider<?> provider = (Provider<?>) clazz.newInstance();
+            HibernateRepositoryProvider provider = (HibernateRepositoryProvider) clazz.newInstance();
             return provider;
         }
         catch(InstantiationException e)
@@ -171,16 +170,16 @@ public final class HibernateUnitOfWorkFilter implements Filter
     
     private static HibernateRepository loadHibernateRepository(String providerClassName)
     {
-      Provider<?> provider = loadProvider(providerClassName);
-      Object provided = provider.get();
+      HibernateRepositoryProvider provider = loadProvider(providerClassName);
+      HibernateRepository provided = provider.get();
       
-      if(!(provided instanceof HibernateRepository))
+      if(provided == null)
       {
         throw new ServletConfigurationError(
-            "Expected '"  + provider.getClass().getCanonicalName() + ".get()' to return an instance of HibernateRepository but got '" + provided + "');");
+            "Expected '"  + provider.getClass().getCanonicalName() + ".get()' to return an instance of HibernateRepository but got null.");
       }
       
-      return (HibernateRepository) provided;
+      return provided;
     }
     
     private static String unableToInstantineErrorString(Class<?> clazz)

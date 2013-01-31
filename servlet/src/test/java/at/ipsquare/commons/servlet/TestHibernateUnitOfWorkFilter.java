@@ -38,8 +38,7 @@ import org.testng.annotations.Test;
 import at.ipsquare.commons.core.interfaces.ExecutionError;
 import at.ipsquare.commons.core.interfaces.UnitOfWork;
 import at.ipsquare.commons.hibernate.HibernateRepository;
-
-import com.google.inject.Provider;
+import at.ipsquare.commons.hibernate.HibernateRepositoryProvider;
 
 
 /**
@@ -102,7 +101,7 @@ public class TestHibernateUnitOfWorkFilter
         }
     }
     
-    public static class TestRepositoryProvider1 implements Provider<TestRepository1>
+    public static class TestRepositoryProvider1 implements HibernateRepositoryProvider
     {
         static final TestRepository1 repo = new TestHibernateRepository();
         
@@ -113,7 +112,7 @@ public class TestHibernateUnitOfWorkFilter
         }
     }
     
-    public static class TestRepositoryProvider2 implements Provider<TestRepository2>
+    public static class TestRepositoryProvider2 implements  HibernateRepositoryProvider
     {
         static final TestRepository2 repo = new TestHibernateRepository();
         
