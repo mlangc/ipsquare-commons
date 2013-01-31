@@ -5,7 +5,7 @@
 		<artifactId>commons-pom</artifactId>
 		<version>1.0.2</version>
 	</parent>
-	<description>Core components that might be useful in almost any Java project.</description>
+	<description>APIs that are likely to be useful in almost any Java project.</description>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-core</artifactId>
