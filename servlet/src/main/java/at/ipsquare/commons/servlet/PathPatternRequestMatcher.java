@@ -35,7 +35,8 @@ import org.slf4j.LoggerFactory;
  *  It is important to note that this filter only considers the path of the request relative to
  *  the context root of the web application. So, if the request is {@literal http://server/web-app/some/path?p0=1&p1=b},
  *  the path that is used for matching is exactly {@literal /some/path}.
- *  
+ * 
+ * @since 2.0.0
  * @author Matthias Langer
  */
 @ThreadSafe

@@ -18,7 +18,7 @@ package at.ipsquare.commons.hibernate;
 /**
  * This enum represents the 'hibernate.hbm2ddl.auto' Hibernate configuration property.
  * 
- * @since 1.0.0
+ * @since 2.0.0
  */
 public enum HibernateHbm2dllAuto
 {

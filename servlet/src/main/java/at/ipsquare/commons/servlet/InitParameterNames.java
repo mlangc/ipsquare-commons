@@ -18,6 +18,7 @@ package at.ipsquare.commons.servlet;
 /**
  * Universally useful initialization parameter names for servlets and filters.
  * 
+ * @since 2.0.0
  * @author Matthias Langer
  */
 public final class InitParameterNames

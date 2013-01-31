@@ -19,7 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import at.ipsquare.commons.interfaces.HasId;
+import at.ipsquare.commons.core.interfaces.HasId;
 
 /**
  * Abstract base class for all unit test entities.

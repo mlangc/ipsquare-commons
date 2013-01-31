@@ -20,8 +20,8 @@ import java.io.Closeable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import at.ipsquare.commons.interfaces.UnitOfWork;
-import at.ipsquare.commons.interfaces.UnitOfWorkExecutor;
+import at.ipsquare.commons.core.interfaces.UnitOfWork;
+import at.ipsquare.commons.core.interfaces.UnitOfWorkExecutor;
 
 /**
  * Wraps our Hibernate repository.
@@ -32,7 +32,7 @@ import at.ipsquare.commons.interfaces.UnitOfWorkExecutor;
  * </ul>
  * 
  * @author Matthias Langer
- * @since 1.0.0
+ * @since 2.0.0
  */
 public interface HibernateRepository extends UnitOfWorkExecutor, Closeable
 {
@@ -65,16 +65,12 @@ public interface HibernateRepository extends UnitOfWorkExecutor, Closeable
     
     /**
      * Closes the repository (all acquired resources are released).
-     * 
-     * @since 2.0.0
      */
     @Override
     void close();
     
     /**
      * Returns true if the repository is closed.
-     * 
-     * @since 2.0.0
      */
     boolean isClosed();
 }

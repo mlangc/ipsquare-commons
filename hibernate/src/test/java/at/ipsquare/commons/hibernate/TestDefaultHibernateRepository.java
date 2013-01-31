@@ -24,9 +24,9 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.testng.annotations.Test;
 
-import at.ipsquare.commons.interfaces.AbstractUnitOfWork;
-import at.ipsquare.commons.interfaces.ExecutionError;
-import at.ipsquare.commons.interfaces.UnitOfWork;
+import at.ipsquare.commons.core.interfaces.AbstractUnitOfWork;
+import at.ipsquare.commons.core.interfaces.ExecutionError;
+import at.ipsquare.commons.core.interfaces.UnitOfWork;
 
 /**
  * Tests for {@link DefaultHibernateRepository}.

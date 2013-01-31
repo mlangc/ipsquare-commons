@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import at.ipsquare.commons.util.StackTrace;
+import at.ipsquare.commons.core.util.StackTrace;
 
 /**
  * Tests for {@link StackTrace}.

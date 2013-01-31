@@ -29,8 +29,8 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.ipsquare.commons.interfaces.ExecutionError;
-import at.ipsquare.commons.interfaces.UnitOfWork;
+import at.ipsquare.commons.core.interfaces.ExecutionError;
+import at.ipsquare.commons.core.interfaces.UnitOfWork;
 
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
@@ -39,7 +39,7 @@ import com.google.inject.Singleton;
 /**
  * Default {@link HibernateRepository} implementation.
  * 
- * @since 1.0.0
+ * @since 2.0.0
  * @author Matthias Langer
  */
 @Singleton

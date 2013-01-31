@@ -13,19 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.commons.interfaces;
-
 
 /**
- * Interface for types (usually entities) that have some kind of ID.
- * 
- * @since 1.0.0
- * @author Matthias Langer
+ * This package contains interfaces and abstract classes as well as directly related types, that are useful in most projects.
  */
-public interface HasId<T>
-{
-    /**
-     * Returns the ID.
-     */
-    T getId();
-}
+package at.ipsquare.commons.core.interfaces;

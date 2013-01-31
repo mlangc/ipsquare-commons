@@ -29,9 +29,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import at.ipsquare.commons.core.interfaces.AbstractUnitOfWork;
+import at.ipsquare.commons.core.interfaces.UnitOfWork;
 import at.ipsquare.commons.hibernate.HibernateRepository;
-import at.ipsquare.commons.interfaces.AbstractUnitOfWork;
-import at.ipsquare.commons.interfaces.UnitOfWork;
 
 import com.google.inject.Provider;
 
@@ -42,6 +42,7 @@ import com.google.inject.Provider;
  * This servlet filter is an implementation of the session-per-request pattern. By default, you also get one transaction per request, but nobody hinders
  * you from doing more fine grained transaction management if you need it.
  * 
+ * @since 2.0.0
  * @author Matthias Langer
  */
 public final class HibernateUnitOfWorkFilter implements Filter

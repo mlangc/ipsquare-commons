@@ -23,7 +23,7 @@ import org.hibernate.dialect.Dialect;
 /**
  * An abstract {@link HibernateConfiguration} implementation, that requires clients only to supply values where no reasonable default can be found.
  * 
- * @since 1.0.0
+ * @since 2.0.0
  * @author Matthias Langer
  */
 public abstract class AbstractHibernateConfiguration implements HibernateConfiguration

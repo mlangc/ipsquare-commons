@@ -25,6 +25,7 @@ import javax.servlet.ServletRequest;
  *  <li>Implementations are expected to be thread save.</li>
  * </ul>
  * 
+ * @since 2.0.0
  * @author Matthias Langer
  */
 public interface RequestMatcher

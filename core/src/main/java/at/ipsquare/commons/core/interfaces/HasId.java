@@ -13,33 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.commons.interfaces;
-
+package at.ipsquare.commons.core.interfaces;
 
 
 /**
- * An interface that represents a single Unit of Work.
+ * Interface for types (usually entities) that have some kind of ID.
  * 
- * <h4>Notes:</h4>
- * <ul>
- * <li>
- *  You should normally extend {@link AbstractUnitOfWork} instead of implementing this interface directly.
- * </li>
- * </ul>
- * 
- * @see AbstractUnitOfWork
- * @since 1.1.0
+ * @since 2.0.0
  * @author Matthias Langer
  */
-public interface UnitOfWork<T>
+public interface HasId<T>
 {
     /**
-     * Performs some operations and returns the results.
+     * Returns the ID.
      */
-    T execute() throws Exception;
-    
-    /**
-     * A name (most likely for logging purposes).
-     */
-    String getName();
+    T getId();
 }

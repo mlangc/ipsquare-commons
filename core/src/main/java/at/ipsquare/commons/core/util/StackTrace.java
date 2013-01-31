@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.commons.util;
+package at.ipsquare.commons.core.util;
 
 import java.util.Arrays;
 
 /**
  * Utility methods for dealing with stack traces.
  * 
- * @since 1.1.0
+ * @since 2.0.0
  * @author Matthias Langer
  */
 public final class StackTrace

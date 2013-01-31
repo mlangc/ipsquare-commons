@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.commons.util;
+package at.ipsquare.commons.core.util;
 
 
 import java.io.File;
@@ -35,7 +35,7 @@ import org.apache.commons.collections.EnumerationUtils;
  * For loading local resources from the classpath.
  *  
  * @author Matthias Langer
- * @since 1.0.0
+ * @since 2.0.0
  */
 public final class LocalResources
 {

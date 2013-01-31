@@ -20,6 +20,7 @@ import javax.servlet.ServletRequest;
 /**
  * Trivial request matcher implementations that might be useful.
  * 
+ * @since 2.0.0
  * @author Matthias Langer
  */
 public enum TrivialRequestMatcher implements RequestMatcher

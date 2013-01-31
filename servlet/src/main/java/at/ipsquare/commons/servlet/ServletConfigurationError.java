@@ -24,6 +24,7 @@ import javax.servlet.Servlet;
  * <p/>
  * Errors of this type usually indicate problems within your web.xml file.
  * 
+ * @since 2.0.0
  * @author Matthias Langer
  */
 public class ServletConfigurationError extends RuntimeException

@@ -13,27 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.commons.interfaces;
-
-import org.apache.commons.lang3.StringUtils;
+package at.ipsquare.commons.core.interfaces;
 
 
 /**
- * Abstract base class for {@link UnitOfWork} implementations.
+ * Thrown by {@link UnitOfWorkExecutor}s if executing {@link UnitOfWork#execute()} fails.
  * 
- * @since 1.1.0
+ * @since 2.0.0
  * @author Matthias Langer
  */
-public abstract class AbstractUnitOfWork<T> implements UnitOfWork<T>
+public class ExecutionError extends RuntimeException
 {
-    public String getName()
+    public ExecutionError(String message)
     {
-        return null;
+        super(message);
     }
-    
-    @Override
-    public String toString()
+
+    public ExecutionError(String message, Throwable cause)
     {
-        return "UnitOfWork[" + (StringUtils.isBlank(getName()) ? "?UNNAMED?" : getName()) + "]";
+        super(message, cause);
+    }
+
+    public ExecutionError(Throwable cause)
+    {
+        super(cause);
     }
 }

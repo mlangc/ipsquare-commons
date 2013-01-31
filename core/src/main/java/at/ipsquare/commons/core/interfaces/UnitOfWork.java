@@ -13,22 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.commons.interfaces;
+package at.ipsquare.commons.core.interfaces;
+
+
 
 /**
- * An API for executing {@link UnitOfWork} instances.
+ * An interface that represents a single Unit of Work.
  * 
- * @since 1.1.0
+ * <h4>Notes:</h4>
+ * <ul>
+ * <li>
+ *  You should normally extend {@link AbstractUnitOfWork} instead of implementing this interface directly.
+ * </li>
+ * </ul>
+ * 
+ * @see AbstractUnitOfWork
+ * @since 2.0.0
  * @author Matthias Langer
  */
-public interface UnitOfWorkExecutor
+public interface UnitOfWork<T>
 {
     /**
-     * Executes the given {@link UnitOfWork} in an implementation defined context and returns its result.
-     * 
-     * @param work a unit of work.
-     * @return the value returned by the given {@link UnitOfWork}.
-     * @throws ExecutionError if {@link UnitOfWork#execute()} threw an exception.
+     * Performs some operations and returns the results.
      */
-    <T> T executeUnitOfWork(UnitOfWork<T> work);
+    T execute() throws Exception;
+    
+    /**
+     * A name (most likely for logging purposes).
+     */
+    String getName();
 }

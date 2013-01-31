@@ -13,8 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package at.ipsquare.commons.core.interfaces;
+
 
 /**
- * Various utility classes.
+ * Interface for generating strings from various objects.
+ * 
+ * @since 2.0.0
+ * @author Matthias Langer
  */
-package at.ipsquare.commons.util;
+public interface StringGenerator<T>
+{
+    /**
+     * Generates a string from the given object.
+     */
+    String generate(T obj);
+}

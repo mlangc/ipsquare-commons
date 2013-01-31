@@ -15,6 +15,6 @@
  */
 
 /**
- * This package contains interfaces and abstract classes as well as directly related types, that are useful in most projects.
+ * Various utility classes.
  */
-package at.ipsquare.commons.interfaces;
+package at.ipsquare.commons.core.util;

@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.ipsquare.commons.interfaces;
-
+package at.ipsquare.commons.core.interfaces;
 
 /**
- * Interface for generating strings from various objects.
+ * An API for executing {@link UnitOfWork} instances.
  * 
- * @since 1.0.0
+ * @since 2.0.0
  * @author Matthias Langer
  */
-public interface StringGenerator<T>
+public interface UnitOfWorkExecutor
 {
     /**
-     * Generates a string from the given object.
+     * Executes the given {@link UnitOfWork} in an implementation defined context and returns its result.
+     * 
+     * @param work a unit of work.
+     * @return the value returned by the given {@link UnitOfWork}.
+     * @throws ExecutionError if {@link UnitOfWork#execute()} threw an exception.
      */
-    String generate(T obj);
+    <T> T executeUnitOfWork(UnitOfWork<T> work);
 }
