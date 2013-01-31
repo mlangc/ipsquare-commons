@@ -25,6 +25,7 @@ import org.hibernate.criterion.Restrictions;
 import org.testng.annotations.Test;
 
 import at.ipsquare.commons.interfaces.AbstractUnitOfWork;
+import at.ipsquare.commons.interfaces.ExecutionError;
 import at.ipsquare.commons.interfaces.UnitOfWork;
 
 /**
