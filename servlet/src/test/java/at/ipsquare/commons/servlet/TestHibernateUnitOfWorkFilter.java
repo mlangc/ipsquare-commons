@@ -36,6 +36,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.testng.annotations.Test;
 
 import at.ipsquare.commons.hibernate.HibernateRepository;
+import at.ipsquare.commons.interfaces.ExecutionError;
 import at.ipsquare.commons.interfaces.UnitOfWork;
 
 import com.google.inject.Provider;
