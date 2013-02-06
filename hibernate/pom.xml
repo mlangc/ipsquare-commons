@@ -85,4 +85,5 @@
 		</dependency>
 	</dependencies>
 	<name>IP SQUARE Commons Hibernate</name>
+	<url>http://ipsquarecommons.sourceforge.net/ipsquare-commons-hibernate/</url>
 </project>

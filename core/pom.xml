@@ -90,4 +90,5 @@
 			<version>14.0-rc1</version>
 		</dependency>
 	</dependencies>
+	<url>http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/</url>
 </project>
