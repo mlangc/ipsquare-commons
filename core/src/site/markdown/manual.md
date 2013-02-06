@@ -1,8 +1,7 @@
-User's Manual
--------------
+### User's Manual
 This library contains APIs that are likely to be useful in almost any non trivial Java project.
 
-### PerformanceLogger
+#### PerformanceLogger
 The class that I use most is without a doubt [PerformanceLogger][]. It does what the name implies, and is meant to be used like this:
 
     //...
@@ -45,11 +44,11 @@ and it is possible to enhance the loggers output with custom messages, like so:
 
 Consult the [Javadocs][] for details.
 
-### LocalResources
+#### LocalResources
 [LocalResources][] is an utility class for loading local resources from the classpath. You should use it whenever you want to load some data from the classapth, 
 like default configurations, images packaged into a JAR file, or test data needed for unit tests.
 
-### UnitOfWork
+#### UnitOfWork
 [UnitOfWork][] represents some unit of work, that is typically, but not necessarily, executed by an [UnitOfWorkExecutor][] implementation. Good examples of concrete 
 [UnitOfWork][] implementations are:
 
@@ -60,7 +59,7 @@ like default configurations, images packaged into a JAR file, or test data neede
 
 Note that you should normally extend [AbstractUnitOfWork][] instead of implementing [UnitOfWork][] directly.
 
-### Miscellaneous
+#### Miscellaneous
 [StackTrace][] contains utility methods around [Thread.getStackTrace()](http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#getStackTrace%28%29)
 that are used for implementing [PerformanceLogger][], but might as well be useful in another context. [HasId][] and [StringGenerator][]
 are two interfaces I employed successfully in multiple projects.
