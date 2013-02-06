@@ -23,6 +23,7 @@
     	<item name="About" href="index.html"></item>
     	<item name="User's Manual" href="manual.html"></item>
     	<item name="Javadocs" href="apidocs/index.html"></item>
+    	<item name="Dependency Info" href="dependency-info.html"></item>
     	<item name="Dependencies" href="dependencies.html"></item>
     	<item name="Issue Tracking" href="issue-tracking.html"></item>
     	<item name="SCM" href="source-repository.html"></item>
