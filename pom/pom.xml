@@ -217,6 +217,7 @@
 							<report>issue-tracking</report>
 							<report>project-team</report>
 							<report>license</report>
+							<report>dependency-info</report>
 						</reports>
 					</reportSet>
 				</reportSets>
