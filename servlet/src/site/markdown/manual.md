@@ -63,6 +63,35 @@ Request matchers are implementations of [RequestMatcher][]. Currently, there are
 against configurable regular expressions. To ease regular expression debugging when configuring the matcher, 
 you might want to switch the log level of [PathPatternRequestMatcher][] to *DEBUG* temporarily.
 
+#### RequestEncodingFilter:
+[RequestEncodingFilter][] is a simple filter that takes care of setting the characer encoding in [ServletRequest][]s. It's quite similar to 
+[this filter](http://static.springsource.org/spring/docs/2.5.x/api/org/springframework/web/filter/CharacterEncodingFilter.html) that comes with [Spring][].
+Unless you have special needs, you might want to use it like so:
+
+    <!-- ... -->
+    <filter>
+        <filter-name>RequestEncodingFilter</filter-name>
+        <filter-class>at.ipsquare.commons.servlet.RequestEncodingFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>RequestEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- ... -->
+
+This will set the requests character encoding to *UTF-8* unless it has already been set. If this is not exactly what you want, you can use
+the following *init parameters* for tuning:
+
++ *encoding*: The character encoding to set (defaults to *UTF-8*).
++ *forceEncoding*: If this parameter is true, the filter will overwrite any previously set encodings (defaults to *false*).
++ *includePathPattern* and *excludePathPattern*: These parameters are are processed by a [PathPatternRequestMatcher][] (see above); the encoding is only set if a match occurs.
+
+**Just make sure that the filter is called before you start processing the request in any way!** Otherwise it will have no effect, as one can easily see by
+reading the Javadocs of [HttpServletRequest.setCharacterEncoding(...)](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getCharacterEncoding%28%29)
+carefully.
+
+
 [PerformanceLogger]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html 
 [SLF4J]: http://www.slf4j.org/
 [LOGBack]: http://logback.qos.ch/
@@ -98,3 +127,6 @@ you might want to switch the log level of [PathPatternRequestMatcher][] to *DEBU
 [ServletModule]: http://code.google.com/p/google-guice/wiki/ServletModule
 [PathPatternRequestMatcher]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/PathPatternRequestMatcher.html
 [RequestMatcher]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/RequestMatcher.html
+[RequestEncodingFilter]: http://TODO
+[ServletRequest]: http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html
+[Spring]: http://www.springsource.org/
