@@ -165,8 +165,6 @@ public class TestHibernateUnitOfWorkFilter
     @Test
     public void testDoFilter() throws ServletException
     {
-       
-        
         HibernateUnitOfWorkFilter filter = new HibernateUnitOfWorkFilter();
         filter.init(validTestFilterConfig());
         try

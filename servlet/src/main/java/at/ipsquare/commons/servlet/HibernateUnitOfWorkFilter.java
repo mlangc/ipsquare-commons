@@ -46,8 +46,8 @@ import at.ipsquare.commons.hibernate.HibernateRepositoryProvider;
  */
 public final class HibernateUnitOfWorkFilter implements Filter
 {
-    private volatile Map<String, HibernateRepository> repoMap;
-    private volatile RequestMatcher requestMatcher;
+    private Map<String, HibernateRepository> repoMap;
+    private RequestMatcher requestMatcher;
     
     @Override
     public void destroy()

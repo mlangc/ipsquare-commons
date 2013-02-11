@@ -15,6 +15,7 @@
  */
 package at.ipsquare.commons.servlet;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.collections.IteratorUtils;
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * {@link FilterConfig} implementation for unit tests.
@@ -31,7 +33,16 @@ import org.apache.commons.collections.IteratorUtils;
  */
 public class UnitTestFilterConfig implements FilterConfig
 {
+    private final MockServletContext servletContext;
     private final Map<String, String> properties;
+    
+    /**
+     * Convenience constructor that builds an empty configuration.
+     */
+    public UnitTestFilterConfig()
+    {
+        this(Collections.<String, String>emptyMap());
+    }
     
     /**
      * Constructs a new {@link FilterConfig} from the given properties.
@@ -42,6 +53,7 @@ public class UnitTestFilterConfig implements FilterConfig
             throw new NullPointerException();
         
         this.properties = new HashMap<String, String>(properties);
+        this.servletContext = new MockServletContext();
     }
     
     @Override
@@ -65,6 +77,6 @@ public class UnitTestFilterConfig implements FilterConfig
     @Override
     public ServletContext getServletContext()
     {
-        return null;
+        return servletContext;
     }
 }
