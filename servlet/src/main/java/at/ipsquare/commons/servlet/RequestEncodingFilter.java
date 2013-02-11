@@ -24,13 +24,26 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * A filter that consistently sets the request encoding.
+ * 
+ * @author Matthias Langer
+ * @since 2.1.0
+ */
 public class RequestEncodingFilter implements Filter
 {
     private String encoding;
     private boolean force;
     private RequestMatcher matcher;
     
+    /**
+     * The init parameter name for the encoding (defaults to UTF-8).
+     */
     public static final String INIT_PARAM_NAME_ENCODING = "encoding";
+    
+    /**
+     * The init parameter name for the force encoding property (defaults to false).
+     */
     public static final String INIT_PARAM_NAME_FORCE = "forceEncoding";
 
     @Override
