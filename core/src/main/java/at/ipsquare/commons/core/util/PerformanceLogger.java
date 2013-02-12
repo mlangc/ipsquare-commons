@@ -15,8 +15,6 @@
  */
 package at.ipsquare.commons.core.util;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.concurrent.TimeUnit;
 
 import net.jcip.annotations.NotThreadSafe;
@@ -56,6 +54,7 @@ public class PerformanceLogger
     
     private final Stopwatch stopwatch;
     private final long threshold;
+    private final PerformanceLogFormatter logFormatter;
     private StackTraceElement from;
     
     /**
@@ -76,8 +75,14 @@ public class PerformanceLogger
         this.from = StackTrace.firstElementBelowClass();
         this.threshold = threshold;
         this.stopwatch = new Stopwatch().start();
+        this.logFormatter = logFormatter();
     }
     
+    private static PerformanceLogFormatter logFormatter()
+    {
+        return new DefaultPerformanceLogFormatter();
+    }
+
     /**
      * See {@link #logElapsed(String)}.
      */
@@ -108,129 +113,10 @@ public class PerformanceLogger
         if(elapsed >= threshold)
         {
             StackTraceElement to = StackTrace.firstElementBelowClass();
-            log.debug(formatLogMessage(from, to, msg, elapsed));
+            log.debug(logFormatter.format(from, to, elapsed, msg));
         }
     }
     
-    private static String formatLogMessage(StackTraceElement from, StackTraceElement to, String msg, long elapsed)
-    {
-        StringBuilder sb = new StringBuilder();
-        if(from != null && to != null)
-        {
-            Class<?> fromClass = StackTrace.associatedClass(from);
-            Class<?> toClass = StackTrace.associatedClass(to);
-            
-            if(fromClass.equals(toClass))
-            {
-                sb.append(className(fromClass));
-                if(from.getMethodName().equals(to.getMethodName()))
-                {
-                    sb.append(".")
-                      .append(from.getMethodName())
-                      .append("[")
-                      .append(lineNumberToString(from))
-                      .append("->")
-                      .append(lineNumberToString(to))
-                      .append("]");
-                }
-                else 
-                {
-                    sb.append("[")
-                      .append(from.getMethodName())
-                      .append(":")
-                      .append(lineNumberToString(from))
-                      .append("->")
-                      .append(to.getMethodName())
-                      .append(":")
-                      .append(lineNumberToString(to))
-                      .append("]");
-                }
-            }
-            else
-            {
-                sb.append("[")
-                  .append(className(fromClass))
-                  .append(".")
-                  .append(from.getMethodName())
-                  .append(":")
-                  .append(lineNumberToString(from))
-                  .append("->")
-                  .append(className(toClass))
-                  .append(".")
-                  .append(to.getMethodName())
-                  .append(":")
-                  .append(lineNumberToString(to))
-                  .append("]");
-            }
-        }
-        else
-        {
-            sb.append("[");
-            StackTraceElement[] fromTo = { from, to };
-            for(int i = 0; i < 2; ++i)
-            {
-                StackTraceElement elem = fromTo[i];
-                if(elem == null)
-                    sb.append("???");
-                else
-                {
-                    Class<?> elemClass = StackTrace.associatedClass(elem);
-                    sb.append(className(elemClass))
-                      .append(".")
-                      .append(from.getMethodName())
-                      .append(":")
-                      .append(lineNumberToString(elem));
-                }
-                
-                if(i == 0)
-                    sb.append("->");
-            }
-            sb.append("]");
-        }
-        
-        sb.append(" ")
-        .append(elapsed)
-        .append("ms");
-        
-        if(msg != null)
-        {
-            sb.append(" <<")
-              .append(msg)
-              .append(">>");
-        }
-        
-        return sb.toString();
-    }
-    
-    private static String className(Class<?> clazz)
-    {
-        Deque<Class<?>> parents = new ArrayDeque<Class<?>>(2);
-        parents.add(clazz);
-        while(true)
-        {
-            Class<?> parent = parents.getFirst().getEnclosingClass();
-            if(parent != null)
-                parents.addFirst(parent);
-            else
-                break;
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        for(Class<?> parent : parents)
-        {
-            if(sb.length() > 0)
-                sb.append("$");
-            sb.append(parent.getSimpleName());
-        }
-        return sb.toString();
-    }
-    
-    private static String lineNumberToString(StackTraceElement elem)
-    {
-        int ln = elem.getLineNumber();
-        return (ln > 0 ? String.valueOf(ln) : "?");
-    }
-        
     /**
      * Logs the elapsed time if it is above the threshold and restarts the internal timer.
      * 
