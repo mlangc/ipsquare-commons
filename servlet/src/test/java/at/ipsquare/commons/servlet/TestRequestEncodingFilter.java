@@ -24,11 +24,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -41,17 +38,6 @@ import org.testng.annotations.Test;
  */
 public class TestRequestEncodingFilter
 {
-    private static class TestFilterChain implements FilterChain
-    {
-        boolean called;
-        
-        @Override
-        public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException
-        {
-            called = true;
-        }
-    }
-    
     private static class EncodingFilterConfig
     {
         String characterEncoding;
@@ -106,9 +92,9 @@ public class TestRequestEncodingFilter
         filter.init(toServletFilterConfig(filterConfig));
         try
         {
-            TestFilterChain chain = new TestFilterChain();
+            UnitTestFilterChain chain = new UnitTestFilterChain();
             filter.doFilter(req, new MockHttpServletResponse(), chain);
-            assertTrue(chain.called);
+            assertTrue(chain.wasCalled());
             assertThat(req.getCharacterEncoding(), equalTo(exp));
         }
         finally

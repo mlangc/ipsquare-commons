@@ -1,0 +1,32 @@
+<configuration>
+
+  <property name="performancePattern" value="%msg%n"/>
+  <property name="defaultPattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${defaultPattern}</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="TEST_PERFORMANCE_LOGGER" class="at.ipsquare.commons.servlet.TestPerformanceLogFilter$TestAppender">
+  	<encoder>
+  		<pattern>${performancePattern}</pattern>
+  	</encoder>
+  </appender>
+  
+  <appender name="PERFORMANCE_OUT" class="ch.qos.logback.core.ConsoleAppender">
+  	<encoder>
+  		<pattern>${performancePattern}</pattern>
+  	</encoder>
+  </appender>
+  
+  <logger name="at.ipsquare.commons.core.util.PerformanceLogger" additivity="false">
+  	<appender-ref ref="TEST_PERFORMANCE_LOGGER"/>
+  	<appender-ref ref="PERFORMANCE_OUT"/>
+  </logger>
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
