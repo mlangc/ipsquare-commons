@@ -42,7 +42,17 @@
 						<targetTests>
 							<param>at.ipsquare.commons.core*</param>
 						</targetTests>
+						<reportsDirectory>target/site/pit-reports</reportsDirectory>
+						<timestampedReports>false</timestampedReports>
 					</configuration>
+					<executions>
+						<execution>
+							<phase>site</phase>
+							<goals>
+								<goal>mutationCoverage</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 		</plugins>
 	</build>
