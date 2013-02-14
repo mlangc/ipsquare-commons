@@ -1,4 +1,4 @@
-package at.ipsquare.util;
+package at.ipsquare.commons.core.util;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;

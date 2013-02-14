@@ -9,7 +9,7 @@
     </encoder>
   </appender>
   
-  <appender name="TEST_PERFORMANCE_LOGGER" class="at.ipsquare.util.TestPerformanceLogger$TestAppender">
+  <appender name="TEST_PERFORMANCE_LOGGER" class="at.ipsquare.commons.core.util.TestPerformanceLogger$TestAppender">
   	<encoder>
   		<pattern>${performancePattern}</pattern>
   	</encoder>

@@ -30,6 +30,20 @@
 						<outputEncoding>UTF-8</outputEncoding>
 					</configuration>
 				</plugin>
+
+				<plugin>
+					<groupId>org.pitest</groupId>
+					<artifactId>pitest-maven</artifactId>
+					<version>0.29</version>
+					<configuration>
+						<targetClasses>
+							<param>at.ipsquare.commons.core*</param>
+						</targetClasses>
+						<targetTests>
+							<param>at.ipsquare.commons.core*</param>
+						</targetTests>
+					</configuration>
+				</plugin>
 		</plugins>
 	</build>
 
