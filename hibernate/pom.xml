@@ -13,6 +13,23 @@
 	<description>Useful APIs for working with Hibernate.</description>
 	<name>IP SQUARE Commons Hibernate</name>
 	<url>http://ipsquarecommons.sourceforge.net/ipsquare-commons-hibernate/</url>
+	
+	<build>
+		<plugins>
+				<plugin>
+					<groupId>org.pitest</groupId>
+					<artifactId>pitest-maven</artifactId>
+					<configuration>
+						<targetClasses>
+							<param>at.ipsquare.commons.hibernate*</param>
+						</targetClasses>
+						<targetTests>
+							<param>at.ipsquare.commons.hibernate*</param>
+						</targetTests>
+					</configuration>
+				</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>
