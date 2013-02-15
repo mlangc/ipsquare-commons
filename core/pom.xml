@@ -14,27 +14,9 @@
 
 	<build>
 		<plugins>
-			<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.2</version>
-					<dependencies>
-						<dependency>
-							<groupId>org.apache.maven.doxia</groupId>
-							<artifactId>doxia-module-markdown</artifactId>
-							<version>1.3</version>
-						</dependency>
-					</dependencies>
-					<configuration>
-						<inputEncoding>UTF-8</inputEncoding>
-						<outputEncoding>UTF-8</outputEncoding>
-					</configuration>
-				</plugin>
-
 				<plugin>
 					<groupId>org.pitest</groupId>
 					<artifactId>pitest-maven</artifactId>
-					<version>0.29</version>
 					<configuration>
 						<targetClasses>
 							<param>at.ipsquare.commons.core*</param>
@@ -42,17 +24,7 @@
 						<targetTests>
 							<param>at.ipsquare.commons.core*</param>
 						</targetTests>
-						<reportsDirectory>target/site/pit-reports</reportsDirectory>
-						<timestampedReports>false</timestampedReports>
 					</configuration>
-					<executions>
-						<execution>
-							<phase>site</phase>
-							<goals>
-								<goal>mutationCoverage</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 		</plugins>
 	</build>
