@@ -3,7 +3,7 @@
 
 	<parent>
 		<groupId>at.ipsquare</groupId>
-		<artifactId>commons-parent</artifactId>
+		<artifactId>ipsquare-commons-parent</artifactId>
 		<version>1</version>
 	</parent>
 
