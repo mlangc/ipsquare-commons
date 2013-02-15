@@ -9,12 +9,12 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.ipsquare</groupId>
-	<artifactId>commons-pom</artifactId>
+	<artifactId>commons-parent</artifactId>
 	<name>IP SQUARE Commons POM</name>
-	<version>2</version>
+	<version>1</version>
 	<packaging>pom</packaging>
 	<url>http://sourceforge.net/p/ipsquarecommons</url>
-	<description>Parent POM for all IP SQUARE Commons projects.</description>
+	<description>Parent for all IP SQUARE Commons projects.</description>
 
 	<issueManagement>
 		<url>https://sourceforge.net/p/ipsquarecommons/tickets/</url>
