@@ -19,7 +19,7 @@
   </custom>
   
   <body>
-    <menu name="Overview">
+    <menu name="Overview" inherit="left">
     	<item name="About" href="index.html"></item>
     	<item name="User's Manual" href="manual.html"></item>
     	<item name="Javadocs" href="apidocs/index.html"></item>
