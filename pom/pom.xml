@@ -14,6 +14,7 @@
 	<version>2</version>
 	<packaging>pom</packaging>
 	<url>http://sourceforge.net/p/ipsquarecommons</url>
+	<description>Parent POM for all IP SQUARE Commons projects.</description>
 
 	<issueManagement>
 		<url>https://sourceforge.net/p/ipsquarecommons/tickets/</url>
@@ -300,6 +301,4 @@
 
 		</plugins>
 	</reporting>
-
-	<description>Parent POM for all IP SQUARE Commons projects.</description>
 </project>
