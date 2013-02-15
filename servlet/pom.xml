@@ -13,6 +13,23 @@
 	<version>2.1.0-SNAPSHOT</version>
 	<description>APIs related to Java servlets and filters.</description>
 	<url>http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/</url>
+	
+	<build>
+		<plugins>
+				<plugin>
+					<groupId>org.pitest</groupId>
+					<artifactId>pitest-maven</artifactId>
+					<configuration>
+						<targetClasses>
+							<param>at.ipsquare.commons.servlet*</param>
+						</targetClasses>
+						<targetTests>
+							<param>at.ipsquare.commons.servlet*</param>
+						</targetTests>
+					</configuration>
+				</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>
