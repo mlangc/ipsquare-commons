@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>at.ipsquare</groupId>
-		<artifactId>commons-pom</artifactId>
-		<version>2</version>
+		<artifactId>commons-parent</artifactId>
+		<version>1</version>
 	</parent>
 	<description>APIs that are likely to be useful in almost any Java project.</description>
 
