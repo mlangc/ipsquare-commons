@@ -72,14 +72,28 @@ public class PerformanceLogger
      */
     public PerformanceLogger(long threshold)
     {
+       this(threshold, null);
+    }
+    
+    /**
+     * Constructs a new {@link PerformanceLogger}.
+     * 
+     * @param threshold the threshold in ms for which the logger should generate any output.
+     * @param an optional {@link PerformanceLogFormatter}.
+     * @since 2.1.0
+     */
+    public PerformanceLogger(long threshold, PerformanceLogFormatter logFormatter)
+    {
         this.from = StackTrace.firstElementBelowClass();
         this.threshold = threshold;
         this.stopwatch = new Stopwatch().start();
-        this.logFormatter = logFormatter();
+        this.logFormatter = getLogFormatter(logFormatter);
     }
     
-    private static PerformanceLogFormatter logFormatter()
+    private static PerformanceLogFormatter getLogFormatter(PerformanceLogFormatter logFormatter)
     {
+        if(logFormatter != null)
+            return logFormatter;
         return new DefaultPerformanceLogFormatter();
     }
 

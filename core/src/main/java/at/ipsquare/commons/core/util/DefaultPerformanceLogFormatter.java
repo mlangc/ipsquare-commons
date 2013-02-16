@@ -30,7 +30,7 @@ import net.jcip.annotations.ThreadSafe;
 public final class DefaultPerformanceLogFormatter implements PerformanceLogFormatter
 {
     @Override
-    public String format(StackTraceElement from, StackTraceElement to, long elapsed, String msg)
+    public String format(StackTraceElement from, StackTraceElement to, long millis, String message)
     {
         StringBuilder sb = new StringBuilder();
         if(from != null && to != null)
@@ -107,13 +107,13 @@ public final class DefaultPerformanceLogFormatter implements PerformanceLogForma
         }
         
         sb.append(" ")
-        .append(elapsed)
+        .append(millis)
         .append("ms");
         
-        if(msg != null)
+        if(message != null)
         {
             sb.append(" <<")
-              .append(msg)
+              .append(message)
               .append(">>");
         }
         
