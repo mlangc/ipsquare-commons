@@ -78,6 +78,17 @@ public class PerformanceLogger
     /**
      * Constructs a new {@link PerformanceLogger}.
      * 
+     * @param an optional {@link PerformanceLogFormatter}
+     * @since 2.1.0
+     */
+    public PerformanceLogger(PerformanceLogFormatter logFormatter)
+    {
+        this(0, logFormatter);
+    }
+    
+    /**
+     * Constructs a new {@link PerformanceLogger}.
+     * 
      * @param threshold the threshold in ms for which the logger should generate any output.
      * @param an optional {@link PerformanceLogFormatter}.
      * @since 2.1.0

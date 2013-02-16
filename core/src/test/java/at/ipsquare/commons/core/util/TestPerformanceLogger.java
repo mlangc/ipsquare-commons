@@ -128,6 +128,10 @@ public class TestPerformanceLogger
         plog2.logElapsed("should-be-logged");
         assertThat(logString(), containsString("should-be-logged"));
         
+        plog2 = new PerformanceLogger(new UnitTestPeformanceLogFormatter());
+        plog2.logElapsed();
+        assertThat(logString(), containsString(UnitTestPeformanceLogFormatter.PREFIX));
+        
         Logger logbackLogger = (Logger) LoggerFactory.getLogger(PerformanceLogger.class);
         logbackLogger.setLevel(Level.ERROR);
         plog.logElapsedAndRestart("do-not-log-me");

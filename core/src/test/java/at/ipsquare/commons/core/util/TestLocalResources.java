@@ -38,7 +38,7 @@ import at.ipsquare.commons.core.util.LocalResources;
  */
 public class TestLocalResources
 {
-    private static String TEST_FILE_PATH = "at/ipsquare/util/_LocalResources/test.txt";
+    private static String TEST_FILE_PATH = "at/ipsquare/commons/core/util/_LocalResources/test.txt";
     private static String NOT_EXISTING_PATH = "ASDFKJASDLFlsdfsdll/sdf/dd";
     private static String WITHIN_COMMONS_COLLECTIONS_JAR_PATH = "META-INF/maven/commons-collections/commons-collections/pom.properties";
     private static String STARTS_WITH_SLASH = "/META-INF/maven/commons-collections/commons-collections/pom.properties";
