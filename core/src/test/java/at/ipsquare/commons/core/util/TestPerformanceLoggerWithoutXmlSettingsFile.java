@@ -4,43 +4,41 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
-import at.ipsquare.commons.core.util.PerformanceLogger;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import ch.qos.logback.core.OutputStreamAppender;
 
 /**
- * Tests for {@link PerformanceLogger}.
+ * Tests for {@link PerformanceLogger} without a settings file.
  * 
  * @author Matthias Langer
  */
-public class TestPerformanceLogger
+public class TestPerformanceLoggerWithoutXmlSettingsFile
 {
-    public static class TestAppender<E> extends OutputStreamAppender<E>
-    {
-        private static final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        
-        @Override
-        public void start()
-        {
-            setOutputStream(stream);
-            super.start();
-        }
-    }
-    
-    private static String logString()
+    @BeforeClass
+    public static void beforeClass()
     {
         try
         {
-            return TestAppender.stream.toString("UTF-8").trim();
+            /*
+             * Remove stray setting files before we start:
+             */
+            File file = LocalResources.getFile("at/ipsquare/commons/core/util/performanceLogger.xml");
+            if(!file.delete())
+                throw new RuntimeException("Could not delete '" + file + "'.");
         }
-        catch(UnsupportedEncodingException e)
+        catch(FileNotFoundException e)
+        {
+            // OK!
+        }
+        catch(IOException e)
         {
             throw new RuntimeException(e);
         }
@@ -86,7 +84,7 @@ public class TestPerformanceLogger
         Thread.sleep(1);
         plog.logElapsed();
         
-        assertThat(logString(), containsString(TestPerformanceLogger.class.getSimpleName()));
+        assertThat(logString(), containsString(TestPerformanceLoggerWithoutXmlSettingsFile.class.getSimpleName()));
         assertThat(logString(), containsString("test"));
         
         new InnerClass(plog);
@@ -136,5 +134,10 @@ public class TestPerformanceLogger
         logbackLogger.setLevel(Level.ERROR);
         plog.logElapsedAndRestart("do-not-log-me");
         assertThat(logString(), not(containsString("do-not-log-me")));
+    }
+
+    private static String logString()
+    {
+        return UnitTestAppender.logString();
     }
 }
