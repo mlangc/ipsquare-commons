@@ -35,4 +35,9 @@ public class UnitTestAppender<E> extends OutputStreamAppender<E>
             throw new RuntimeException(e);
         }
     }
+    
+    public static void reset()
+    {
+        stream.reset();
+    }
 }

@@ -51,6 +51,9 @@ public class TestPerformanceLoggerWithSettingsFile
         {
             throw new RuntimeException(e);
         }
+
+        PerformanceLogger.reloadDefaults();
+        UnitTestAppender.reset();
     }
     
     @AfterClass

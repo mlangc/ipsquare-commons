@@ -82,10 +82,22 @@ public class PerformanceLogger
      * @since 2.1.0
      */
     public static final String DEFAULT_THRESHOLD_KEY = "defaultThreshold";
+    
+    private static final class DefaultSettings
+    {
+        final Class<? extends PerformanceLogFormatter> formatterClass;
+        final long threshold;
+        
+        DefaultSettings(Class<? extends PerformanceLogFormatter> formatterClass, long threshold)
+        {
+            this.formatterClass = formatterClass;
+            this.threshold = threshold;
+        }
+    }
+    
+    private static volatile DefaultSettings defaultSettings;
 
     private static final Logger log = LoggerFactory.getLogger(PerformanceLogger.class);
-    private static final Class<? extends PerformanceLogFormatter> defaultLogFormatterClass;
-    private static final long defaultThreshold;
     
     private final Stopwatch stopwatch;
     private final long threshold;
@@ -93,6 +105,19 @@ public class PerformanceLogger
     private StackTraceElement from;
     
     static
+    {
+       reloadDefaults();
+    }
+    
+    /**
+     * This method reloads the default settings from {@link #DEFAULT_SETTINGS_PATH}.
+     */
+    static void reloadDefaults()
+    {
+        defaultSettings = loadDefaultSettings();
+    }
+    
+    private static DefaultSettings loadDefaultSettings()
     {
         Class<? extends PerformanceLogFormatter> logFormatterClass = null;
         long threshold = 0;
@@ -137,10 +162,9 @@ public class PerformanceLogger
         if(logFormatterClass == null)
             logFormatterClass = DefaultPerformanceLogFormatter.class;
         
-        defaultLogFormatterClass = logFormatterClass;
-        defaultThreshold = threshold;
+        return new DefaultSettings(logFormatterClass, threshold);
     }
-    
+
     private static Class<? extends PerformanceLogFormatter> loadFormatterClass(String name)
     {
         if(StringUtils.isEmpty(name))
@@ -187,7 +211,7 @@ public class PerformanceLogger
      */
     public PerformanceLogger()
     {
-        this(defaultThreshold);
+        this(defaultSettings.threshold);
     }
     
     /**
@@ -197,7 +221,7 @@ public class PerformanceLogger
      */
     public PerformanceLogger(long threshold)
     {
-       this(threshold, null);
+       this(threshold, getLogFormatter(null));
     }
     
     /**
@@ -208,7 +232,7 @@ public class PerformanceLogger
      */
     public PerformanceLogger(PerformanceLogFormatter logFormatter)
     {
-        this(defaultThreshold, logFormatter);
+        this(defaultSettings.threshold, logFormatter);
     }
     
     /**
@@ -235,13 +259,14 @@ public class PerformanceLogger
 
     private static PerformanceLogFormatter defaultPerformanceLogFormatter()
     {
+        Class<? extends PerformanceLogFormatter> clazz = defaultSettings.formatterClass;
         try
         {
-            return defaultLogFormatterClass.newInstance();
+            return clazz.newInstance();
         }
         catch(Exception e)
         {
-            log.warn("Cannot create a new instance of " + defaultLogFormatterClass.getName() + ".", e);
+            log.warn("Cannot create a new instance of " + clazz.getName() + ".", e);
             return new DefaultPerformanceLogFormatter();
         }
     }

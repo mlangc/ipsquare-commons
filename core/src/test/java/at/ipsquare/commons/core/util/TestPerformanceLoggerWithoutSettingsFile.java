@@ -57,6 +57,9 @@ public class TestPerformanceLoggerWithoutSettingsFile
         {
             throw new RuntimeException(e);
         }
+
+        UnitTestAppender.reset();
+        PerformanceLogger.reloadDefaults();
     }
     
     private static class InnerClass
@@ -144,9 +147,16 @@ public class TestPerformanceLoggerWithoutSettingsFile
         assertThat(logString(), containsString(UnitTestPeformanceLogFormatter.PREFIX));
         
         Logger logbackLogger = (Logger) LoggerFactory.getLogger(PerformanceLogger.class);
-        logbackLogger.setLevel(Level.ERROR);
-        plog.logElapsedAndRestart("do-not-log-me");
-        assertThat(logString(), not(containsString("do-not-log-me")));
+        try
+        {
+            logbackLogger.setLevel(Level.ERROR);
+            plog.logElapsedAndRestart("do-not-log-me");
+            assertThat(logString(), not(containsString("do-not-log-me")));
+        }
+        finally
+        {
+            logbackLogger.setLevel(Level.DEBUG);
+        }
     }
 
     private static String logString()
