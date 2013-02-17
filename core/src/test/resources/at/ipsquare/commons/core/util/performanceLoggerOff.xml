@@ -3,4 +3,5 @@
 
 <properties>
 	<entry key="defaultPerformanceLogFormatter">at.ipsquare.commons.core.util.UnitTestPeformanceLogFormatter</entry>
+	<entry key="defaultThreshold">5</entry>
 </properties>

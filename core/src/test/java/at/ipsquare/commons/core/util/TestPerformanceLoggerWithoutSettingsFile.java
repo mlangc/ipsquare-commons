@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2012 IP SQUARE
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package at.ipsquare.commons.core.util;
 
 import static org.hamcrest.Matchers.containsString;
@@ -20,7 +35,7 @@ import ch.qos.logback.classic.Logger;
  * 
  * @author Matthias Langer
  */
-public class TestPerformanceLoggerWithoutXmlSettingsFile
+public class TestPerformanceLoggerWithoutSettingsFile
 {
     @BeforeClass
     public static void beforeClass()
@@ -74,9 +89,6 @@ public class TestPerformanceLoggerWithoutXmlSettingsFile
         }
     }
     
-    /**
-     * Meant to cover the full functionality of our {@link PerformanceLogger}.
-     */
     @Test
     public void test() throws InterruptedException
     {
@@ -84,8 +96,9 @@ public class TestPerformanceLoggerWithoutXmlSettingsFile
         Thread.sleep(1);
         plog.logElapsed();
         
-        assertThat(logString(), containsString(TestPerformanceLoggerWithoutXmlSettingsFile.class.getSimpleName()));
+        assertThat(logString(), containsString(TestPerformanceLoggerWithoutSettingsFile.class.getSimpleName()));
         assertThat(logString(), containsString("test"));
+        assertThat(logString(), not(containsString(UnitTestPeformanceLogFormatter.PREFIX)));
         
         new InnerClass(plog);
         plog.logElapsed("asdf");

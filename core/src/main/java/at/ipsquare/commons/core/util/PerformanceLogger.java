@@ -15,10 +15,16 @@
  */
 package at.ipsquare.commons.core.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import net.jcip.annotations.NotThreadSafe;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,23 +56,142 @@ import com.google.common.base.Stopwatch;
 @NotThreadSafe
 public class PerformanceLogger
 {
+    /**
+     * Path to an XML properties file that can be used to override the default settings of this class.
+     * 
+     * <p>
+     *  This file loaded using {@link LocalResources}. Consult the users manual for details.
+     * </p>
+     * 
+     * @since 2.1.0
+     */
+    public static final String DEFAULT_SETTINGS_PATH = "at/ipsquare/commons/core/util/performanceLogger.xml";
+    
+    /**
+     * The property key that specifies the default {@link PerformanceLogFormatter} implementation to use.
+     * 
+     * @see #DEFAULT_SETTINGS_PATH
+     * @since 2.1.0
+     */
+    public static final String DEFAULT_PERFORMANCE_LOG_FORMATTER_KEY = "defaultPerformanceLogFormatter";
+    
+    /**
+     * The property key that specifies the default threshold to use.
+     * 
+     * @see #DEFAULT_SETTINGS_PATH
+     * @since 2.1.0
+     */
+    public static final String DEFAULT_THRESHOLD_KEY = "defaultThreshold";
+
     private static final Logger log = LoggerFactory.getLogger(PerformanceLogger.class);
+    private static final Class<? extends PerformanceLogFormatter> defaultLogFormatterClass;
+    private static final long defaultThreshold;
     
     private final Stopwatch stopwatch;
     private final long threshold;
     private final PerformanceLogFormatter logFormatter;
     private StackTraceElement from;
     
-    /**
-     * Constructs a new {@link PerformanceLogger} with no threshold.
-     */
-    public PerformanceLogger()
+    static
     {
-        this(0);
+        Class<? extends PerformanceLogFormatter> logFormatterClass = null;
+        long threshold = 0;
+        
+        try
+        {
+            InputStream in = LocalResources.getStream(DEFAULT_SETTINGS_PATH);
+            try
+            {
+                Properties props = new Properties();
+                props.loadFromXML(in);
+                String formatterName = props.getProperty(DEFAULT_PERFORMANCE_LOG_FORMATTER_KEY);
+                logFormatterClass = loadFormatterClass(formatterName);
+                
+                String thresholdString = props.getProperty(DEFAULT_THRESHOLD_KEY);
+                if(StringUtils.isNotEmpty(thresholdString))
+                {
+                    try
+                    {
+                        threshold = Long.parseLong(thresholdString);
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        log.warn("Not a legal default threshold value: '" + thresholdString + "'.", e);
+                    }
+                }
+            }
+            finally
+            {
+                IOUtils.closeQuietly(in);
+            }
+        }
+        catch(FileNotFoundException e)
+        {
+            // OK!
+        }
+        catch(IOException e)
+        {
+            log.warn("Error reading " + DEFAULT_SETTINGS_PATH + ".", e);
+        }
+        
+        if(logFormatterClass == null)
+            logFormatterClass = DefaultPerformanceLogFormatter.class;
+        
+        defaultLogFormatterClass = logFormatterClass;
+        defaultThreshold = threshold;
+    }
+    
+    private static Class<? extends PerformanceLogFormatter> loadFormatterClass(String name)
+    {
+        if(StringUtils.isEmpty(name))
+            return DefaultPerformanceLogFormatter.class;
+        
+        Class<? extends PerformanceLogFormatter> ret = null;
+        
+        ClassLoader[] loaders = new ClassLoader[] { 
+                Thread.currentThread().getContextClassLoader(), PerformanceLogger.class.getClassLoader()
+        };
+        
+        for(ClassLoader cl : loaders)
+        {
+            try
+            {
+                @SuppressWarnings("unchecked")
+                Class<? extends PerformanceLogFormatter> tmp = (Class<? extends PerformanceLogFormatter>) Class.forName(name, true, cl);
+                ret = tmp;
+            }
+            catch(ClassNotFoundException e)
+            {
+                // Try next classloader or handle later...
+            }
+        }
+        
+        if(ret != null)
+        {
+            if(!PerformanceLogFormatter.class.isAssignableFrom(ret))
+            {
+                log.warn(ret.getName() + " does not implement PerformanceLogFormatter; ignoring parameter.");
+                ret = DefaultPerformanceLogFormatter.class;
+            }
+        }
+        else
+        {
+            log.warn("Could not load default performance log formatter '" + name + "'.");
+            ret = DefaultPerformanceLogFormatter.class;
+        }
+        return ret;
     }
     
     /**
-     * Constructs a new {@link PerformanceLogger}.
+     * Constructs a new {@link PerformanceLogger} with default settings.
+     */
+    public PerformanceLogger()
+    {
+        this(defaultThreshold);
+    }
+    
+    /**
+     * Constructs a new {@link PerformanceLogger} a default {@link PerformanceLogFormatter} implementation.
      * 
      * @param threshold the threshold in ms for which the logger should generate any output.
      */
@@ -76,14 +201,14 @@ public class PerformanceLogger
     }
     
     /**
-     * Constructs a new {@link PerformanceLogger}.
+     * Constructs a new {@link PerformanceLogger} with a default threshold.
      * 
      * @param an optional {@link PerformanceLogFormatter}
      * @since 2.1.0
      */
     public PerformanceLogger(PerformanceLogFormatter logFormatter)
     {
-        this(0, logFormatter);
+        this(defaultThreshold, logFormatter);
     }
     
     /**
@@ -105,7 +230,20 @@ public class PerformanceLogger
     {
         if(logFormatter != null)
             return logFormatter;
-        return new DefaultPerformanceLogFormatter();
+        return defaultPerformanceLogFormatter();
+    }
+
+    private static PerformanceLogFormatter defaultPerformanceLogFormatter()
+    {
+        try
+        {
+            return defaultLogFormatterClass.newInstance();
+        }
+        catch(Exception e)
+        {
+            log.warn("Cannot create a new instance of " + defaultLogFormatterClass.getName() + ".", e);
+            return new DefaultPerformanceLogFormatter();
+        }
     }
 
     /**
