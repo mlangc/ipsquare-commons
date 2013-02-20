@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+	<entry key="defaultPerformanceLogFormatter">at.ipsquare.commons.core.util.BrokenPerformanceLogFormatter</entry>
+	<entry key="defaultThreshold">5</entry>
+</properties>

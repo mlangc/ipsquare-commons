@@ -17,6 +17,7 @@ package at.ipsquare.commons.core.util;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
@@ -24,7 +25,6 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,25 +35,39 @@ import org.junit.Test;
 public class TestPerformanceLoggerWithSettingsFile
 {
     private static final String 
-        SETTINGS_SRC  = "at/ipsquare/commons/core/util/performanceLoggerOff.xml",
-        SETTINGS_DEST = "at/ipsquare/commons/core/util/performanceLogger.xml";
+        SETTING_SRC_BASE = "at/ipsquare/commons/core/util/_PerformanceLogger/",
+        SETTINGS_FULL = "performanceLoggerFull.xml",
+        SETTINGS_NO_THRESHOLD = "performanceLoggerNoThreshold.xml",
+        SETTINGS_NO_FORMATTER = "performanceLoggerNoFormatter.xml",
+        SETTINGS_INVALID_THRESHOLD = "performanceLoggerInvalidThreshold.xml",
+        SETTINGS_INVALID_FORMATTER = "performanceLoggerInvalidFormatter.xml",
+        SETTINGS_BROKEN_FORMATTER = "performanceLoggerBrokenFormatter.xml";
     
-    @BeforeClass
-    public static void beforeClass()
+    private static void installDefaultSettingsFile(String basename)
     {
         try
         {
-            File src = LocalResources.getFile(SETTINGS_SRC);
-            File dest = new File(src.getParentFile(), "performanceLogger.xml");
-            FileUtils.copyFile(src, dest);
+            File src = LocalResources.getFile(SETTING_SRC_BASE + basename);
+            FileUtils.copyFile(src, defaultSettingsFile());
+            PerformanceLogger.reloadDefaults();
         }
         catch(IOException e)
         {
             throw new RuntimeException(e);
         }
-
-        PerformanceLogger.reloadDefaults();
+    }
+    
+    private static void installDefaultSettingsFileAndResetTestAppender(String basename)
+    {
         UnitTestAppender.reset();
+        installDefaultSettingsFile(basename);
+    }
+    
+    
+    private static File defaultSettingsFile() throws IOException
+    {
+        File settingsDir = LocalResources.getFile("at/ipsquare/commons/core/util/_PerformanceLogger/").getParentFile();
+        return new File(settingsDir, "performanceLogger.xml");
     }
     
     @AfterClass
@@ -61,8 +75,7 @@ public class TestPerformanceLoggerWithSettingsFile
     {
         try
         {
-            File settingsFile = LocalResources.getFile(SETTINGS_DEST);
-            settingsFile.delete();
+            defaultSettingsFile().delete();
         }
         catch(IOException e)
         {
@@ -71,8 +84,9 @@ public class TestPerformanceLoggerWithSettingsFile
     }
     
     @Test
-    public void test() throws InterruptedException
+    public void testWithFullSettings() throws InterruptedException
     {
+        installDefaultSettingsFileAndResetTestAppender(SETTINGS_FULL);
         PerformanceLogger plog = new PerformanceLogger();
         plog.logElapsedAndRestart();
         assertThat(UnitTestAppender.logString(), isEmptyString());
@@ -80,5 +94,60 @@ public class TestPerformanceLoggerWithSettingsFile
         Thread.sleep(6);
         plog.logElapsed();
         assertThat(UnitTestAppender.logString(), containsString(UnitTestPeformanceLogFormatter.PREFIX));
+    }
+    
+    @Test
+    public void testWithNoThreshold() throws InterruptedException
+    {
+        assertThatSomethingIsLogged(SETTINGS_NO_THRESHOLD);
+    }
+    
+    @Test
+    public void testWithNoFormatter() throws InterruptedException
+    {
+        assertThatSomethingIsLogged(SETTINGS_NO_FORMATTER);
+    }
+    
+    @Test
+    public void testWithInvalidFormatter() throws InterruptedException
+    {
+       assertThatSomethingIsLogged(SETTINGS_INVALID_FORMATTER, 0, "Upsala");
+    }
+    
+    @Test
+    public void testWithBrokenFormatter() throws InterruptedException
+    {
+        assertThatSomethingIsLogged(SETTINGS_BROKEN_FORMATTER, 0, "Damn");
+    }
+    
+    @Test
+    public void testWithInvalidThreshold() throws InterruptedException
+    {
+        assertThatSomethingIsLogged(SETTINGS_INVALID_THRESHOLD, 0, "NaN");
+        assertThatSomethingIsLogged(SETTINGS_INVALID_THRESHOLD, 0, TestPerformanceLoggerWithSettingsFile.class.getSimpleName());
+    }
+    
+    private void assertThatSomethingIsLogged(String settingsFile) throws InterruptedException
+    {
+        assertThatSomethingIsLogged(settingsFile, 0);
+    }
+    
+    private void assertThatSomethingIsLogged(String settingsFile, int sleep) throws InterruptedException
+    {
+        assertThatSomethingIsLogged(settingsFile, sleep, null);
+    }
+    
+    private void assertThatSomethingIsLogged(String settingsFile, int sleep, String catchword) throws InterruptedException
+    {
+        installDefaultSettingsFileAndResetTestAppender(settingsFile);
+        PerformanceLogger plog = new PerformanceLogger();
+        Thread.sleep(sleep);
+        plog.logElapsed();
+        
+        if(catchword == null)
+            assertThat(UnitTestAppender.logString(), not(isEmptyString()));
+        else
+            assertThat(UnitTestAppender.logString(), containsString(catchword));
+        
     }
 }

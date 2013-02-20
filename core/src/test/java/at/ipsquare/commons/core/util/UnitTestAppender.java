@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
 import net.jcip.annotations.NotThreadSafe;
-
 import ch.qos.logback.core.OutputStreamAppender;
 
 /**
