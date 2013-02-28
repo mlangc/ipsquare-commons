@@ -87,10 +87,11 @@ the following *init parameters* for tuning:
 + *forceEncoding*: If this parameter is true, the filter will overwrite any previously set encodings (defaults to *false*).
 + *includePathPattern* and *excludePathPattern*: These parameters are are processed by a [PathPatternRequestMatcher][] (see above); the encoding is only set if a match occurs.
 
-**Just make sure that the filter is called before you start processing the request in any way!** Otherwise it will have no effect, as one can easily see by
-reading the Javadocs of [HttpServletRequest.setCharacterEncoding(...)](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getCharacterEncoding%28%29)
-carefully.
+**Just make sure that the filter is called before you start processing the request in any way!** Otherwise it will have no effect, as stated by
+Javadocs of [HttpServletRequest.setCharacterEncoding(...)](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getCharacterEncoding%28%29).
 
+#### PerformanceLogFilter
+[PerformanceLogFilter][]
 
 [PerformanceLogger]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html 
 [SLF4J]: http://www.slf4j.org/
@@ -128,5 +129,6 @@ carefully.
 [PathPatternRequestMatcher]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/PathPatternRequestMatcher.html
 [RequestMatcher]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/RequestMatcher.html
 [RequestEncodingFilter]: http://TODO
+[PerformanceLogFilter]: http://TODO
 [ServletRequest]: http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html
 [Spring]: http://www.springsource.org/

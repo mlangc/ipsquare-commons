@@ -27,7 +27,7 @@ import javax.servlet.Servlet;
  * @since 2.0.0
  * @author Matthias Langer
  */
-public class ServletConfigurationError extends RuntimeException
+public class ServletConfigurationError extends IllegalArgumentException
 {
     public ServletConfigurationError(String message, Throwable cause)
     {

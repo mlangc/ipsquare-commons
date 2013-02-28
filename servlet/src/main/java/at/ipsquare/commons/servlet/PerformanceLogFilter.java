@@ -63,6 +63,11 @@ public class PerformanceLogFilter implements Filter
      */
     public static String INIT_PARAM_PREFIX = "prefix";
     
+    /**
+     * Init parameter name for the {@link PerformanceLogFormatter} to use.
+     */
+    public static String PERFORMANCE_LOG_FORMATTER = "performanceLogFormatter";
+    
     private long threshold;
     private RequestMatcher requestMatcher;
     private String prefix;
