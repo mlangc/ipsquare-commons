@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
+import at.ipsquare.commons.core.util.PerformanceLogFormatter;
 import at.ipsquare.commons.core.util.PerformanceLogger;
 
 /**
@@ -36,6 +37,22 @@ import at.ipsquare.commons.core.util.PerformanceLogger;
  */
 public class PerformanceLogFilter implements Filter
 {
+    private enum MessageFormatter implements PerformanceLogFormatter
+    {
+        INSTANCE;
+        
+        @Override
+        public String format(StackTraceElement from, StackTraceElement to, long millis, String message)
+        {
+            return new StringBuilder()
+              .append(millis)
+              .append("ms <<")
+              .append(message)
+              .append(">>")
+              .toString();
+        }
+    }
+    
     /**
      * Init parameter name for the threshold to use (see {@link PerformanceLogger#PerformanceLogger(long)}).
      */
@@ -78,7 +95,7 @@ public class PerformanceLogFilter implements Filter
             chain.doFilter(request, response);
         else
         {
-            PerformanceLogger plog = new PerformanceLogger(threshold);
+            PerformanceLogger plog = new PerformanceLogger(threshold, MessageFormatter.INSTANCE);
             try
             {
                 chain.doFilter(request, response);
