@@ -33,7 +33,7 @@ import org.apache.commons.collections.EnumerationUtils;
 
 /**
  * For loading local resources from the classpath.
- *  
+ * 
  * @author Matthias Langer
  * @since 2.0.0
  */
