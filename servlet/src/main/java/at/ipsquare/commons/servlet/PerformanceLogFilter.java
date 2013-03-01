@@ -71,6 +71,7 @@ public class PerformanceLogFilter implements Filter
     private long threshold;
     private RequestMatcher requestMatcher;
     private String prefix;
+    private Class<? extends PerformanceLogFormatter> formatterClass;
     
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
@@ -91,8 +92,18 @@ public class PerformanceLogFilter implements Filter
         
         requestMatcher = PathPatternRequestMatcher.fromFilterConfig(filterConfig);
         prefix = StringUtils.defaultString(filterConfig.getInitParameter(INIT_PARAM_PREFIX));
+        formatterClass = formatterClassFromConfig(filterConfig);
     }
     
+    private static Class<? extends PerformanceLogFormatter> formatterClassFromConfig(FilterConfig filterConfig)
+    {
+        String className = filterConfig.getInitParameter(PERFORMANCE_LOG_FORMATTER);
+        if(StringUtils.isEmpty(className))
+            return null;
+        
+        return  null;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
     {

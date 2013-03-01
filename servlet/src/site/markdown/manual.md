@@ -91,7 +91,7 @@ the following *init parameters* for tuning:
 Javadocs of [HttpServletRequest.setCharacterEncoding(...)](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getCharacterEncoding%28%29).
 
 #### PerformanceLogFilter
-[PerformanceLogFilter][]
+[PerformanceLogFilter][] just logs the 
 
 [PerformanceLogger]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html 
 [SLF4J]: http://www.slf4j.org/
