@@ -24,7 +24,7 @@ import net.jcip.annotations.GuardedBy;
 import com.google.common.collect.Sets;
 
 /**
- * A registry for class loaders.
+ * A global registry for class loaders that is used throughout all IP SQUARE commons components.
  * 
  * @since 2.1.0
  * @author Matthias Langer

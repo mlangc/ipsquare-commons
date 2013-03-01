@@ -24,6 +24,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,7 +76,7 @@ public final class LocalResources
    */
   public static URL getUrl(String path) throws IOException
   {
-    List<ClassLoader> classLoaders = classLoadersToTry();
+    Set<ClassLoader> classLoaders = ClassLoaders.get();
     Set<String> urls = new HashSet<String>(2);
     
     for(ClassLoader cl : classLoaders)
@@ -96,13 +97,14 @@ public final class LocalResources
       sb.append("\n").append(classLoaderInfo(classLoaders));
       throw new FileNotFoundException(sb.toString());
     }
+    
     if(urls.size() > 1)
       throw new IOException("'" + path + "' : Ambiguous path.");
     
     return new URL(urls.iterator().next());
   }
   
-  private static String classLoaderInfo(List<ClassLoader> classLoaders)
+  private static String classLoaderInfo(Collection<ClassLoader> classLoaders)
   {
     StringBuilder sb = new StringBuilder("ClassLoaders involved:");
     for(ClassLoader cl : classLoaders)
@@ -152,18 +154,6 @@ public final class LocalResources
     ClassLoader parent = cl.getParent();
     if(parent instanceof URLClassLoader)
       collectClassLoaderUrls((URLClassLoader) parent, accumulator);
-  }
-  
-  private static List<ClassLoader> classLoadersToTry()
-  {
-    List<ClassLoader> classLoaders = new ArrayList<ClassLoader>(2);
-    
-    ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-    if(contextClassLoader != null)
-      classLoaders.add(contextClassLoader);
-    classLoaders.add(LocalResources.class.getClassLoader());
-    
-    return classLoaders;
   }
   
   private LocalResources()
