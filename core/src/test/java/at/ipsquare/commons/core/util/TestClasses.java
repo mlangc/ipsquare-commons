@@ -57,5 +57,16 @@ public class TestClasses
         
         ClassLoaders.register(fancyLoader);
         assertNotNull(Classes.forName(SOME_CLASS_NAME_ONLY_IN_SOME_JAR));
+        
+        try
+        {
+            ClassLoaders.unregister(fancyLoader);
+            Classes.forName(SOME_CLASS_NAME_ONLY_IN_SOME_JAR);
+        }
+        catch(ClassNotFoundException e)
+        {
+            // OK!
+        }
+        
     }
 }

@@ -38,7 +38,19 @@ public final class Classes
      */
     public static Class<?> forName(String name, boolean initialize) throws ClassNotFoundException
     {
-        return null;
+        for(ClassLoader cl : ClassLoaders.get())
+        {
+            try
+            {
+                return Class.forName(name, initialize, cl);
+            }
+            catch(ClassNotFoundException e)
+            {
+                // Try next loader.
+            }
+        }
+        
+        throw new ClassNotFoundException(name);
     }
     
     /**
@@ -55,7 +67,7 @@ public final class Classes
      */
     public static Class<?> forName(String name) throws ClassNotFoundException
     {
-        return null;
+        return forName(name, true);
     }
     
     private Classes()
