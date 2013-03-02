@@ -121,24 +121,6 @@ public class TestPerformanceLogFilter
         }
     }
     
-    private static class SimpleChain extends UnitTestFilterChain
-    {
-        final int status;
-        
-        SimpleChain(int status)
-        {
-            this.status = status;
-        }
-
-        @Override
-        protected void performDoFilter(ServletRequest req, ServletResponse res)
-        {
-            if(res instanceof HttpServletResponse)
-                ((HttpServletResponse) res).setStatus(status);
-        }
-    }
-    
-    
     @Test
     public void testDoFilter() throws IOException, ServletException
     {
@@ -150,7 +132,6 @@ public class TestPerformanceLogFilter
             "/in/test/3",
             "here4.do",
             MessageFormatter.PREFIX,
-            "" + HttpServletResponse.SC_NO_CONTENT,
             BrokenChainException.class.getSimpleName(),
             PREFIX
         };
@@ -195,9 +176,6 @@ public class TestPerformanceLogFilter
         {
             // OK!
         }
-        
-        chain = new SimpleChain(HttpServletResponse.SC_NO_CONTENT);
-        filter.doFilter(req("/test", null, null), res(), chain);
         
         String logString = TestAppender.stream.toString("UTF-8");
         for(String inLog : IN_LOG)

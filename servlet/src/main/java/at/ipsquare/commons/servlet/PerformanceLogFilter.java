@@ -145,19 +145,41 @@ public class PerformanceLogFilter implements Filter
             chain.doFilter(request, response);
         else
         {
+            Throwable th = null;
             PerformanceLogger plog = new PerformanceLogger(threshold, performanceLogFormatter());
             try
             {
                 chain.doFilter(request, response);
             }
+            catch(Throwable e)
+            {
+                th = e;
+            }
             finally
             {
-                plog.logElapsed(toLogString(request));
+                plog.logElapsed(toLogString(request, th));
+            }
+            
+            if(th != null)
+            {
+                if(th instanceof IOException)
+                    throw (IOException) th;
+                
+                if(th instanceof ServletException)
+                    throw (ServletException) th;
+                
+                if(th instanceof RuntimeException)
+                    throw (RuntimeException) th;
+                
+                if(th instanceof Error)
+                    throw (Error) th;
+                
+                throw new RuntimeException(th);
             }
         }
     }
     
-    private String toLogString(ServletRequest request)
+    private String toLogString(ServletRequest request, Throwable th)
     {
         if(!(request instanceof HttpServletRequest))
             return "" + request;
@@ -166,6 +188,7 @@ public class PerformanceLogFilter implements Filter
         StringBuilder sb = new StringBuilder()
             .append(prefix)
             .append(req.getMethod())
+            .append(errorString(th))
             .append(" ");
         int lenWithMethodAndSpace = sb.length();
         
@@ -179,6 +202,18 @@ public class PerformanceLogFilter implements Filter
         if(sb.length() == lenWithMethodAndSpace)
             sb.setLength(lenWithMethodAndSpace - 1);
         return sb.toString();
+    }
+    
+    private static String errorString(Throwable th)
+    {
+        if(th == null)
+            return "";
+        
+        return new StringBuilder()
+            .append("(!")
+            .append(th.getClass().getSimpleName())
+            .append("!)")
+            .toString();
     }
 
     @Override
