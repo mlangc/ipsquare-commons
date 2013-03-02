@@ -170,39 +170,25 @@ public class PerformanceLogger
         if(StringUtils.isEmpty(name))
             return DefaultPerformanceLogFormatter.class;
         
-        Class<? extends PerformanceLogFormatter> ret = null;
-        
-        ClassLoader[] loaders = new ClassLoader[] { 
-                Thread.currentThread().getContextClassLoader(), PerformanceLogger.class.getClassLoader()
-        };
-        
-        for(ClassLoader cl : loaders)
+        Class<? extends PerformanceLogFormatter> ret;
+        try
         {
-            try
-            {
-                @SuppressWarnings("unchecked")
-                Class<? extends PerformanceLogFormatter> tmp = (Class<? extends PerformanceLogFormatter>) Class.forName(name, true, cl);
-                ret = tmp;
-            }
-            catch(ClassNotFoundException e)
-            {
-                // Try next classloader or handle later...
-            }
+            @SuppressWarnings("unchecked")
+            Class<? extends PerformanceLogFormatter> tmp = (Class<? extends PerformanceLogFormatter>) Classes.forName(name);
+            ret = tmp;
         }
-        
-        if(ret != null)
-        {
-            if(!PerformanceLogFormatter.class.isAssignableFrom(ret))
-            {
-                log.warn(ret.getName() + " does not implement PerformanceLogFormatter; ignoring parameter.");
-                ret = DefaultPerformanceLogFormatter.class;
-            }
-        }
-        else
+        catch(ClassNotFoundException e)
         {
             log.warn("Could not load default performance log formatter '" + name + "'.");
             ret = DefaultPerformanceLogFormatter.class;
         }
+        
+        if(!PerformanceLogFormatter.class.isAssignableFrom(ret))
+        {
+            log.warn(ret.getName() + " does not implement PerformanceLogFormatter; ignoring parameter.");
+            ret = DefaultPerformanceLogFormatter.class;
+        }
+        
         return ret;
     }
     

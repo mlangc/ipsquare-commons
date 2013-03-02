@@ -231,7 +231,7 @@ public class DefaultHibernateRepository implements HibernateRepository
     {
         try
         {
-            Class.forName(clazz.getCanonicalName());
+            Classes.forName(clazz.getCanonicalName());
         }
         catch(ClassNotFoundException e)
         {
