@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import at.ipsquare.commons.core.interfaces.ExecutionError;
 import at.ipsquare.commons.core.interfaces.UnitOfWork;
+import at.ipsquare.commons.core.util.Classes;
 
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;

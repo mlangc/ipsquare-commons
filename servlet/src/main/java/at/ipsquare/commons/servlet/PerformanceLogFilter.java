@@ -26,7 +26,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import at.ipsquare.commons.core.util.Classes;
 import at.ipsquare.commons.core.util.PerformanceLogFormatter;
 import at.ipsquare.commons.core.util.PerformanceLogger;
 
@@ -37,6 +40,8 @@ import at.ipsquare.commons.core.util.PerformanceLogger;
  */
 public class PerformanceLogFilter implements Filter
 {
+    private static final Logger log = LoggerFactory.getLogger(PerformanceLogFilter.class);
+    
     private enum MessageFormatter implements PerformanceLogFormatter
     {
         INSTANCE;
@@ -101,7 +106,36 @@ public class PerformanceLogFilter implements Filter
         if(StringUtils.isEmpty(className))
             return null;
         
-        return  null;
+        try
+        {
+            Class<?> clazz = Classes.forName(className);
+            if(!PerformanceLogFormatter.class.isAssignableFrom(clazz))
+                throw new ServletConfigurationError(className + " does not implement " + PerformanceLogFormatter.class.getName() + ".");
+            
+            @SuppressWarnings("unchecked")
+            Class<? extends PerformanceLogFormatter> ret = (Class<? extends PerformanceLogFormatter>) clazz;
+            return ret;
+        }
+        catch(ClassNotFoundException e)
+        {
+            throw new ServletConfigurationError("Cannot load formatter class '" + className + "'.");
+        }
+    }
+    
+    private PerformanceLogFormatter performanceLogFormatter()
+    {
+        if(formatterClass == null)
+            return MessageFormatter.INSTANCE;
+        
+        try
+        {
+            return formatterClass.newInstance();
+        }
+        catch(Exception e)
+        {
+            log.error("Could not create an instance of " + formatterClass.getName() + ".", e);
+            return MessageFormatter.INSTANCE;
+        }
     }
 
     @Override
@@ -111,7 +145,7 @@ public class PerformanceLogFilter implements Filter
             chain.doFilter(request, response);
         else
         {
-            PerformanceLogger plog = new PerformanceLogger(threshold, MessageFormatter.INSTANCE);
+            PerformanceLogger plog = new PerformanceLogger(threshold, performanceLogFormatter());
             try
             {
                 chain.doFilter(request, response);

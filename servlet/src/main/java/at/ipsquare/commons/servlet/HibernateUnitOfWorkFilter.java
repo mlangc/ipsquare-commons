@@ -31,6 +31,7 @@ import javax.servlet.ServletResponse;
 
 import at.ipsquare.commons.core.interfaces.AbstractUnitOfWork;
 import at.ipsquare.commons.core.interfaces.UnitOfWork;
+import at.ipsquare.commons.core.util.Classes;
 import at.ipsquare.commons.hibernate.HibernateRepository;
 import at.ipsquare.commons.hibernate.HibernateRepositoryProvider;
 
@@ -187,30 +188,15 @@ public final class HibernateUnitOfWorkFilter implements Filter
         return "Unable to instantine '" + clazz.getCanonicalName() + "'.";
     }
     
-    private static ClassLoader[] classLoaders()
-    {
-        ClassLoader contextLoader =  Thread.currentThread().getContextClassLoader();
-        ClassLoader myLoader =  HibernateUnitOfWorkFilter.class.getClassLoader();
-        
-        if(contextLoader != null && contextLoader != myLoader)
-            return new ClassLoader[] { contextLoader, myLoader };
-        return new ClassLoader[] { myLoader };
-    }
-    
     private static Class<?> loadClass(String className)
     {
-        for(ClassLoader loader : classLoaders())
+        try
         {
-            try
-            {
-                return loader.loadClass(className);
-            }
-            catch(ClassNotFoundException e)
-            {
-                // OK, try next class loader!
-            }
+            return Classes.forName(className);
         }
-        
-        throw new ServletConfigurationError("Could not load class '" + className + "'.");
+        catch(ClassNotFoundException e1)
+        {
+            throw new ServletConfigurationError("Could not load class '" + className + "'.");
+        }
     }
 }
