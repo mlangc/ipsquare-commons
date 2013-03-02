@@ -70,6 +70,42 @@ public final class Classes
         return forName(name, true);
     }
     
+    /**
+     * An enhanced version of {@link #forName(String)} that makes sure that the returned class extends the given type.
+     * 
+     * <p>
+     *  Calling this method is equivalent to:
+     *  <blockquote>
+     *      {@code Classes.forName(name, true, type)}
+     *  </blockquote>
+     * </p>
+     */
+    public static <T> Class<? extends T> forName(String name, Class<T> type) throws ClassNotFoundException
+    {
+        return forName(name, true, type);
+    }
+    
+    /**
+     * An enhanced version of {@link #forName(String, boolean)} that makes sure that the returned class extends the given type.
+     * 
+     * @param name the fully qualified name of the desired class.
+     * @param initialize whether the class must be initialized.
+     * @param type the type the returned class is expected to extend.
+     * @return the desired class.
+     * @throws ClassNotFoundException if the specified class could not be located by any loader returned by {@link ClassLoaders#get()}.
+     * @throws ClassCastException if the desired class could be loaded, but does not extend the given type.
+     */
+    public static <T> Class<? extends T> forName(String name, boolean initialize, Class<T> type) throws ClassNotFoundException
+    {
+        Class<?> clazz = forName(name, initialize);
+        if(!type.isAssignableFrom(clazz))
+            throw new ClassCastException(clazz.getName() + " does not extend or implement " + type.getName() + ".");
+        
+        @SuppressWarnings("unchecked")
+        Class<? extends T> ret = (Class<? extends T>) clazz;
+        return ret;
+    }
+    
     private Classes()
     {
         

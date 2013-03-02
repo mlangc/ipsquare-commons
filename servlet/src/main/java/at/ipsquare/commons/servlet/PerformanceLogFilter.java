@@ -73,10 +73,16 @@ public class PerformanceLogFilter implements Filter
      */
     public static String PERFORMANCE_LOG_FORMATTER = "performanceLogFormatter";
     
+    /**
+     * Init parameter name for the {@link PerformanceLogFilterMessageFormatter} to use.
+     */
+    public static String PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER = "performanceLogFilterMessageFormatter";
+    
     private long threshold;
     private RequestMatcher requestMatcher;
     private String prefix;
-    private Class<? extends PerformanceLogFormatter> formatterClass;
+    private Class<? extends PerformanceLogFormatter> logFormatterClass;
+    private Class<? extends PerformanceLogFilterMessageFormatter> logFilterMessageFormatterClass;
     
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
@@ -97,24 +103,33 @@ public class PerformanceLogFilter implements Filter
         
         requestMatcher = PathPatternRequestMatcher.fromFilterConfig(filterConfig);
         prefix = StringUtils.defaultString(filterConfig.getInitParameter(INIT_PARAM_PREFIX));
-        formatterClass = formatterClassFromConfig(filterConfig);
+        logFormatterClass = logFormatterClassFromConfig(filterConfig);
+        logFilterMessageFormatterClass = logFilterMessageFormatterClassFromConfig(filterConfig);
     }
     
-    private static Class<? extends PerformanceLogFormatter> formatterClassFromConfig(FilterConfig filterConfig)
+    private Class<? extends PerformanceLogFilterMessageFormatter> logFilterMessageFormatterClassFromConfig(FilterConfig filterConfig)
     {
-        String className = filterConfig.getInitParameter(PERFORMANCE_LOG_FORMATTER);
+        return typeFromConfig(filterConfig, PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER, PerformanceLogFilterMessageFormatter.class);
+    }
+    
+    private static Class<? extends PerformanceLogFormatter> logFormatterClassFromConfig(FilterConfig filterConfig)
+    {
+        return typeFromConfig(filterConfig, PERFORMANCE_LOG_FORMATTER, PerformanceLogFormatter.class);
+    }
+
+    private static <T> Class<? extends T> typeFromConfig(FilterConfig filterConfig, String parameterName, Class<T> type)
+    {
+        String className = filterConfig.getInitParameter(parameterName);
         if(StringUtils.isEmpty(className))
             return null;
         
         try
         {
-            Class<?> clazz = Classes.forName(className);
-            if(!PerformanceLogFormatter.class.isAssignableFrom(clazz))
-                throw new ServletConfigurationError(className + " does not implement " + PerformanceLogFormatter.class.getName() + ".");
-            
-            @SuppressWarnings("unchecked")
-            Class<? extends PerformanceLogFormatter> ret = (Class<? extends PerformanceLogFormatter>) clazz;
-            return ret;
+            return Classes.forName(className, type);
+        }
+        catch(ClassCastException e)
+        {
+            throw new ServletConfigurationError(e.getMessage());
         }
         catch(ClassNotFoundException e)
         {
@@ -124,16 +139,16 @@ public class PerformanceLogFilter implements Filter
     
     private PerformanceLogFormatter performanceLogFormatter()
     {
-        if(formatterClass == null)
+        if(logFormatterClass == null)
             return DefaultLogFormatter.INSTANCE;
         
         try
         {
-            return formatterClass.newInstance();
+            return logFormatterClass.newInstance();
         }
         catch(Exception e)
         {
-            log.error("Could not create an instance of " + formatterClass.getName() + ".", e);
+            log.error("Could not create an instance of " + logFormatterClass.getName() + ".", e);
             return DefaultLogFormatter.INSTANCE;
         }
     }

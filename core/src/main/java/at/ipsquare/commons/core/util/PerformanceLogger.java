@@ -173,19 +173,16 @@ public class PerformanceLogger
         Class<? extends PerformanceLogFormatter> ret;
         try
         {
-            @SuppressWarnings("unchecked")
-            Class<? extends PerformanceLogFormatter> tmp = (Class<? extends PerformanceLogFormatter>) Classes.forName(name);
-            ret = tmp;
+            ret = Classes.forName(name, PerformanceLogFormatter.class);
+        }
+        catch(ClassCastException e)
+        {
+            log.warn(e.getMessage());
+            ret = DefaultPerformanceLogFormatter.class;
         }
         catch(ClassNotFoundException e)
         {
             log.warn("Could not load default performance log formatter '" + name + "'.");
-            ret = DefaultPerformanceLogFormatter.class;
-        }
-        
-        if(!PerformanceLogFormatter.class.isAssignableFrom(ret))
-        {
-            log.warn(ret.getName() + " does not implement PerformanceLogFormatter; ignoring parameter.");
             ret = DefaultPerformanceLogFormatter.class;
         }
         

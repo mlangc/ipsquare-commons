@@ -22,7 +22,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import net.jcip.annotations.ThreadSafe;
+import net.jcip.annotations.Immutable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @since 2.0.0
  * @author Matthias Langer
  */
-@ThreadSafe
+@Immutable
 public class PathPatternRequestMatcher implements RequestMatcher
 {
     private static final Logger log = LoggerFactory.getLogger(PathPatternRequestMatcher.class);

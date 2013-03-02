@@ -32,6 +32,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.jcip.annotations.Immutable;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.testng.annotations.Test;
@@ -62,7 +64,8 @@ public class TestPerformanceLogFilter
         }
     }
     
-    public static class MessageFormatter implements PerformanceLogFormatter
+    @Immutable
+    public static class LogMessageFormatter implements PerformanceLogFormatter
     {
         private static final String PREFIX = "~~preFix~~ ";
         
@@ -80,6 +83,18 @@ public class TestPerformanceLogFilter
         }
     }
     
+    @Immutable
+    public static class LogFilterMessageFormatter implements PerformanceLogFilterMessageFormatter
+    {
+        private static final String PREFIX = "++**#prefix#**++";
+        private static final PerformanceLogFilterMessageFormatter defaultFormatter = new DefaultPerformanceLogFilterMessageFormatter();
+        
+        @Override
+        public String format(ServletRequest req, ServletResponse res, Throwable th)
+        {
+            return PREFIX + defaultFormatter.format(req, res, th);
+        }
+    }
     
     private static class SleepyChain extends UnitTestFilterChain
     {
@@ -121,6 +136,76 @@ public class TestPerformanceLogFilter
         }
     }
     
+    private static class FilterConfigBuilder
+    {
+        Long threshold;
+        String incPtn;
+        String exPtn;
+        String prefix;
+        String performanceLogFormatter;
+        String performanceLogFilterMessageFormatter;
+        
+        FilterConfigBuilder whithThreshold(Long threshold)
+        {
+            this.threshold = threshold;
+            return this;
+        }
+        
+        FilterConfigBuilder withIncPtn(String incPtn)
+        {
+            this.incPtn = incPtn;
+            return this;
+        }
+        
+        FilterConfigBuilder withExPtn(String exPtn)
+        {
+            this.exPtn = exPtn;
+            return this;
+        }
+        
+        FilterConfigBuilder withPrefex(String prefix)
+        {
+            this.prefix = prefix;
+            return this;
+        }
+        
+        FilterConfigBuilder withPerformanceLogFormatter(String performanceLogFormatter)
+        {
+            this.performanceLogFormatter = performanceLogFormatter;
+            return this;
+        }
+        
+        FilterConfigBuilder withThreshold(Long threshold)
+        {
+            this.threshold = threshold;
+            return this;
+        }
+        
+        FilterConfigBuilder withPerformanceLogFilterMessageFormatter(String performanceLogFilterMessageFormatter)
+        {
+            this.performanceLogFilterMessageFormatter = performanceLogFilterMessageFormatter;
+            return this;
+        }
+        
+        FilterConfig toFilterConfig()
+        {
+            Map<String, String> props = Maps.newHashMapWithExpectedSize(4);
+            if(threshold != null)
+                props.put(PerformanceLogFilter.INIT_PARAM_THRESHOLD, "" + threshold);
+            if(incPtn != null)
+                props.put(InitParameterNames.INCLUDE_PATH_PATTERN, incPtn);
+            if(exPtn != null)
+                props.put(InitParameterNames.EXCLUDE_PATH_PATTERN, exPtn);
+            if(prefix != null)
+                props.put(PerformanceLogFilter.INIT_PARAM_PREFIX, prefix);
+            if(performanceLogFormatter != null)
+                props.put(PerformanceLogFilter.PERFORMANCE_LOG_FORMATTER, performanceLogFormatter);
+            if(performanceLogFilterMessageFormatter != null)
+                props.put(PerformanceLogFilter.PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER, performanceLogFilterMessageFormatter);
+            return new UnitTestFilterConfig(props);
+        }
+    }
+    
     @Test
     public void testDoFilter() throws IOException, ServletException
     {
@@ -131,7 +216,8 @@ public class TestPerformanceLogFilter
             "in2=test",
             "/in/test/3",
             "here4.do",
-            MessageFormatter.PREFIX,
+            LogMessageFormatter.PREFIX,
+            LogFilterMessageFormatter.PREFIX,
             BrokenChainException.class.getSimpleName(),
             PREFIX
         };
@@ -145,14 +231,14 @@ public class TestPerformanceLogFilter
         
         UnitTestFilterChain chain = new SleepyChain(1);
         PerformanceLogFilter filter = new PerformanceLogFilter();
-        filter.init(filterConfig(null));
+        filter.init(new FilterConfigBuilder().toFilterConfig());
         filter.doFilter(req(null,  null, null), res(), chain);
         filter.doFilter(req(IN_LOG[0], null, null), res(), chain);
         filter.doFilter(req("/hansi/hintenrum", null, IN_LOG[1]), res(), chain);
         filter.doFilter(req("/foo", IN_LOG[2], ""), res(), chain);
         
         filter = new PerformanceLogFilter();
-        filter.init(filterConfig(THRESHOLD, "^.*do$", ".*skip.*"));
+        filter.init(new FilterConfigBuilder().withThreshold(THRESHOLD).withIncPtn("^.*do$").withExPtn(".*skip.*").toFilterConfig());
         filter.doFilter(req(NOT_IN_LOG[0], null, null), res(), chain);
         
         chain = new SleepyChain(THRESHOLD + 1);
@@ -160,11 +246,11 @@ public class TestPerformanceLogFilter
         filter.doFilter(req("/you/should", NOT_IN_LOG[1], "right=now"), res(), chain);
         
         filter = new PerformanceLogFilter();
-        filter.init(filterConfig(THRESHOLD, null, null, PREFIX));
+        filter.init(new FilterConfigBuilder().whithThreshold(THRESHOLD).withPrefex(PREFIX).toFilterConfig());
         filter.doFilter(req("/whatever/you/want", "/is/already/here", "with=you"), res(), chain);
         
         filter = new PerformanceLogFilter();
-        filter.init(filterConfig(0L, null, null, null, MessageFormatter.class.getName()));
+        filter.init(new FilterConfigBuilder().withThreshold(0L).withPerformanceLogFormatter(LogMessageFormatter.class.getName()).toFilterConfig());
         filter.doFilter(req("/kirschen-essen", null, "nicht=gut"), res(), chain);
         
         try
@@ -176,6 +262,11 @@ public class TestPerformanceLogFilter
         {
             // OK!
         }
+        
+        chain = new SleepyChain(0);
+        filter = new PerformanceLogFilter();
+        filter.init(new FilterConfigBuilder().withPerformanceLogFilterMessageFormatter(LogFilterMessageFormatter.class.getName()).toFilterConfig());
+        filter.doFilter(req("/i/cant", null, "care=less"), res(), chain);
         
         String logString = TestAppender.stream.toString("UTF-8");
         for(String inLog : IN_LOG)
@@ -189,7 +280,7 @@ public class TestPerformanceLogFilter
     {
         try
         {
-            new PerformanceLogFilter().init(filterConfig(0L, null, null, null, "Uuuups"));
+            new PerformanceLogFilter().init(new FilterConfigBuilder().withThreshold(0L).withPerformanceLogFormatter("Uuuuups").toFilterConfig());
             fail();
         }
         catch(IllegalArgumentException e)
@@ -216,36 +307,5 @@ public class TestPerformanceLogFilter
     {
         MockHttpServletResponse ret = new MockHttpServletResponse();
         return ret;
-    }
-    
-    private static FilterConfig filterConfig(Long threshold, String incPtn, String exPtn, String prefix, String performanceLogFormatter)
-    {
-        Map<String, String> props = Maps.newHashMapWithExpectedSize(4);
-        if(threshold != null)
-            props.put(PerformanceLogFilter.INIT_PARAM_THRESHOLD, "" + threshold);
-        if(incPtn != null)
-            props.put(InitParameterNames.INCLUDE_PATH_PATTERN, incPtn);
-        if(exPtn != null)
-            props.put(InitParameterNames.EXCLUDE_PATH_PATTERN, exPtn);
-        if(prefix != null)
-            props.put(PerformanceLogFilter.INIT_PARAM_PREFIX, prefix);
-        if(performanceLogFormatter != null)
-            props.put(PerformanceLogFilter.PERFORMANCE_LOG_FORMATTER, performanceLogFormatter);
-        return new UnitTestFilterConfig(props);
-    }
-    
-    private static FilterConfig filterConfig(Long threshold, String incPtn, String exPtn, String prefix)
-    {
-        return filterConfig(threshold, incPtn, exPtn, prefix, null);
-    }
-    
-    private static FilterConfig filterConfig(Long threshold, String incPtn, String exPtn)
-    {
-        return filterConfig(threshold, incPtn, exPtn, null);
-    }
-    
-    private static FilterConfig filterConfig(Long threshold)
-    {
-        return filterConfig(threshold, null, null);
     }
 }

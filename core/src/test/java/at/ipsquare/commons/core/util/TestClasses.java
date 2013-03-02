@@ -68,5 +68,17 @@ public class TestClasses
             // OK!
         }
         
+        Class<? extends PerformanceLogFormatter> formatterClass = Classes.forName(DefaultPerformanceLogFormatter.class.getName(), PerformanceLogFormatter.class);
+        assertNotNull(formatterClass);
+        
+        try
+        {
+            Classes.forName(String.class.getName(), PerformanceLogFormatter.class);
+            fail();
+        }
+        catch(ClassCastException e)
+        {
+            // OK!
+        }
     }
 }
