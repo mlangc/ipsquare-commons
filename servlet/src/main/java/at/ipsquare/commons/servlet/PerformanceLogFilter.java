@@ -41,6 +41,7 @@ import at.ipsquare.commons.core.util.PerformanceLogger;
 public class PerformanceLogFilter implements Filter
 {
     private static final Logger log = LoggerFactory.getLogger(PerformanceLogFilter.class);
+    private static final PerformanceLogFilterMessageFormatter DEFAULT_LOG_FILTER_MESSAGE_FORMATTER = new DefaultPerformanceLogFilterMessageFormatter();
     
     private enum DefaultLogFormatter implements PerformanceLogFormatter
     {
@@ -57,6 +58,7 @@ public class PerformanceLogFilter implements Filter
               .toString();
         }
     }
+    
     
     /**
      * Init parameter name for the threshold to use (see {@link PerformanceLogger#PerformanceLogger(long)}).
@@ -155,7 +157,18 @@ public class PerformanceLogFilter implements Filter
     
     private PerformanceLogFilterMessageFormatter filterMessageFormatter()
     {
-        return new DefaultPerformanceLogFilterMessageFormatter();
+        if(logFilterMessageFormatterClass == null)
+            return DEFAULT_LOG_FILTER_MESSAGE_FORMATTER;
+        
+        try
+        {
+            return logFilterMessageFormatterClass.newInstance();
+        }
+        catch(Exception e)
+        {
+            log.error("Could not create an instance of " + logFilterMessageFormatterClass.getName() + ".", e);
+            return DEFAULT_LOG_FILTER_MESSAGE_FORMATTER;
+        }
     }
 
     @Override
