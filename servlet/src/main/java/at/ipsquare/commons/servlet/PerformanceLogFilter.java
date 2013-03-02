@@ -23,7 +23,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -36,6 +35,7 @@ import at.ipsquare.commons.core.util.PerformanceLogger;
 /**
  * This filter logs the execution time of incoming web requests using a {@link PerformanceLogger}.
  * 
+ * @since 2.1.0
  * @author Matthias Langer
  */
 public class PerformanceLogFilter implements Filter
@@ -137,19 +137,24 @@ public class PerformanceLogFilter implements Filter
             return DefaultLogFormatter.INSTANCE;
         }
     }
+    
+    private PerformanceLogFilterMessageFormatter filterMessageFormatter()
+    {
+        return new DefaultPerformanceLogFilterMessageFormatter();
+    }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException
     {
-        if(!requestMatcher.matches(request))
-            chain.doFilter(request, response);
+        if(!requestMatcher.matches(req))
+            chain.doFilter(req, res);
         else
         {
             Throwable th = null;
             PerformanceLogger plog = new PerformanceLogger(threshold, performanceLogFormatter());
             try
             {
-                chain.doFilter(request, response);
+                chain.doFilter(req, res);
             }
             catch(Throwable e)
             {
@@ -157,7 +162,7 @@ public class PerformanceLogFilter implements Filter
             }
             finally
             {
-                plog.logElapsed(toLogString(request, th));
+                plog.logElapsed(toLogString(req, res, th));
             }
             
             if(th != null)
@@ -179,43 +184,11 @@ public class PerformanceLogFilter implements Filter
         }
     }
     
-    private String toLogString(ServletRequest request, Throwable th)
+    private String toLogString(ServletRequest req, ServletResponse res, Throwable th)
     {
-        if(!(request instanceof HttpServletRequest))
-            return "" + request;
-        
-        HttpServletRequest req = (HttpServletRequest) request;
-        StringBuilder sb = new StringBuilder()
-            .append(prefix)
-            .append(req.getMethod())
-            .append(errorString(th))
-            .append(" ");
-        int lenWithMethodAndSpace = sb.length();
-        
-        if(req.getServletPath() != null)
-            sb.append(req.getServletPath());
-        if(req.getPathInfo() != null)
-            sb.append(req.getPathInfo());
-        if(StringUtils.isNotEmpty(req.getQueryString()))
-            sb.append("?").append(req.getQueryString());
-        
-        if(sb.length() == lenWithMethodAndSpace)
-            sb.setLength(lenWithMethodAndSpace - 1);
-        return sb.toString();
+        return prefix + filterMessageFormatter().format(req, res, th);
     }
     
-    private static String errorString(Throwable th)
-    {
-        if(th == null)
-            return "";
-        
-        return new StringBuilder()
-            .append("(!")
-            .append(th.getClass().getSimpleName())
-            .append("!)")
-            .toString();
-    }
-
     @Override
     public void destroy()
     {

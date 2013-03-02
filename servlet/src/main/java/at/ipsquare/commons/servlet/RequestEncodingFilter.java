@@ -27,8 +27,8 @@ import javax.servlet.ServletResponse;
 /**
  * A filter that consistently sets the request encoding.
  * 
- * @author Matthias Langer
  * @since 2.1.0
+ * @author Matthias Langer
  */
 public class RequestEncodingFilter implements Filter
 {

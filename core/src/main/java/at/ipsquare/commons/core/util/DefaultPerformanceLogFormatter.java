@@ -18,7 +18,7 @@ package at.ipsquare.commons.core.util;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import net.jcip.annotations.ThreadSafe;
+import net.jcip.annotations.Immutable;
 
 /**
  * Default {@link PerformanceLogFormatter} implementation.
@@ -26,7 +26,7 @@ import net.jcip.annotations.ThreadSafe;
  * @author Matthias Langer
  * @since 2.1.0
  */
-@ThreadSafe
+@Immutable
 public final class DefaultPerformanceLogFormatter implements PerformanceLogFormatter
 {
     @Override
