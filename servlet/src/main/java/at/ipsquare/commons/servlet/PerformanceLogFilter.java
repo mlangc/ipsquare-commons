@@ -42,7 +42,7 @@ public class PerformanceLogFilter implements Filter
 {
     private static final Logger log = LoggerFactory.getLogger(PerformanceLogFilter.class);
     
-    private enum MessageFormatter implements PerformanceLogFormatter
+    private enum DefaultLogFormatter implements PerformanceLogFormatter
     {
         INSTANCE;
         
@@ -125,7 +125,7 @@ public class PerformanceLogFilter implements Filter
     private PerformanceLogFormatter performanceLogFormatter()
     {
         if(formatterClass == null)
-            return MessageFormatter.INSTANCE;
+            return DefaultLogFormatter.INSTANCE;
         
         try
         {
@@ -134,7 +134,7 @@ public class PerformanceLogFilter implements Filter
         catch(Exception e)
         {
             log.error("Could not create an instance of " + formatterClass.getName() + ".", e);
-            return MessageFormatter.INSTANCE;
+            return DefaultLogFormatter.INSTANCE;
         }
     }
 
