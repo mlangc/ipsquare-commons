@@ -44,9 +44,11 @@ and it is possible to enhance the loggers output with custom messages, like so:
 
 Consult the [Javadocs][] for details.
 
-#### LocalResources
-[LocalResources][] is an utility class for loading local resources from the classpath. You should use it whenever you want to load some data from the classapth, 
-like default configurations, images packaged into a JAR file, or test data needed for unit tests.
+#### Class and Resource Loading
++ [ClassLoaders][] is a global registry for class loaders that is used by all IP SQUARE commons components (this is especially true for [LocalResources][] and [Classes][]). 
++ [LocalResources][] is an utility class for loading local resources from the classpath. You should use it whenever you want to load some data from the classapth, 
+  like default configurations, images packaged into a JAR file, or test data needed for unit tests.
++ [Classes][] is an utility class for class loading.
 
 #### UnitOfWork
 [UnitOfWork][] represents some unit of work, that is typically, but not necessarily, executed by an [UnitOfWorkExecutor][] implementation. Good examples of concrete 
@@ -75,3 +77,5 @@ are two interfaces I employed successfully in multiple projects.
 [HasId]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/interfaces/HasId.html
 [StringGenerator]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/interfaces/StringGenerator.html
 [LocalResources]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/LocalResources.html
+[Classes]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/Classes.html
+[ClassLoaders]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/ClassLoaders.html
