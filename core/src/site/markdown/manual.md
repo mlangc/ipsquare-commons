@@ -15,13 +15,13 @@ The class that I use most is without a doubt [PerformanceLogger][]. It does what
 The implementation uses [SLF4J][]. Varying with your logging configuration ([PerformanceLogger][] logs to *at.ipsquare.commons.core.util.PerformanceLogger* with log level *DEBUG*),
 the code above will result in something like this written to your shiny logs:
 
-    SomeClass.someMethod[14->16] 333ms
-    SomeClass.someMethod[16->18] 222ms
+    17:52:33 PERFORMANCE SomeClass.someMethod[15->17] 333ms
+    17:52:33 PERFORMANCE SomeClass.someMethod[17->19] 222ms
 
 If you happen to use [LOGBack][] and you want your performance related log messages formatted similar to the example above, you might find the following logback.xml snippets useful:
 
     <!-- ... -->
-    <property name="performancePattern" value="%msg%n"/>
+    <property name="performancePattern" value="%d{HH:mm:ss} PERFORMANCE %msg%n"/>
     <!-- ... -->
     <appender name="PERFORMANCE_OUT" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
