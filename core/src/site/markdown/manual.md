@@ -12,7 +12,7 @@ The class that I use most is without a doubt [PerformanceLogger][]. It does what
     plog.logElapsed();
     //...
 
-The implementation uses [SLF4J][]. Varying with your logging configuration ([PerformanceLogger][] logs *to at.ipsquare.commons.core.util.PerformanceLogger* with log level *DEBUG*),
+The implementation uses [SLF4J][]. Varying with your logging configuration ([PerformanceLogger][] logs to *at.ipsquare.commons.core.util.PerformanceLogger* with log level *DEBUG*),
 the code above will result in something like this written to your shiny logs:
 
     SomeClass.someMethod[14->16] 333ms
@@ -42,13 +42,31 @@ and it is possible to enhance the loggers output with custom messages, like so:
     doWork();
     plog.logElapsed("Finally done");
 
+If you are not content with the output that is produced by [PerformanceLogger][], or if you need something special, 
+you can implement your own [PerformanceLogFormatter][]. The defaults used by [PerformanceLogger.PerformanceLogger()][] can be customized
+by adding an XML properties file called *at/ipsquare/commons/core/util/performanceLogger.xml* to the classpath. The recognized entries (which are all optional) are:
+
+* *defaultPerformanceLogFormatter*: The fully qualified class name of a [PerformanceLogFormatter][] implementation.
+* *defaultThreshold*: The threshold in milliseconds.
+
+Here is an example:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+    <properties>
+        <entry key="defaultPerformanceLogFormatter">my.very.special.HandCraftedPerformanceLogFormatter</entry>
+        <entry key="defaultThreshold">2</entry>
+    </properties>
+
+
 Consult the [Javadocs][] for details.
 
 #### Class and Resource Loading
-+ [ClassLoaders][] is a global registry for class loaders that is used by all IP SQUARE commons components (this is especially true for [LocalResources][] and [Classes][]). 
-+ [LocalResources][] is an utility class for loading local resources from the classpath. You should use it whenever you want to load some data from the classapth, 
-  like default configurations, images packaged into a JAR file, or test data needed for unit tests.
-+ [Classes][] is an utility class for class loading.
+* [ClassLoaders][] is a global registry for class loaders that is used by all IP SQUARE commons components (this is especially true for [LocalResources][] and [Classes][]). 
+* [LocalResources][] is an utility class for loading local resources from the classpath. You should use it whenever you want to load some data from the classpath, 
+* like default configurations, images packaged into a JAR file, or test data needed for unit tests.
+* [Classes][] is an utility class for class loading.
 
 #### UnitOfWork
 [UnitOfWork][] represents some unit of work, that is typically, but not necessarily, executed by an [UnitOfWorkExecutor][] implementation. Good examples of concrete 
@@ -79,3 +97,7 @@ are two interfaces I employed successfully in multiple projects.
 [LocalResources]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/LocalResources.html
 [Classes]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/Classes.html
 [ClassLoaders]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/ClassLoaders.html
+[PerformanceLogger.PerformanceLogger()]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html#PerformanceLogger%28%29
+[PerformanceLogFormatter]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogFormatter.html
+
+
