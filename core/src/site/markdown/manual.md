@@ -59,13 +59,10 @@ Here is an example:
         <entry key="defaultThreshold">2</entry>
     </properties>
 
-
-Consult the [Javadocs][] for details.
-
 #### Class and Resource Loading
 * [ClassLoaders][] is a global registry for class loaders that is used by all IP SQUARE commons components (this is especially true for [LocalResources][] and [Classes][]). 
 * [LocalResources][] is an utility class for loading local resources from the classpath. You should use it whenever you want to load some data from the classpath, 
-* like default configurations, images packaged into a JAR file, or test data needed for unit tests.
+  like default configurations, images packaged into a JAR file, or test data needed for unit tests.
 * [Classes][] is an utility class for class loading.
 
 #### UnitOfWork
@@ -99,5 +96,3 @@ are two interfaces I employed successfully in multiple projects.
 [ClassLoaders]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/ClassLoaders.html
 [PerformanceLogger.PerformanceLogger()]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html#PerformanceLogger%28%29
 [PerformanceLogFormatter]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogFormatter.html
-
-
