@@ -20,6 +20,7 @@ import java.io.Closeable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import at.ipsquare.commons.core.interfaces.ExecutionError;
 import at.ipsquare.commons.core.interfaces.UnitOfWork;
 import at.ipsquare.commons.core.interfaces.UnitOfWorkExecutor;
 

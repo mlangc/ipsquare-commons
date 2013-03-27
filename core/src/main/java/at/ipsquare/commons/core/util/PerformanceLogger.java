@@ -210,7 +210,7 @@ public class PerformanceLogger
     /**
      * Constructs a new {@link PerformanceLogger} with a default threshold.
      * 
-     * @param an optional {@link PerformanceLogFormatter}
+     * @param logFormatter optional {@link PerformanceLogFormatter}
      * @since 2.1.0
      */
     public PerformanceLogger(PerformanceLogFormatter logFormatter)
@@ -222,7 +222,7 @@ public class PerformanceLogger
      * Constructs a new {@link PerformanceLogger}.
      * 
      * @param threshold the threshold in ms for which the logger should generate any output.
-     * @param an optional {@link PerformanceLogFormatter}.
+     * @param logFormatter optional {@link PerformanceLogFormatter}.
      * @since 2.1.0
      */
     public PerformanceLogger(long threshold, PerformanceLogFormatter logFormatter)
