@@ -116,7 +116,7 @@ of [PerformanceLogger][] to *DEBUG* or below. Further tweaking is possible using
 
 + *excludePathPattern* and *includePathPattern*: See [PathPatternRequestMatcher][].
 + *threshold*: The threshold to use for performance logging (see [PerformanceLogger.PerformanceLogger(threshold)][]).
-+ *prefix*: A prefix that is used to mark to log messages (useful if you want to filter them later).
++ *prefix*: A prefix that is used to mark the log messages (useful if you want to filter them later).
 + *performanceLogFormatter*: The fully qualified class name of a [PerformanceLogFormatter][].
 + *performanceLogFilterMessageFormatter*: The fully qualified class name of a [PerformanceLogFilterMessageFormatter][].
 

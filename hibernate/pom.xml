@@ -9,7 +9,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-hibernate</artifactId>
-	<version>2.0.1-SNAPSHOT</version>
+	<version>2.0.1</version>
 	<description>Useful APIs for working with Hibernate.</description>
 	<name>IP SQUARE Commons Hibernate</name>
 	<url>http://ipsquarecommons.sourceforge.net/ipsquare-commons-hibernate/</url>
@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>at.ipsquare</groupId>
 			<artifactId>ipsquare-commons-core</artifactId>
-			<version>[2.1.0-SNAPSHOT,3.0.0)</version>
+			<version>[2.1.0,3.0.0)</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
