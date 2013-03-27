@@ -199,9 +199,9 @@ public class TestPerformanceLogFilter
             if(prefix != null)
                 props.put(PerformanceLogFilter.INIT_PARAM_PREFIX, prefix);
             if(performanceLogFormatter != null)
-                props.put(PerformanceLogFilter.PERFORMANCE_LOG_FORMATTER, performanceLogFormatter);
+                props.put(PerformanceLogFilter.INIT_PARAM_PERFORMANCE_LOG_FORMATTER, performanceLogFormatter);
             if(performanceLogFilterMessageFormatter != null)
-                props.put(PerformanceLogFilter.PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER, performanceLogFilterMessageFormatter);
+                props.put(PerformanceLogFilter.INIT_PARAM_PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER, performanceLogFilterMessageFormatter);
             return new UnitTestFilterConfig(props);
         }
     }

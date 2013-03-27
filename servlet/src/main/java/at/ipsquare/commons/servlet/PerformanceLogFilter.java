@@ -63,22 +63,22 @@ public class PerformanceLogFilter implements Filter
     /**
      * Init parameter name for the threshold to use (see {@link PerformanceLogger#PerformanceLogger(long)}).
      */
-    public static String INIT_PARAM_THRESHOLD = "threshold";
+    public final static String INIT_PARAM_THRESHOLD = "threshold";
     
     /**
      * Init parameter name for an optional prefix to use.
      */
-    public static String INIT_PARAM_PREFIX = "prefix";
+    public final static String INIT_PARAM_PREFIX = "prefix";
     
     /**
      * Init parameter name for the {@link PerformanceLogFormatter} to use.
      */
-    public static String PERFORMANCE_LOG_FORMATTER = "performanceLogFormatter";
+    public final static String INIT_PARAM_PERFORMANCE_LOG_FORMATTER = "performanceLogFormatter";
     
     /**
      * Init parameter name for the {@link PerformanceLogFilterMessageFormatter} to use.
      */
-    public static String PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER = "performanceLogFilterMessageFormatter";
+    public final static String INIT_PARAM_PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER = "performanceLogFilterMessageFormatter";
     
     private long threshold;
     private RequestMatcher requestMatcher;
@@ -111,12 +111,12 @@ public class PerformanceLogFilter implements Filter
     
     private Class<? extends PerformanceLogFilterMessageFormatter> logFilterMessageFormatterClassFromConfig(FilterConfig filterConfig)
     {
-        return typeFromConfig(filterConfig, PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER, PerformanceLogFilterMessageFormatter.class);
+        return typeFromConfig(filterConfig, INIT_PARAM_PERFORMANCE_LOG_FILTER_MESSAGE_FORMATTER, PerformanceLogFilterMessageFormatter.class);
     }
     
     private static Class<? extends PerformanceLogFormatter> logFormatterClassFromConfig(FilterConfig filterConfig)
     {
-        return typeFromConfig(filterConfig, PERFORMANCE_LOG_FORMATTER, PerformanceLogFormatter.class);
+        return typeFromConfig(filterConfig, INIT_PARAM_PERFORMANCE_LOG_FORMATTER, PerformanceLogFormatter.class);
     }
 
     private static <T> Class<? extends T> typeFromConfig(FilterConfig filterConfig, String parameterName, Class<T> type)

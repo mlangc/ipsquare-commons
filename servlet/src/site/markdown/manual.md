@@ -65,7 +65,7 @@ you might want to switch the log level of [PathPatternRequestMatcher][] to *DEBU
 
 #### RequestEncodingFilter:
 [RequestEncodingFilter][] is a simple filter that takes care of setting the characer encoding in [ServletRequest][]s. It's quite similar to 
-[this filter](http://static.springsource.org/spring/docs/2.5.x/api/org/springframework/web/filter/CharacterEncodingFilter.html) that comes with [Spring][].
+[this filter](http://static.springsource.org/spring/docs/3.0.x/api/org/springframework/web/filter/CharacterEncodingFilter.html) that comes with [Spring][].
 Unless you have special needs, you might want to use it like so:
 
     <!-- ... -->
@@ -91,7 +91,35 @@ the following *init parameters* for tuning:
 Javadocs of [HttpServletRequest.setCharacterEncoding(...)](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getCharacterEncoding%28%29).
 
 #### PerformanceLogFilter
-[PerformanceLogFilter][] just logs the 
+[PerformanceLogFilter][] is a servlet filter that logs the time spent processing the requests that go through it. With my logging configuration 
+a typical log entry produced by [PerformanceLogFilter][] looks like this:
+
+    15:46:28 PERFORMANCE 15ms <<GET /html/index.html>>
+
+If you don't need anything special, adding the following snippet to your *web.xml* should do the trick:
+
+    <!-- ... -->
+    <!-- Dont forget to configure your logging framework accordingly if you want to see any output!-->
+    <filter>
+        <filter-name>PerformanceLogFilter</filter-name>
+        <filter-class>at.ipsquare.commons.servlet.PerformanceLogFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>PerformanceLogFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- ... -->
+
+[PerformanceLogFilter][] uses a [PerformanceLogger][] from [ipsquare-commons-core][]. To see any output you have to set the log level
+of [PerformanceLogger][] to *DEBUG* or below. Further tweaking is possible using the following *init parameters*, that are all optional:
+
++ *excludePathPattern* and *includePathPattern*: See [PathPatternRequestMatcher][].
++ *threshold*: The threshold to use for performance logging (see [PerformanceLogger.PerformanceLogger(threshold)][]).
++ *prefix*: A prefix that is used to mark to log messages (useful if you want to filter them later).
++ *performanceLogFormatter*: The fully qualified class name of a [PerformanceLogFormatter][].
++ *performanceLogFilterMessageFormatter*: The fully qualified class name of a [PerformanceLogFilterMessageFormatter][].
+
 
 [PerformanceLogger]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html 
 [SLF4J]: http://www.slf4j.org/
@@ -128,7 +156,12 @@ Javadocs of [HttpServletRequest.setCharacterEncoding(...)](http://docs.oracle.co
 [ServletModule]: http://code.google.com/p/google-guice/wiki/ServletModule
 [PathPatternRequestMatcher]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/PathPatternRequestMatcher.html
 [RequestMatcher]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/RequestMatcher.html
-[RequestEncodingFilter]: http://TODO
-[PerformanceLogFilter]: http://TODO
+[RequestEncodingFilter]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/RequestEncodingFilter.html
+[PerformanceLogFilter]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/PerformanceLogFilter.html
 [ServletRequest]: http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html
 [Spring]: http://www.springsource.org/
+[PerformanceLogger.PerformanceLogger()]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html#PerformanceLogger%28%29
+[PerformanceLogFormatter]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogFormatter.html
+[ipsquare-commons-core]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/index.html
+[PerformanceLogger.PerformanceLogger(threshold)]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html#PerformanceLogger%28long%29
+[PerformanceLogFilterMessageFormatter]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/PerformanceLogFilterMessageFormatter.html
