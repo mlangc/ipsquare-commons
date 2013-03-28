@@ -51,6 +51,23 @@
 		<javadocPluginVersion>2.9</javadocPluginVersion>
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>useLnetRepo</id>
+
+			<distributionManagement>
+				<snapshotRepository>
+					<id>lnet-snapshots</id>
+				</snapshotRepository>
+
+				<repository>
+					<id>lnet-releases</id>
+				</repository>
+			</distributionManagement>
+
+		</profile>
+	</profiles>
+
 	<build>
 		<pluginManagement>
 			<plugins>
