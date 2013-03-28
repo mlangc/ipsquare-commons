@@ -29,15 +29,11 @@
 
 	<inceptionYear>2012</inceptionYear>
 
-	<organization>
-		<name>IP SQUARE</name>
-		<url>http://www.ipsquare.at/</url>
-	</organization>
-
 	<developers>
 		<developer>
 			<email>mlangc@gmx.at</email>
 			<name>Matthias Langer</name>
+			<url>https://mlangc.wordpress.com/</url>
 		</developer>
 	</developers>
 
