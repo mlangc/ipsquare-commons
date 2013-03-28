@@ -310,10 +310,12 @@
 			<distributionManagement>
 				<snapshotRepository>
 					<id>lnet-snapshots</id>
+					<url>http://192.168.0.64:17080/nexus/content/repositories/lnet-snapshots</url>
 				</snapshotRepository>
 
 				<repository>
 					<id>lnet-releases</id>
+					<url>http://192.168.0.64:17080/nexus/content/repositories/lnet-releases</url>
 				</repository>
 			</distributionManagement>
 
