@@ -133,6 +133,14 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>${javadocPluginVersion}</version>
+					
+					<configuration>
+						<links>
+							<link>http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/</link>
+							<link>http://ipsquarecommons.sourceforge.net/ipsquare-commons-hibernate/apidocs/</link>
+							<link>http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/</link>
+						</links>
+					</configuration>
 				</plugin>
 				
 				<plugin>
