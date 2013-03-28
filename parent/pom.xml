@@ -148,6 +148,19 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<GitRevId>${gitRevId}</GitRevId>
+							<Timestamp>${timestamp}</Timestamp>
+							<Scm>${project.scm.developerConnection}</Scm>
+						</manifestEntries>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
