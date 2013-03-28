@@ -6,7 +6,15 @@ This library is meant to contain commonly useful [Servlet][]s, [Filter][]s as we
 The most useful component of the library is without a doubt [HibernateUnitOfWorkFilter][].
 It executes your web requests in [UnitOfWork][] instances, that are submitted against configurable [HibernateRepository][]s,
 thereby implementing the [session-per-request](http://docs.jboss.org/hibernate/orm/4.1/devguide/en-US/html/ch02.html#session-per-request) pattern.
-Simply add it to your web.xml like in the snippet below:
+To use it you need [ipsquare-commons-hibernate][]; Maven users should add the following dependency to their POMs:
+    
+    <dependency>
+        <groupId>at.ipsquare</groupId>
+        <artifactId>ipsquare-commons-hibernate</artifactId>
+        <version>2.0.1</version>
+    </dependency> 
+
+Now simply add the filter to your web.xml like in the snippet below:
 
     <!-- ... -->
     <filter>
@@ -165,3 +173,4 @@ of [PerformanceLogger][] to *DEBUG* or below. Further tweaking is possible using
 [ipsquare-commons-core]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/index.html
 [PerformanceLogger.PerformanceLogger(threshold)]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-core/apidocs/at/ipsquare/commons/core/util/PerformanceLogger.html#PerformanceLogger%28long%29
 [PerformanceLogFilterMessageFormatter]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-servlet/apidocs/at/ipsquare/commons/servlet/PerformanceLogFilterMessageFormatter.html
+[ipsquare-commons-hibernate]: http://ipsquarecommons.sourceforge.net/ipsquare-commons-hibernate/index.html
