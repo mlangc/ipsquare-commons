@@ -196,6 +196,7 @@
 					<buildNumberPropertyName>gitRevId</buildNumberPropertyName>
 					<timestampPropertyName>timestamp</timestampPropertyName>
 					<timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss z}</timestampFormat>
+					<getRevisionOnlyOnce>true</getRevisionOnlyOnce>
 				</configuration>
 			</plugin>
 
