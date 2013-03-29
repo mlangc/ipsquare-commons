@@ -21,7 +21,7 @@
   <body>
     <menu name="Overview" inherit="top">
     	<item name="About" href="index.html"></item>
-    	<item name="User's Manual" href="manual.html"></item>
+    	<item name="User Manual" href="manual.html"></item>
     	<item name="Javadocs" href="apidocs/index.html"></item>
     	<item name="Dependency Info" href="dependency-info.html"></item>
     	<item name="Dependencies" href="dependencies.html"></item>
@@ -30,7 +30,10 @@
     	<item name="Developers" href="team-list.html"></item>
     	<item name="License" href="license.html"></item>
     	<item name="Code Coverage" href="cobertura/index.html"></item>
-    	<item name="Mutation Coverage" href="pit-reports/index.html"></item>
+
+        <!--
+            <item name="Mutation Coverage" href="pit-reports/index.html"></item>
+        -->
 	</menu>
   </body>
   

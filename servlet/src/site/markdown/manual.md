@@ -1,4 +1,4 @@
-### User's Manual
+### User Manual
 
 This library is meant to contain commonly useful [Servlet][]s, [Filter][]s as well as related APIs.
 

@@ -1,4 +1,4 @@
-### User's Manual
+### User Manual
 
 This library contains a [UnitOfWorkExecutor][] implementation, namely [DefaultHibernateRepository][], that should greatly help you with Hibernate session and transaction management
 in a non managed environment. [ipsquare-commons-hibernate][] has been designed with [google-guice][] in mind, and I will therefore demonstrate its usage with the dependency

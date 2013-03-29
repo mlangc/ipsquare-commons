@@ -1,4 +1,4 @@
-### User's Manual
+### User Manual
 This library contains APIs that are likely to be useful in almost any non trivial Java project.
 
 #### PerformanceLogger
