@@ -232,7 +232,7 @@ public class DefaultHibernateRepository implements HibernateRepository
     {
         try
         {
-            Classes.forName(clazz.getCanonicalName());
+            Classes.forName(clazz.getName());
         }
         catch(ClassNotFoundException e)
         {
