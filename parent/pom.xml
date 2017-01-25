@@ -320,6 +320,18 @@
 			</distributionManagement>
 
 		</profile>
+
+		<profile>
+			<id>use-irian-repo</id>
+
+			<distributionManagement>
+				<repository>
+					<id>irian-3d-party</id>
+					<url>http://maven.irian.at/content/repositories/thirdparty</url>
+				</repository>
+			</distributionManagement>
+
+		</profile>
 	</profiles>
 
 	<reporting>
