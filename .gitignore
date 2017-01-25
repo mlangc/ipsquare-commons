@@ -3,3 +3,5 @@
 *.war
 *.swp
 *~
+.idea
+*.iml
