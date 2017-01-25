@@ -229,7 +229,7 @@ public class PerformanceLogger
     {
         this.from = StackTrace.firstElementBelowClass();
         this.threshold = threshold;
-        this.stopwatch = new Stopwatch().start();
+        this.stopwatch = Stopwatch.createStarted();
         this.logFormatter = getLogFormatter(logFormatter);
     }
     
