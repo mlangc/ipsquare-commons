@@ -25,7 +25,7 @@ import at.ipsquare.commons.core.util.PerformanceLogFormatter;
 
 /**
  * Tests for {@link DefaultPerformanceLogFormatter}.
- * 
+ *
  * @author Matthias Langer
  */
 public class TestDefaultPerformanceLogFormatter
@@ -35,57 +35,64 @@ public class TestDefaultPerformanceLogFormatter
        static final String NAME = SomeClass.class.getName();
        static final String SIMPLE_NAME = SomeClass.class.getSimpleName();
     }
-    
+
     private static class SomeOtherClass
     {
         static final String NAME = SomeOtherClass.class.getName();
         static final String SIMPLE_NAME = SomeOtherClass.class.getSimpleName();
     }
-    
+
     @Test
     public void testFormat()
     {
         testFormat(
-                null, 
-                null, 
-                111, 
-                null, 
-                "111", "?");
-        
+                null,
+                null,
+                111,
+                null,
+                "   111ms ", "?");
+
+        testFormat(
+                null,
+                null,
+                1234567,
+                null,
+                "1234567ms ", "?");
+
         testFormat(
                 new StackTraceElement(SomeClass.NAME, "foo", null, -1),
                 null,
                 111,
                 null,
-                "111", "?", "foo");
-        
+                "   111ms ", "?", "foo");
+
         testFormat(
                 new StackTraceElement(SomeClass.NAME, "foo", null, -2),
                 null,
                 111,
                 "test",
-                "111", "test", "?", "foo");
-        
+                "   111ms ", "test", "?", "foo");
+
         testFormat(
                 new StackTraceElement(SomeClass.NAME, "bar", "From.java", -1),
                 new StackTraceElement(SomeOtherClass.NAME, "to", "To.java", 33),
                 66,
                 null,
                 SomeClass.SIMPLE_NAME, SomeOtherClass.SIMPLE_NAME, "to", "33", "66", "?", "bar");
-        
+
         testFormat(
                 new StackTraceElement(SomeClass.NAME, "method", "Clazz.java", 88),
                 new StackTraceElement(SomeClass.NAME, "method", "Clazz.java", 99),
                 313,
                 "***",
-                "88", "99", "313", SomeClass.SIMPLE_NAME, "method");
-        
+                "88", "99", "   313ms ", SomeClass.SIMPLE_NAME, "method");
+
         testFormat(
                 new StackTraceElement(SomeClass.NAME, "method", "Clazz.java", 88),
                 new StackTraceElement(SomeClass.NAME, "otherMethod", "Clazz.java", 99),
                 313,
                 "***",
-                "88", "99", "313", SomeClass.SIMPLE_NAME, "method", "otherMethod");
+                "88", "99", "   313ms ", SomeClass.SIMPLE_NAME, "method", "otherMethod");
     }
 
     private static void testFormat(StackTraceElement from, StackTraceElement to, long ms, String msg, String... lookFor)

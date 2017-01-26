@@ -22,7 +22,7 @@ import net.jcip.annotations.Immutable;
 
 /**
  * Default {@link PerformanceLogFormatter} implementation.
- * 
+ *
  * @author Matthias Langer
  * @since 2.1.0
  */
@@ -32,12 +32,14 @@ public final class DefaultPerformanceLogFormatter implements PerformanceLogForma
     @Override
     public String format(StackTraceElement from, StackTraceElement to, long millis, String message)
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder()
+            .append(String.format("%6dms ", millis));
+
         if(from != null && to != null)
         {
             Class<?> fromClass = StackTrace.associatedClass(from);
             Class<?> toClass = StackTrace.associatedClass(to);
-            
+
             if(fromClass.equals(toClass))
             {
                 sb.append(className(fromClass));
@@ -51,7 +53,7 @@ public final class DefaultPerformanceLogFormatter implements PerformanceLogForma
                       .append(lineNumberToString(to))
                       .append("]");
                 }
-                else 
+                else
                 {
                     sb.append("[")
                       .append(from.getMethodName())
@@ -99,27 +101,23 @@ public final class DefaultPerformanceLogFormatter implements PerformanceLogForma
                       .append(":")
                       .append(lineNumberToString(elem));
                 }
-                
+
                 if(i == 0)
                     sb.append("->");
             }
             sb.append("]");
         }
-        
-        sb.append(" ")
-        .append(millis)
-        .append("ms");
-        
+
         if(message != null)
         {
             sb.append(" <<")
               .append(message)
               .append(">>");
         }
-        
+
         return sb.toString();
     }
-    
+
     private static String className(Class<?> clazz)
     {
         Deque<Class<?>> parents = new ArrayDeque<Class<?>>(2);
@@ -132,7 +130,7 @@ public final class DefaultPerformanceLogFormatter implements PerformanceLogForma
             else
                 break;
         }
-        
+
         StringBuilder sb = new StringBuilder();
         for(Class<?> parent : parents)
         {
@@ -142,7 +140,7 @@ public final class DefaultPerformanceLogFormatter implements PerformanceLogForma
         }
         return sb.toString();
     }
-    
+
     private static String lineNumberToString(StackTraceElement elem)
     {
         int ln = elem.getLineNumber();
