@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ipsquare-commons-core</artifactId>
 	<name>IP SQUARE Commons Core</name>
-	<version>2.3.0</version>
+	<version>3.0.0</version>
 
 	<build>
 		<plugins>
@@ -24,6 +24,15 @@
 						<targetTests>
 							<param>at.ipsquare.commons.core*</param>
 						</targetTests>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 		</plugins>

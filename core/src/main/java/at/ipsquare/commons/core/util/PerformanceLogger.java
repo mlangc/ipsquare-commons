@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-
-import net.jcip.annotations.NotThreadSafe;
+import java.util.function.Supplier;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Stopwatch;
+
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * A simple performance logger.
@@ -309,5 +310,80 @@ public class PerformanceLogger
         
         from = StackTrace.firstElementBelowClass();
         stopwatch.reset().start();
+    }
+
+    /**
+     * Executes the given block and logs its execution time.
+     * 
+     * @param threshold the threshold in ms for with the logger should generate any output.
+     * @param msg an optional message.
+     * @param block the block to execute.
+     * @return the return value of the block.
+     */
+    public static <T> T timedExec(long threshold, String msg, Supplier<T> block)
+    {
+    	PerformanceLogger plog = new PerformanceLogger(threshold);
+    	T res = block.get();
+    	plog.logElapsed(msg);
+    	return res;
+    }
+
+
+    /**
+     * See {@link #timedExec(long, String, Runnable)} 
+     */
+    public static <T> T timedExec(String msg, Supplier<T> block)
+    {
+    	return timedExec(defaultSettings.threshold, msg, block);
+    }
+
+    /**
+     * See {@link #timedExec(long, String, Runnable)} 
+     */
+    public static <T> T timedExec(long threshold, Supplier<T> block)
+    {
+    	return timedExec(threshold, null, block);
+    }
+
+    /**
+     * See {@link #timedExec(long, String, Runnable)} 
+     */
+    public static <T> T timedExec(Supplier<T> block)
+    {
+    	return timedExec(defaultSettings.threshold, null, block);
+    }
+    
+    /**
+     * See {@link #timedExec(long, String, Runnable)} 
+     */
+    public static void timedExec(long threshold, String msg, Runnable block)
+    {
+    	PerformanceLogger plog = new PerformanceLogger(threshold);
+    	block.run();
+    	plog.logElapsed(msg);
+    }
+
+    /**
+     * See {@link #timedExec(long, String, Runnable)} 
+     */
+    public static void timedExec(long threshold, Runnable block)
+    {
+    	timedExec(threshold, null, block);
+    }
+
+    /**
+     * See {@link #timedExec(long, String, Runnable)} 
+     */
+    public static void timedExec(String msg, Runnable block)
+    {
+    	timedExec(defaultSettings.threshold, msg, block);
+    }
+    
+    /**
+     * See {@link #timedExec(long, String, Runnable)} 
+     */
+    public static void timedExec(Runnable block)
+    {
+    	timedExec(null, block);
     }
 }
