@@ -61,8 +61,7 @@ public final class Classes
      *  <blockquote>
      *      {@code Classes.forName(name, true)}
      *  </blockquote>
-     * </p>
-     * 
+     *
      * @see #forName(String, boolean)
      */
     public static Class<?> forName(String name) throws ClassNotFoundException
@@ -78,7 +77,6 @@ public final class Classes
      *  <blockquote>
      *      {@code Classes.forName(name, true, type)}
      *  </blockquote>
-     * </p>
      */
     public static <T> Class<? extends T> forName(String name, Class<T> type) throws ClassNotFoundException
     {

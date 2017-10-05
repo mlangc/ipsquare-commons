@@ -49,8 +49,7 @@ import net.jcip.annotations.NotThreadSafe;
  * 
  * For logging SLF4J with log level DEBUG is used; you can therefore disable
  * performance logging by simply setting the log level for this class accordingly.
- * </p>
- * 
+ *
  * @since 2.0.0
  * @author Matthias Langer
  */

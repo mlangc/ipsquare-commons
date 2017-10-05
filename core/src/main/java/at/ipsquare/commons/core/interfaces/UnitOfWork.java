@@ -20,7 +20,7 @@ package at.ipsquare.commons.core.interfaces;
 /**
  * An interface that represents a single Unit of Work.
  * 
- * <h4>Notes:</h4>
+ * <h3>Notes:</h3>
  * <ul>
  * <li>
  *  You should normally extend {@link AbstractUnitOfWork} instead of implementing this interface directly.
