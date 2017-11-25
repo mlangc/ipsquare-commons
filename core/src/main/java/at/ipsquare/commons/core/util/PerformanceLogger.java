@@ -37,16 +37,24 @@ import net.jcip.annotations.NotThreadSafe;
  * <p>
  * This class is meant to be used like this:
  * <pre>
- * {@code
  * //...
  * PerformanceLogger plog = new PerformanceLogger();
  * doWork();
  * plog.logElapsedAndRestart();
  * doSomeMoreWork();
  * plog.logElapsed();
- * //...}
+ * //...
  * </pre>
- * 
+ * or
+ * <pre>
+ * //...
+ * PerformanceLogger.timedExec(() -> {
+ *     doSomeWork();
+ *     return doSomeMoreWork();
+ * }
+ * //...
+ * </pre>
+ *
  * For logging SLF4J with log level DEBUG is used; you can therefore disable
  * performance logging by simply setting the log level for this class accordingly.
  *
