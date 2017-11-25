@@ -227,10 +227,19 @@ public class PerformanceLogger
      */
     public PerformanceLogger(long threshold, PerformanceLogFormatter logFormatter)
     {
-        this.from = StackTrace.firstElementBelowClass();
         this.threshold = threshold;
-        this.stopwatch = Stopwatch.createStarted();
         this.logFormatter = getLogFormatter(logFormatter);
+
+        if (log.isDebugEnabled())
+        {
+            this.from = StackTrace.firstElementBelowClass();
+            this.stopwatch = Stopwatch.createStarted();
+        }
+        else
+        {
+            this.from = null;
+            this.stopwatch = Stopwatch.createUnstarted();
+        }
     }
     
     private static PerformanceLogFormatter getLogFormatter(PerformanceLogFormatter logFormatter)
@@ -277,7 +286,7 @@ public class PerformanceLogger
      */
     public void logElapsed(String msg)
     {
-        if(!log.isDebugEnabled())
+        if(!log.isDebugEnabled() || !stopwatch.isRunning())
             return;
         
         long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
