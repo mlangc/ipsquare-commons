@@ -75,7 +75,6 @@ public class TestPerformanceLoggerBlockBasedApi
 		assertThat(expectedResult, is(actualResult));
 		assertThat(UnitTestAppender.logString(), not(containsString(marker)));
 
-		actualResult = PerformanceLogger.timedExec(marker, () -> expectedResult);
-		
+		PerformanceLogger.timedExec(marker, () -> expectedResult);
 	}
 }
