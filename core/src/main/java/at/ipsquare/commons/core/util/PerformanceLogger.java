@@ -48,7 +48,7 @@ import net.jcip.annotations.NotThreadSafe;
  * or
  * <pre>
  * //...
- * PerformanceLogger.timedExec(() -> {
+ * PerformanceLogger.timedExec(() -&gt; {
  *     doSomeWork();
  *     return doSomeMoreWork();
  * }
