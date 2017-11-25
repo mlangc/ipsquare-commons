@@ -19,12 +19,7 @@ public abstract class BenchPerformanceLogger {
     public void configureLogger() {
         Logger logger = (Logger) LoggerFactory.getLogger(PerformanceLogger.class);
         UnitTestAppender.enabled = false;
-
-        if (!performanceLogsEnabled()) {
-            logger.setLevel(ch.qos.logback.classic.Level.INFO);
-        } else {
-            logger.setLevel(ch.qos.logback.classic.Level.DEBUG);
-        }
+        PerformanceLogTestUtils.enablePerformanceLogs(performanceLogsEnabled());
     }
 
     @TearDown(Level.Trial)

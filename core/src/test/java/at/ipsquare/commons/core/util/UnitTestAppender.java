@@ -16,7 +16,7 @@ import ch.qos.logback.core.OutputStreamAppender;
 public class UnitTestAppender<E> extends OutputStreamAppender<E>
 {
     private static final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    public static boolean enabled;
+    public static boolean enabled = true;
 
     @Override
     public void start()
