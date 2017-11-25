@@ -47,11 +47,21 @@ public final class DefaultPerformanceLogFormatter implements PerformanceLogForma
                 {
                     sb.append(".")
                       .append(from.getMethodName())
-                      .append("[")
-                      .append(lineNumberToString(from))
-                      .append("->")
-                      .append(lineNumberToString(to))
-                      .append("]");
+                      .append("[");
+
+                    if(from.getLineNumber() == to.getLineNumber())
+                    {
+                        sb.append(lineNumberToString(to));
+                    }
+                    else
+                    {
+
+                      sb.append(lineNumberToString(from))
+                        .append("->")
+                        .append(lineNumberToString(to));
+                    }
+
+                    sb.append("]");
                 }
                 else
                 {

@@ -93,6 +93,13 @@ public class TestDefaultPerformanceLogFormatter
                 313,
                 "***",
                 "88", "99", "   313ms ", SomeClass.SIMPLE_NAME, "method", "otherMethod");
+
+        testFormat(
+                new StackTraceElement(SomeClass.NAME, "f", "Clazz.java", 42),
+                new StackTraceElement(SomeClass.NAME, "f", "Clazz.java", 42),
+                10,
+                null,
+                "[42]", "f" , SomeClass.SIMPLE_NAME);
     }
 
     private static void testFormat(StackTraceElement from, StackTraceElement to, long ms, String msg, String... lookFor)
